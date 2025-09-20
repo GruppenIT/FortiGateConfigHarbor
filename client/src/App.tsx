@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import AuthPage from "@/pages/auth-page";
 import Dashboard from "@/pages/dashboard";
 import Devices from "@/pages/devices";
+import DeviceDetail from "@/pages/device-detail";
 import Configurations from "@/pages/configurations";
 import Compliance from "@/pages/compliance";
 import Ingestion from "@/pages/ingestion";
@@ -20,6 +21,7 @@ function Router() {
   return (
     <Switch>
       <ProtectedRoute path="/" component={Dashboard} />
+      <ProtectedRoute path="/devices/:serial" component={DeviceDetail} />
       <ProtectedRoute path="/devices" component={Devices} />
       <ProtectedRoute path="/configurations" component={Configurations} />
       <ProtectedRoute path="/compliance" component={Compliance} />
