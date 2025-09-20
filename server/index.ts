@@ -33,12 +33,22 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      
+      // Em produção, não logar dados sensíveis - apenas informações básicas
+      if (process.env.NODE_ENV !== "production" && capturedJsonResponse) {
+        // Em desenvolvimento, logar apenas métodos seguros e informações não sensíveis
+        if (req.method === "GET" && typeof capturedJsonResponse === "object") {
+          // Logar apenas contagem de resultados, não dados completos
+          if (Array.isArray(capturedJsonResponse)) {
+            logLine += ` :: [${capturedJsonResponse.length} items]`;
+          } else if (capturedJsonResponse.message) {
+            logLine += ` :: ${capturedJsonResponse.message}`;
+          }
+        }
       }
 
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
+      if (logLine.length > 100) {
+        logLine = logLine.slice(0, 99) + "…";
       }
 
       log(logLine);
