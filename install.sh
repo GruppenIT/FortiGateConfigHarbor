@@ -245,6 +245,35 @@ EOF
     log "Banco de dados inicializado com usuário admin@local"
 }
 
+# Criar usuário de sistema dedicado
+create_system_user() {
+    log "Criando usuário de sistema configharbor..."
+    
+    # Criar grupo e usuário de sistema
+    groupadd --system configharbor 2>/dev/null || true
+    useradd --system --gid configharbor --home-dir /opt/FortiGateConfigHarbor \
+        --shell /usr/sbin/nologin --comment "FortiGate ConfigHarbor Service" \
+        configharbor 2>/dev/null || true
+    
+    # Ajustar propriedade dos diretórios
+    APP_DIR="/opt/FortiGateConfigHarbor"
+    chown -R configharbor:configharbor "$APP_DIR"
+    
+    # Definir permissões mais restritivas (750)
+    chmod 750 "$APP_DIR"
+    chmod 750 "$APP_DIR/data"
+    chmod 750 "$APP_DIR/logs"
+    chmod 750 "$APP_DIR/quarantine"
+    
+    # Manter permissões restritivas para arquivos sensíveis
+    chmod 600 "$APP_DIR/.env"
+    chmod 600 "$APP_DIR/ADMIN_CREDENTIAL"
+    chown configharbor:configharbor "$APP_DIR/.env"
+    chown configharbor:configharbor "$APP_DIR/ADMIN_CREDENTIAL"
+    
+    log "Usuário de sistema configharbor criado com segurança"
+}
+
 # Criar serviço systemd
 create_systemd_service() {
     log "Criando serviço systemd..."
@@ -257,12 +286,20 @@ Requires=postgresql.service
 
 [Service]
 Type=simple
-User=root
+User=configharbor
+Group=configharbor
 WorkingDirectory=/opt/FortiGateConfigHarbor
 Environment=NODE_ENV=production
+EnvironmentFile=/opt/FortiGateConfigHarbor/.env
 ExecStart=/usr/bin/npm run start
 Restart=always
 RestartSec=10
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/FortiGateConfigHarbor/data /opt/FortiGateConfigHarbor/logs /opt/FortiGateConfigHarbor/quarantine
 
 # Logs
 StandardOutput=journal
@@ -323,10 +360,13 @@ main() {
     log "=== FASE 6: Inicialização do banco de dados ==="
     setup_database
     
-    log "=== FASE 7: Configuração do serviço ==="
+    log "=== FASE 7: Criação de usuário de sistema ==="
+    create_system_user
+    
+    log "=== FASE 8: Configuração do serviço ==="
     create_systemd_service
     
-    log "=== FASE 8: Configuração do firewall ==="
+    log "=== FASE 9: Configuração do firewall ==="
     setup_firewall
     
     log "=== INSTALAÇÃO CONCLUÍDA COM SUCESSO! ==="
