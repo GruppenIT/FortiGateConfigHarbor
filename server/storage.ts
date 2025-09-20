@@ -67,6 +67,13 @@ export interface IStorage {
   createComplianceRule(rule: InsertComplianceRule): Promise<ComplianceRule>;
   insertComplianceResults(results: any[]): Promise<void>;
   getComplianceResultsForDevice(deviceSerial: string): Promise<ComplianceResult[]>;
+  getAllComplianceResults(): Promise<ComplianceResult[]>;
+  getComplianceStats(): Promise<{
+    compliantDevices: number;
+    violations: number;
+    warnings: number;
+    lastCheck: Date | null;
+  }>;
   
   // Metrics and dashboard
   getDashboardMetrics(): Promise<{
@@ -336,6 +343,49 @@ export class DatabaseStorage implements IStorage {
       .from(ingestErrors)
       .orderBy(desc(ingestErrors.createdAt))
       .limit(limit);
+  }
+
+  async getAllComplianceResults(): Promise<ComplianceResult[]> {
+    return await db
+      .select()
+      .from(complianceResults)
+      .orderBy(desc(complianceResults.measuredAt));
+  }
+
+  async getComplianceStats(): Promise<{
+    compliantDevices: number;
+    violations: number;
+    warnings: number;
+    lastCheck: Date | null;
+  }> {
+    // Get unique devices that are compliant (all rules pass)
+    const compliantDevicesQuery = await db
+      .select({
+        deviceVersionId: complianceResults.deviceVersionId
+      })
+      .from(complianceResults)
+      .groupBy(complianceResults.deviceVersionId)
+      .having(sql`COUNT(CASE WHEN ${complianceResults.status} = 'fail' THEN 1 END) = 0`);
+
+    // Get violations (fail status)
+    const [violationsResult] = await db
+      .select({ count: count() })
+      .from(complianceResults)
+      .where(eq(complianceResults.status, 'fail'));
+
+    // Get last check date
+    const [lastCheckResult] = await db
+      .select({ measuredAt: complianceResults.measuredAt })
+      .from(complianceResults)
+      .orderBy(desc(complianceResults.measuredAt))
+      .limit(1);
+
+    return {
+      compliantDevices: compliantDevicesQuery.length,
+      violations: violationsResult.count,
+      warnings: 0, // We don't have warnings in our current schema
+      lastCheck: lastCheckResult?.measuredAt || null,
+    };
   }
 }
 

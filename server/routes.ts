@@ -181,6 +181,52 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Get all compliance results
+  app.get("/api/compliance/results", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const results = await storage.getAllComplianceResults();
+      res.json(results);
+    } catch (error) {
+      console.error("Error fetching compliance results:", error);
+      res.status(500).json({ message: "Failed to fetch compliance results" });
+    }
+  });
+
+  // Get compliance statistics
+  app.get("/api/compliance/stats", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const stats = await storage.getComplianceStats();
+      res.json(stats);
+    } catch (error) {
+      console.error("Error fetching compliance stats:", error);
+      res.status(500).json({ message: "Failed to fetch compliance stats" });
+    }
+  });
+
+  // Alternative evaluation endpoint for API consistency
+  app.post("/api/compliance/evaluate", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      const result = await complianceService.runComplianceCheck();
+      await storage.logAudit({
+        userId: req.user.id,
+        action: "run_compliance_check",
+        target: "compliance_service",
+        detailsJson: result
+      });
+      res.json(result);
+    } catch (error) {
+      console.error("Error running compliance evaluation:", error);
+      res.status(500).json({ message: "Failed to run compliance evaluation" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

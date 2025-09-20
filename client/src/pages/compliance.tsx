@@ -18,6 +18,10 @@ export default function Compliance() {
     queryKey: ["/api/compliance/rules"],
   });
 
+  const { data: stats, isLoading: statsLoading } = useQuery({
+    queryKey: ["/api/compliance/stats"],
+  });
+
   const runComplianceCheckMutation = useMutation({
     mutationFn: async () => {
       const res = await apiRequest("POST", "/api/compliance/check");
@@ -29,6 +33,7 @@ export default function Compliance() {
         description: `Checked ${data.rulesChecked} rules, found ${data.violations} violations`,
       });
       queryClient.invalidateQueries({ queryKey: ["/api/compliance/rules"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/compliance/stats"] });
     },
     onError: (error) => {
       toast({
@@ -180,7 +185,9 @@ export default function Compliance() {
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-muted-foreground">Compliant Devices</p>
-                    <p className="text-2xl font-semibold text-foreground" data-testid="text-compliant-devices">0</p>
+                    <p className="text-2xl font-semibold text-foreground" data-testid="text-compliant-devices">
+                      {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.compliantDevices || 0}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -194,7 +201,9 @@ export default function Compliance() {
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-muted-foreground">Violations</p>
-                    <p className="text-2xl font-semibold text-foreground" data-testid="text-violations">0</p>
+                    <p className="text-2xl font-semibold text-foreground" data-testid="text-violations">
+                      {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.violations || 0}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -208,7 +217,9 @@ export default function Compliance() {
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-muted-foreground">Warnings</p>
-                    <p className="text-2xl font-semibold text-foreground" data-testid="text-warnings">0</p>
+                    <p className="text-2xl font-semibold text-foreground" data-testid="text-warnings">
+                      {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.warnings || 0}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -222,7 +233,15 @@ export default function Compliance() {
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-muted-foreground">Last Check</p>
-                    <p className="text-2xl font-semibold text-foreground" data-testid="text-last-check">Never</p>
+                    <p className="text-2xl font-semibold text-foreground" data-testid="text-last-check">
+                      {statsLoading ? (
+                        <Skeleton className="h-8 w-16" />
+                      ) : stats?.lastCheck ? (
+                        new Date(stats.lastCheck).toLocaleString()
+                      ) : (
+                        "Never"
+                      )}
+                    </p>
                   </div>
                 </div>
               </CardContent>
