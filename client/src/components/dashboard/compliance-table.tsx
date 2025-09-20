@@ -40,10 +40,12 @@ export function ComplianceTable() {
     }
   };
 
+  const deviceCount = devices?.length || 0;
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Compliance Rules Status</CardTitle>
+        <CardTitle>Status das Regras de Conformidade</CardTitle>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -57,34 +59,41 @@ export function ComplianceTable() {
               </div>
             ))}
           </div>
+        ) : !rules || rules.length === 0 ? (
+          <div className="text-center py-8">
+            <div className="text-muted-foreground">
+              <p>Nenhuma regra de conformidade configurada</p>
+              <p className="text-sm">Configure regras de conformidade para monitorar seus dispositivos</p>
+            </div>
+          </div>
         ) : (
           <div className="overflow-hidden">
             <table className="min-w-full divide-y divide-border">
               <thead>
                 <tr>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Rule</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Severity</th>
-                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Devices</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Regra</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Severidade</th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Dispositivos</th>
                   <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {complianceStatus.map((rule, index) => (
-                  <tr key={index}>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-foreground" data-testid={`text-compliance-rule-${index}`}>
+                {rules.map((rule: any, index: number) => (
+                  <tr key={rule.id}>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-foreground" data-testid={`text-compliance-rule-${rule.id}`}>
                       {rule.name}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
-                      <Badge variant={getSeverityBadgeVariant(rule.severity)} data-testid={`badge-compliance-severity-${index}`}>
+                      <Badge variant={getSeverityBadgeVariant(rule.severity)} data-testid={`badge-compliance-severity-${rule.id}`}>
                         {rule.severity}
                       </Badge>
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-muted-foreground" data-testid={`text-compliance-devices-${index}`}>
-                      {rule.deviceCount}
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-muted-foreground" data-testid={`text-compliance-devices-${rule.id}`}>
+                      {deviceCount} dispositivos
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap">
-                      <Badge variant={getStatusBadgeVariant(rule.statusType)} data-testid={`badge-compliance-status-${index}`}>
-                        {rule.status}
+                      <Badge variant={rule.enabled ? "default" : "secondary"} data-testid={`badge-compliance-status-${rule.id}`}>
+                        {rule.enabled ? "Habilitada" : "Desabilitada"}
                       </Badge>
                     </td>
                   </tr>
