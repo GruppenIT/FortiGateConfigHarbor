@@ -16,14 +16,14 @@ import {
 import { Button } from "@/components/ui/button";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: ChartPie },
-  { name: "Devices", href: "/devices", icon: Server },
-  { name: "Configurations", href: "/configurations", icon: Settings },
-  { name: "Compliance", href: "/compliance", icon: CheckCircle },
-  { name: "File Ingestion", href: "/ingestion", icon: Download },
-  { name: "Quarantine", href: "/quarantine", icon: AlertTriangle },
-  { name: "User Management", href: "/users", icon: Users, adminOnly: true },
-  { name: "Audit Log", href: "/audit", icon: ClipboardList, minRole: "auditor" },
+  { name: "Painel Geral", href: "/", icon: ChartPie },
+  { name: "Dispositivos", href: "/devices", icon: Server },
+  { name: "Configurações", href: "/configurations", icon: Settings },
+  { name: "Conformidade", href: "/compliance", icon: CheckCircle },
+  { name: "Ingestão de Arquivos", href: "/ingestion", icon: Download },
+  { name: "Quarentena", href: "/quarantine", icon: AlertTriangle },
+  { name: "Gestão de Usuários", href: "/users", icon: Users, adminOnly: true },
+  { name: "Log de Auditoria", href: "/audit", icon: ClipboardList, minRole: "auditor" },
 ];
 
 export function Sidebar() {

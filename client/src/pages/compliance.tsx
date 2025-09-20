@@ -29,15 +29,15 @@ export default function Compliance() {
     },
     onSuccess: (data) => {
       toast({
-        title: "Compliance check completed",
-        description: `Checked ${data.rulesChecked} rules, found ${data.violations} violations`,
+        title: "Verificação de conformidade concluída",
+        description: `Verificadas ${data.rulesChecked} regras, encontradas ${data.violations} violações`,
       });
       queryClient.invalidateQueries({ queryKey: ["/api/compliance/rules"] });
       queryClient.invalidateQueries({ queryKey: ["/api/compliance/stats"] });
     },
     onError: (error) => {
       toast({
-        title: "Compliance check failed",
+        title: "Verificação de conformidade falhou",
         description: error.message,
         variant: "destructive",
       });
@@ -75,14 +75,14 @@ export default function Compliance() {
   };
 
   return (
-    <MainLayout title="Compliance Management">
+    <MainLayout title="Gestão de Conformidade">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Header Actions */}
           <div className="mb-6 flex items-center justify-between">
             <p className="text-muted-foreground">
-              Monitor and enforce compliance policies across your FortiGate infrastructure.
+              Monitore e aplique políticas de conformidade em toda sua infraestrutura FortiGate.
             </p>
             <div className="flex space-x-3">
               {user?.role === 'admin' && (
@@ -93,11 +93,11 @@ export default function Compliance() {
                     data-testid="button-run-compliance-check"
                   >
                     <Play className="h-4 w-4 mr-2" />
-                    {runComplianceCheckMutation.isPending ? "Running..." : "Run Check"}
+                    {runComplianceCheckMutation.isPending ? "Executando..." : "Executar Verificação"}
                   </Button>
                   <Button variant="outline" data-testid="button-add-rule">
                     <Plus className="h-4 w-4 mr-2" />
-                    Add Rule
+                    Adicionar Regra
                   </Button>
                 </>
               )}
@@ -107,7 +107,7 @@ export default function Compliance() {
           {/* Compliance Rules */}
           <Card>
             <CardHeader>
-              <CardTitle>Compliance Rules</CardTitle>
+              <CardTitle>Regras de Conformidade</CardTitle>
             </CardHeader>
             <CardContent>
               {isLoading ? (
@@ -146,12 +146,12 @@ export default function Compliance() {
                       </div>
                       <div className="flex-shrink-0">
                         <Badge variant={rule.enabled ? "default" : "secondary"} data-testid={`badge-rule-status-${rule.id}`}>
-                          {rule.enabled ? "Enabled" : "Disabled"}
+                          {rule.enabled ? "Habilitada" : "Desabilitada"}
                         </Badge>
                       </div>
                       <div className="flex-shrink-0">
                         <Badge variant="outline" data-testid={`badge-rule-compliance-${rule.id}`}>
-                          Compliant
+                          Conforme
                         </Badge>
                       </div>
                     </div>
@@ -160,14 +160,14 @@ export default function Compliance() {
               ) : (
                 <div className="text-center py-12">
                   <CheckCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-foreground mb-2">No compliance rules configured</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-2">Nenhuma regra de conformidade configurada</h3>
                   <p className="text-muted-foreground mb-4">
-                    Get started by creating your first compliance rule to monitor your FortiGate configurations.
+                    Comece criando sua primeira regra de conformidade para monitorar suas configurações FortiGate.
                   </p>
                   {user?.role === 'admin' && (
                     <Button data-testid="button-create-first-rule">
                       <Plus className="h-4 w-4 mr-2" />
-                      Create First Rule
+                      Criar Primeira Regra
                     </Button>
                   )}
                 </div>
@@ -184,7 +184,7 @@ export default function Compliance() {
                     <CheckCircle className="h-6 w-6 text-green-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Compliant Devices</p>
+                    <p className="text-sm font-medium text-muted-foreground">Dispositivos Conformes</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-compliant-devices">
                       {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.compliantDevices || 0}
                     </p>
@@ -200,7 +200,7 @@ export default function Compliance() {
                     <XCircle className="h-6 w-6 text-red-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Violations</p>
+                    <p className="text-sm font-medium text-muted-foreground">Violações</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-violations">
                       {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.violations || 0}
                     </p>
@@ -216,7 +216,7 @@ export default function Compliance() {
                     <AlertTriangle className="h-6 w-6 text-yellow-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Warnings</p>
+                    <p className="text-sm font-medium text-muted-foreground">Avisos</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-warnings">
                       {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.warnings || 0}
                     </p>
@@ -232,14 +232,14 @@ export default function Compliance() {
                     <Play className="h-6 w-6 text-blue-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Last Check</p>
+                    <p className="text-sm font-medium text-muted-foreground">Última Verificação</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-last-check">
                       {statsLoading ? (
                         <Skeleton className="h-8 w-16" />
                       ) : stats?.lastCheck ? (
-                        new Date(stats.lastCheck).toLocaleString()
+                        new Date(stats.lastCheck).toLocaleString('pt-BR')
                       ) : (
-                        "Never"
+                        "Nunca"
                       )}
                     </p>
                   </div>

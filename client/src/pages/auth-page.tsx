@@ -45,38 +45,38 @@ export default function AuthPage() {
               <Shield className="h-6 w-6 text-primary-foreground" />
             </div>
             <CardTitle className="text-2xl">ConfigHarbor</CardTitle>
-            <p className="text-sm text-muted-foreground">FortiGate Configuration Management</p>
+            <p className="text-sm text-muted-foreground">Gestão de Configuração FortiGate</p>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login" data-testid="tab-login">Sign In</TabsTrigger>
-                <TabsTrigger value="register" data-testid="tab-register">Register</TabsTrigger>
+                <TabsTrigger value="login" data-testid="tab-login">Entrar</TabsTrigger>
+                <TabsTrigger value="register" data-testid="tab-register">Registrar</TabsTrigger>
               </TabsList>
               
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="login-username">Username</Label>
+                    <Label htmlFor="login-username">Usuário</Label>
                     <Input
                       id="login-username"
                       data-testid="input-login-username"
                       type="text"
                       value={loginForm.username}
                       onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
-                      placeholder="Enter your username"
+                      placeholder="Digite seu usuário"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="login-password">Password</Label>
+                    <Label htmlFor="login-password">Senha</Label>
                     <Input
                       id="login-password"
                       data-testid="input-login-password"
                       type="password"
                       value={loginForm.password}
                       onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                      placeholder="Enter your password"
+                      placeholder="Digite sua senha"
                       required
                     />
                   </div>
@@ -86,7 +86,7 @@ export default function AuthPage() {
                     disabled={loginMutation.isPending}
                     data-testid="button-login"
                   >
-                    {loginMutation.isPending ? "Signing in..." : "Sign In"}
+                    {loginMutation.isPending ? "Entrando..." : "Entrar"}
                   </Button>
                 </form>
               </TabsContent>
@@ -94,51 +94,51 @@ export default function AuthPage() {
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="register-username">Username</Label>
+                    <Label htmlFor="register-username">Usuário</Label>
                     <Input
                       id="register-username"
                       data-testid="input-register-username"
                       type="text"
                       value={registerForm.username}
                       onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
-                      placeholder="Choose a username"
+                      placeholder="Escolha um usuário"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="register-display-name">Display Name</Label>
+                    <Label htmlFor="register-display-name">Nome Completo</Label>
                     <Input
                       id="register-display-name"
                       data-testid="input-register-display-name"
                       type="text"
                       value={registerForm.displayName}
                       onChange={(e) => setRegisterForm({ ...registerForm, displayName: e.target.value })}
-                      placeholder="Enter your full name"
+                      placeholder="Digite seu nome completo"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="register-role">Role</Label>
+                    <Label htmlFor="register-role">Função</Label>
                     <Select value={registerForm.role} onValueChange={(value: any) => setRegisterForm({ ...registerForm, role: value })}>
                       <SelectTrigger data-testid="select-register-role">
-                        <SelectValue placeholder="Select a role" />
+                        <SelectValue placeholder="Selecione uma função" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="readonly">Read Only</SelectItem>
+                        <SelectItem value="readonly">Apenas Leitura</SelectItem>
                         <SelectItem value="auditor">Auditor</SelectItem>
-                        <SelectItem value="admin">Administrator</SelectItem>
+                        <SelectItem value="admin">Administrador</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="register-password">Password</Label>
+                    <Label htmlFor="register-password">Senha</Label>
                     <Input
                       id="register-password"
                       data-testid="input-register-password"
                       type="password"
                       value={registerForm.password}
                       onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-                      placeholder="Choose a strong password"
+                      placeholder="Escolha uma senha forte"
                       required
                     />
                   </div>
@@ -148,7 +148,7 @@ export default function AuthPage() {
                     disabled={registerMutation.isPending}
                     data-testid="button-register"
                   >
-                    {registerMutation.isPending ? "Creating account..." : "Create Account"}
+                    {registerMutation.isPending ? "Criando conta..." : "Criar Conta"}
                   </Button>
                 </form>
               </TabsContent>
@@ -164,23 +164,23 @@ export default function AuthPage() {
             <Shield className="h-10 w-10 text-primary" />
           </div>
           <h2 className="text-3xl font-bold text-primary-foreground mb-6">
-            Secure Configuration Management
+            Gestão Segura de Configuração
           </h2>
           <p className="text-lg text-primary-foreground/90 mb-8">
-            Automate FortiGate configuration ingestion, compliance checking, and audit trails with ConfigHarbor's enterprise-grade security platform.
+            Automatize a ingestão de configurações FortiGate, verificação de conformidade e trilhas de auditoria com a plataforma de segurança empresarial ConfigHarbor.
           </p>
           <div className="space-y-4 text-sm text-primary-foreground/80">
             <div className="flex items-center justify-center space-x-2">
               <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
-              <span>Automated configuration parsing and validation</span>
+              <span>Processamento e validação automática de configurações</span>
             </div>
             <div className="flex items-center justify-center space-x-2">
               <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
-              <span>Real-time compliance monitoring and reporting</span>
+              <span>Monitoramento e relatórios de conformidade em tempo real</span>
             </div>
             <div className="flex items-center justify-center space-x-2">
               <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
-              <span>Complete audit trail and change tracking</span>
+              <span>Trilha de auditoria completa e rastreamento de mudanças</span>
             </div>
           </div>
         </div>

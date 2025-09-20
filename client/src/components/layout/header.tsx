@@ -22,13 +22,13 @@ export function Header({ title }: HeaderProps) {
     },
     onSuccess: (data) => {
       toast({
-        title: "Ingestion triggered",
-        description: `Processing files...`,
+        title: "Ingestão iniciada",
+        description: `Processando arquivos...`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Ingestion failed",
+        title: "Falha na ingestão",
         description: error.message,
         variant: "destructive",
       });
@@ -56,7 +56,7 @@ export function Header({ title }: HeaderProps) {
           {/* System Status Indicator */}
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm text-muted-foreground" data-testid="text-system-status">System Healthy</span>
+            <span className="text-sm text-muted-foreground" data-testid="text-system-status">Sistema Operacional</span>
           </div>
           
           {/* Manual Ingestion Trigger */}
@@ -69,7 +69,7 @@ export function Header({ title }: HeaderProps) {
               data-testid="button-trigger-ingestion"
             >
               <FolderSync className={`mr-2 h-4 w-4 ${triggerIngestionMutation.isPending ? 'animate-spin' : ''}`} />
-              {triggerIngestionMutation.isPending ? "Processing..." : "Trigger Ingestion"}
+              {triggerIngestionMutation.isPending ? "Processando..." : "Executar Ingestão"}
             </Button>
           )}
           

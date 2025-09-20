@@ -23,7 +23,7 @@ export default function Devices() {
   ) || [];
 
   return (
-    <MainLayout title="Device Management">
+    <MainLayout title="Gestão de Dispositivos">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -32,7 +32,7 @@ export default function Devices() {
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search devices by hostname, serial, or model..."
+                placeholder="Buscar dispositivos por hostname, serial ou modelo..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -59,7 +59,7 @@ export default function Devices() {
           ) : (
             <>
               <div className="mb-4 text-sm text-muted-foreground">
-                Showing {filteredDevices.length} of {devices?.length || 0} devices
+                Exibindo {filteredDevices.length} de {devices?.length || 0} dispositivos
               </div>
               
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -73,7 +73,7 @@ export default function Devices() {
                           </div>
                           <div>
                             <CardTitle className="text-lg" data-testid={`text-device-hostname-${device.serial}`}>
-                              {device.hostname || "Unknown"}
+                              {device.hostname || "Desconhecido"}
                             </CardTitle>
                             <p className="text-sm text-muted-foreground" data-testid={`text-device-serial-${device.serial}`}>
                               {device.serial}
@@ -81,41 +81,41 @@ export default function Devices() {
                           </div>
                         </div>
                         <Badge variant="secondary" data-testid={`badge-device-status-${device.serial}`}>
-                          Active
+                          Ativo
                         </Badge>
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <p className="text-muted-foreground">Model</p>
+                          <p className="text-muted-foreground">Modelo</p>
                           <p className="font-medium" data-testid={`text-device-model-${device.serial}`}>
-                            {device.model || "Unknown"}
+                            {device.model || "Desconhecido"}
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Last Seen</p>
+                          <p className="text-muted-foreground">Último Acesso</p>
                           <p className="font-medium" data-testid={`text-device-last-seen-${device.serial}`}>
-                            {device.lastSeen ? new Date(device.lastSeen).toLocaleDateString() : "Never"}
+                            {device.lastSeen ? new Date(device.lastSeen).toLocaleDateString('pt-BR') : "Nunca"}
                           </p>
                         </div>
                         <div>
                           <p className="text-muted-foreground">VDOM</p>
                           <p className="font-medium">
-                            {device.vdomEnabled ? "Enabled" : "Disabled"}
+                            {device.vdomEnabled ? "Habilitado" : "Desabilitado"}
                           </p>
                         </div>
                         <div>
-                          <p className="text-muted-foreground">Tenant</p>
+                          <p className="text-muted-foreground">Inquilino</p>
                           <p className="font-medium">
-                            {device.tenantId || "Unassigned"}
+                            {device.tenantId || "Não Atribuído"}
                           </p>
                         </div>
                       </div>
                       
                       {device.tags && device.tags.length > 0 && (
                         <div>
-                          <p className="text-sm text-muted-foreground mb-2">Tags</p>
+                          <p className="text-sm text-muted-foreground mb-2">Etiquetas</p>
                           <div className="flex flex-wrap gap-1">
                             {device.tags.map((tag: string, index: number) => (
                               <Badge key={index} variant="outline" className="text-xs">
@@ -130,7 +130,7 @@ export default function Devices() {
                         <Link href={`/devices/${device.serial}`}>
                           <Button variant="outline" size="sm" className="w-full" data-testid={`button-view-device-${device.serial}`}>
                             <Eye className="h-4 w-4 mr-2" />
-                            View Details
+                            Ver Detalhes
                           </Button>
                         </Link>
                       </div>
@@ -142,9 +142,9 @@ export default function Devices() {
               {filteredDevices.length === 0 && searchTerm && (
                 <div className="text-center py-12">
                   <Server className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-foreground mb-2">No devices found</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-2">Nenhum dispositivo encontrado</h3>
                   <p className="text-muted-foreground">
-                    No devices match your search criteria. Try adjusting your search terms.
+                    Nenhum dispositivo corresponde aos seus critérios de busca. Tente ajustar os termos de pesquisa.
                   </p>
                 </div>
               )}
@@ -152,9 +152,9 @@ export default function Devices() {
               {filteredDevices.length === 0 && !searchTerm && devices?.length === 0 && (
                 <div className="text-center py-12">
                   <Server className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-foreground mb-2">No devices registered</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-2">Nenhum dispositivo registrado</h3>
                   <p className="text-muted-foreground">
-                    Devices will appear here once configuration files are ingested and processed.
+                    Os dispositivos aparecerão aqui assim que os arquivos de configuração forem ingeridos e processados.
                   </p>
                 </div>
               )}
