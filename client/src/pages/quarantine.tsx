@@ -27,13 +27,13 @@ export default function Quarantine() {
   };
 
   return (
-    <MainLayout title="Quarantine Management">
+    <MainLayout title="Gestão de Quarentena">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="mb-6">
             <p className="text-muted-foreground">
-              Files that could not be processed are quarantined here for review and manual handling.
+              Arquivos que não puderam ser processados são colocados em quarentena aqui para revisão e tratamento manual.
             </p>
           </div>
 
@@ -42,10 +42,10 @@ export default function Quarantine() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center space-x-2">
                   <AlertTriangle className="h-5 w-5 text-yellow-600" />
-                  <span>Quarantined Files</span>
+                  <span>Arquivos em Quarentena</span>
                 </CardTitle>
                 <Badge variant="outline" data-testid="badge-quarantine-count">
-                  {quarantineItems?.length || 0} items
+                  {quarantineItems?.length || 0} itens
                 </Badge>
               </div>
             </CardHeader>
@@ -71,19 +71,19 @@ export default function Quarantine() {
                     <thead>
                       <tr>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          File
+                          Arquivo
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Reason
+                          Motivo
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Size
+                          Tamanho
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Quarantined
+                          Em Quarentena
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Actions
+                          Ações
                         </th>
                       </tr>
                     </thead>

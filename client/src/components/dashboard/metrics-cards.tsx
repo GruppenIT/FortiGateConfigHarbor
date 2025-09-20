@@ -58,7 +58,7 @@ export function MetricsCards() {
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-muted-foreground truncate">Compliance Score</dt>
+                <dt className="text-sm font-medium text-muted-foreground truncate">Pontuação de Conformidade</dt>
                 <dd className="text-2xl font-semibold text-foreground" data-testid="text-compliance-score">
                   {metrics?.complianceScore || 0}%
                 </dd>
@@ -77,7 +77,7 @@ export function MetricsCards() {
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-muted-foreground truncate">Files Today</dt>
+                <dt className="text-sm font-medium text-muted-foreground truncate">Arquivos Hoje</dt>
                 <dd className="text-2xl font-semibold text-foreground" data-testid="text-files-today">
                   {metrics?.filesIngestedToday || 0}
                 </dd>
@@ -96,7 +96,7 @@ export function MetricsCards() {
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-muted-foreground truncate">Quarantined</dt>
+                <dt className="text-sm font-medium text-muted-foreground truncate">Em Quarentena</dt>
                 <dd className="text-2xl font-semibold text-foreground" data-testid="text-quarantined-files">
                   {metrics?.quarantinedFiles || 0}
                 </dd>

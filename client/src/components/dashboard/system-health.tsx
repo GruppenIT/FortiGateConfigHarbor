@@ -29,23 +29,23 @@ export function SystemHealth() {
 
   const healthItems = [
     {
-      name: "Ingestion Service",
-      status: "Running",
+      name: "Serviço de Ingestão",
+      status: "Executando",
       color: "bg-green-500"
     },
     {
-      name: "Database", 
-      status: "Connected",
+      name: "Banco de Dados", 
+      status: "Conectado",
       color: "bg-green-500"
     },
     {
-      name: "File System",
-      status: "78% Used", 
+      name: "Sistema de Arquivos",
+      status: "78% Usado", 
       color: "bg-green-500"
     },
     {
-      name: "Compliance Engine",
-      status: "Active",
+      name: "Motor de Conformidade",
+      status: "Ativo",
       color: "bg-green-500"
     }
   ];
@@ -53,7 +53,7 @@ export function SystemHealth() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>System Health</CardTitle>
+        <CardTitle>Saúde do Sistema</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

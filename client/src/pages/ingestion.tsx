@@ -38,7 +38,7 @@ export default function Ingestion() {
   });
 
   return (
-    <MainLayout title="File Ingestion">
+    <MainLayout title="Ingestão de Arquivos">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -51,8 +51,8 @@ export default function Ingestion() {
                     <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Ingestion Service</p>
-                    <p className="text-lg font-semibold text-foreground" data-testid="text-service-status">Running</p>
+                    <p className="text-sm font-medium text-muted-foreground">Serviço de Ingestão</p>
+                    <p className="text-lg font-semibold text-foreground" data-testid="text-service-status">Executando</p>
                   </div>
                 </div>
               </CardContent>
@@ -65,7 +65,7 @@ export default function Ingestion() {
                     <Download className="h-6 w-6 text-blue-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Files Today</p>
+                    <p className="text-sm font-medium text-muted-foreground">Arquivos Hoje</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-files-today">0</p>
                   </div>
                 </div>
