@@ -25,7 +25,7 @@ export default function Ingestion() {
       setLastIngestionResult(data);
       toast({
         title: "Ingestão concluída",
-        description: `Processed ${data.processed} files, quarantined ${data.quarantined}, found ${data.duplicates} duplicates`,
+        description: `Processados ${data.processed} arquivos, ${data.quarantined} em quarentena, ${data.duplicates} duplicados encontrados`,
       });
     },
     onError: (error) => {

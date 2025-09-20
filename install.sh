@@ -296,11 +296,36 @@ ExecStart=/usr/bin/npm run start
 Restart=always
 RestartSec=10
 
-# Security hardening
+# Security hardening completo
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
-ReadWritePaths=/opt/FortiGateConfigHarbor/data /opt/FortiGateConfigHarbor/logs /opt/FortiGateConfigHarbor/quarantine
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RemoveIPC=true
+
+# Diretórios acessíveis pelo serviço
+ReadWritePaths=/opt/FortiGateConfigHarbor/data
+ReadWritePaths=/opt/FortiGateConfigHarbor/logs
+ReadWritePaths=/opt/FortiGateConfigHarbor/quarantine
+
+# Capacidades restritas
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Famílias de endereços permitidas
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+# Namespaces privados
+PrivateNetwork=false
+PrivateUsers=true
+PrivateDevices=true
 
 # Logs
 StandardOutput=journal
