@@ -56,22 +56,34 @@ app.use((req, res, next) => {
     if (!existingAdmin) {
       log("Creating default admin user...");
       
-      // Tentar ler senha do arquivo de credenciais ou usar padrão
-      let adminPassword = "admin123"; // Senha padrão para desenvolvimento
+      // Ler senha do arquivo de credenciais obrigatório (produção)
+      const fs = require('fs');
+      const credentialPath = "/opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL";
       
+      if (!fs.existsSync(credentialPath)) {
+        const errorMsg = `ERRO CRÍTICO: Arquivo de credenciais não encontrado em ${credentialPath}. Execute o script install.sh primeiro.`;
+        log(errorMsg);
+        console.error(errorMsg);
+        process.exit(1);
+      }
+      
+      let adminPassword;
       try {
-        const fs = require('fs');
-        const credentialPath = "/opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL";
-        if (fs.existsSync(credentialPath)) {
-          const credentialContent = fs.readFileSync(credentialPath, 'utf8');
-          const passwordMatch = credentialContent.match(/SENHA INICIAL: (.+)/);
-          if (passwordMatch) {
-            adminPassword = passwordMatch[1].trim();
-            log("Admin password loaded from credential file");
-          }
+        const credentialContent = fs.readFileSync(credentialPath, 'utf8');
+        const passwordMatch = credentialContent.match(/SENHA INICIAL: (.+)/);
+        if (!passwordMatch) {
+          const errorMsg = "ERRO CRÍTICO: Formato inválido no arquivo de credenciais. Senha não encontrada.";
+          log(errorMsg);
+          console.error(errorMsg);
+          process.exit(1);
         }
+        adminPassword = passwordMatch[1].trim();
+        log("Admin password loaded from credential file");
       } catch (credError) {
-        log("Could not read credential file, using default password");
+        const errorMsg = `ERRO CRÍTICO: Não foi possível ler o arquivo de credenciais: ${credError}`;
+        log(errorMsg);
+        console.error(errorMsg);
+        process.exit(1);
       }
       
       await storage.createUser({
