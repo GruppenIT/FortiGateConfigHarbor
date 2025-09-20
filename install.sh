@@ -109,12 +109,7 @@ setup_directories() {
     mkdir -p "$APP_DIR/logs"
     mkdir -p "$APP_DIR/quarantine"
     
-    # Definir permissões
-    chown -R root:root "$APP_DIR"
-    chmod 755 "$APP_DIR"
-    chmod 755 "$APP_DIR/data"
-    chmod 755 "$APP_DIR/logs"
-    chmod 755 "$APP_DIR/quarantine"
+    # Permissões serão definidas posteriormente pela função create_system_user()
     
     log "Estrutura de diretórios criada em $APP_DIR"
 }
@@ -255,21 +250,27 @@ create_system_user() {
         --shell /usr/sbin/nologin --comment "FortiGate ConfigHarbor Service" \
         configharbor 2>/dev/null || true
     
-    # Ajustar propriedade dos diretórios
+    # Ajustar propriedade de todos os arquivos e diretórios
     APP_DIR="/opt/FortiGateConfigHarbor"
     chown -R configharbor:configharbor "$APP_DIR"
     
-    # Definir permissões mais restritivas (750)
-    chmod 750 "$APP_DIR"
+    # Definir permissões seguras para diretórios (750)
+    find "$APP_DIR" -type d -exec chmod 750 {} \;
+    
+    # Definir permissões para arquivos regulares (640)
+    find "$APP_DIR" -type f -exec chmod 640 {} \;
+    
+    # Permissões especiais para arquivos executáveis necessários
+    find "$APP_DIR/node_modules/.bin" -type f -exec chmod 750 {} \; 2>/dev/null || true
+    
+    # Permissões restritivas para arquivos sensíveis (600)
+    chmod 600 "$APP_DIR/.env"
+    chmod 600 "$APP_DIR/ADMIN_CREDENTIAL"
+    
+    # Garantir que diretórios de dados têm permissões corretas
     chmod 750 "$APP_DIR/data"
     chmod 750 "$APP_DIR/logs"
     chmod 750 "$APP_DIR/quarantine"
-    
-    # Manter permissões restritivas para arquivos sensíveis
-    chmod 600 "$APP_DIR/.env"
-    chmod 600 "$APP_DIR/ADMIN_CREDENTIAL"
-    chown configharbor:configharbor "$APP_DIR/.env"
-    chown configharbor:configharbor "$APP_DIR/ADMIN_CREDENTIAL"
     
     log "Usuário de sistema configharbor criado com segurança"
 }
