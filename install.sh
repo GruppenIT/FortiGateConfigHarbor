@@ -72,6 +72,10 @@ setup_postgresql() {
     log "Instalando PostgreSQL..."
     apt install -y postgresql postgresql-contrib
     
+    # Gerar senha aleatória segura para o banco de dados
+    DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+    log "Senha do banco de dados gerada com segurança"
+    
     # Iniciar serviço
     systemctl start postgresql
     systemctl enable postgresql
@@ -84,13 +88,10 @@ setup_postgresql() {
 DROP DATABASE IF EXISTS configharbor;
 DROP USER IF EXISTS configharbor_user;
 
--- Criar novo usuário e banco
-CREATE USER configharbor_user WITH PASSWORD 'configharbor_secure_2024';
+-- Criar novo usuário e banco (sem CREATEDB para segurança)
+CREATE USER configharbor_user WITH PASSWORD '$DB_PASSWORD';
 CREATE DATABASE configharbor OWNER configharbor_user;
 GRANT ALL PRIVILEGES ON DATABASE configharbor TO configharbor_user;
-
--- Dar permissões necessárias para o usuário
-ALTER USER configharbor_user CREATEDB;
 \q
 EOF
 
@@ -165,11 +166,11 @@ setup_environment() {
     # Criar arquivo .env
     cat > "$APP_DIR/.env" << EOF
 # Configuração do Banco de Dados
-DATABASE_URL="postgresql://configharbor_user:configharbor_secure_2024@localhost:5432/configharbor"
+DATABASE_URL="postgresql://configharbor_user:$DB_PASSWORD@localhost:5432/configharbor"
 PGHOST=localhost
 PGPORT=5432
 PGUSER=configharbor_user
-PGPASSWORD=configharbor_secure_2024
+PGPASSWORD=$DB_PASSWORD
 PGDATABASE=configharbor
 
 # Configuração de Sessão
@@ -223,7 +224,7 @@ setup_database() {
     ADMIN_PASSWORD=$(grep "SENHA INICIAL:" "$APP_DIR/ADMIN_CREDENTIAL" | cut -d' ' -f3)
     
     # Criar usuário admin inicial via SQL direto
-    PGPASSWORD=configharbor_secure_2024 psql -h localhost -U configharbor_user -d configharbor <<EOF
+    PGPASSWORD=$DB_PASSWORD psql -h localhost -U configharbor_user -d configharbor <<EOF
 -- Remover usuário admin existente se houver
 DELETE FROM users WHERE username = 'admin@local';
 
