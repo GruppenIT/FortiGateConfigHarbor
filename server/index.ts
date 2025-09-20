@@ -52,16 +52,35 @@ app.use((req, res, next) => {
   // Initialize default admin user
   try {
     log("Checking for default admin user...");
-    const existingAdmin = await storage.getUserByUsername("admin");
+    const existingAdmin = await storage.getUserByUsername("admin@local");
     if (!existingAdmin) {
       log("Creating default admin user...");
+      
+      // Tentar ler senha do arquivo de credenciais ou usar padrão
+      let adminPassword = "admin123"; // Senha padrão para desenvolvimento
+      
+      try {
+        const fs = require('fs');
+        const credentialPath = "/opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL";
+        if (fs.existsSync(credentialPath)) {
+          const credentialContent = fs.readFileSync(credentialPath, 'utf8');
+          const passwordMatch = credentialContent.match(/SENHA INICIAL: (.+)/);
+          if (passwordMatch) {
+            adminPassword = passwordMatch[1].trim();
+            log("Admin password loaded from credential file");
+          }
+        }
+      } catch (credError) {
+        log("Could not read credential file, using default password");
+      }
+      
       await storage.createUser({
-        username: "admin",
-        displayName: "Administrator",
-        password: await hashPassword("admin123"),
+        username: "admin@local",
+        displayName: "Administrador do Sistema",
+        password: await hashPassword(adminPassword),
         role: "admin",
       });
-      log("Default admin user created successfully");
+      log("Default admin user created successfully with username: admin@local");
     } else {
       log("Default admin user already exists");
     }

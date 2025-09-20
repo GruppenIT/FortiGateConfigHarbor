@@ -8,30 +8,9 @@ export function ComplianceTable() {
     queryKey: ["/api/compliance/rules"],
   });
 
-  // Mock compliance status data
-  const complianceStatus = [
-    {
-      name: "Admins with trusted hosts",
-      severity: "Critical",
-      deviceCount: "247 / 247",
-      status: "3 Violations",
-      statusType: "fail"
-    },
-    {
-      name: "Strong password policy", 
-      severity: "High",
-      deviceCount: "247 / 247",
-      status: "Compliant",
-      statusType: "pass"
-    },
-    {
-      name: "Interface security",
-      severity: "Medium", 
-      deviceCount: "247 / 247",
-      status: "1 Warning",
-      statusType: "warning"
-    }
-  ];
+  const { data: devices } = useQuery({
+    queryKey: ["/api/devices"],
+  });
 
   const getSeverityBadgeVariant = (severity: string) => {
     switch (severity.toLowerCase()) {
