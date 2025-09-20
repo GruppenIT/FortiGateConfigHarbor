@@ -24,13 +24,13 @@ export default function Ingestion() {
     onSuccess: (data) => {
       setLastIngestionResult(data);
       toast({
-        title: "Ingestion completed",
+        title: "Ingestão concluída",
         description: `Processed ${data.processed} files, quarantined ${data.quarantined}, found ${data.duplicates} duplicates`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Ingestion failed",
+        title: "Ingestão falhou",
         description: error.message,
         variant: "destructive",
       });

@@ -65,7 +65,7 @@ export default function UserManagement() {
   );
 
   return (
-    <MainLayout title="User Management">
+    <MainLayout title="Gerenciamento de Usuários">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -75,7 +75,7 @@ export default function UserManagement() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search users..."
+                  placeholder="Buscar usuários..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 max-w-md"
