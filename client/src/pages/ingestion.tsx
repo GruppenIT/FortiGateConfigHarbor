@@ -79,7 +79,7 @@ export default function Ingestion() {
                     <Clock className="h-6 w-6 text-orange-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Next Scan</p>
+                    <p className="text-sm font-medium text-muted-foreground">Próxima Verificação</p>
                     <p className="text-lg font-semibold text-foreground" data-testid="text-next-scan">2:45 minutes</p>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ export default function Ingestion() {
                     <AlertTriangle className="h-6 w-6 text-yellow-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Pending Files</p>
+                    <p className="text-sm font-medium text-muted-foreground">Arquivos Pendentes</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-pending-files">0</p>
                   </div>
                 </div>
@@ -103,8 +103,8 @@ export default function Ingestion() {
 
           <Tabs defaultValue="overview" className="space-y-6">
             <TabsList>
-              <TabsTrigger value="overview" data-testid="tab-overview">Overview</TabsTrigger>
-              <TabsTrigger value="settings" data-testid="tab-settings">Settings</TabsTrigger>
+              <TabsTrigger value="overview" data-testid="tab-overview">Visão Geral</TabsTrigger>
+              <TabsTrigger value="settings" data-testid="tab-settings">Configurações</TabsTrigger>
               <TabsTrigger value="logs" data-testid="tab-logs">Logs</TabsTrigger>
             </TabsList>
 
@@ -116,12 +116,12 @@ export default function Ingestion() {
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
                       <Play className="h-5 w-5" />
-                      <span>Manual Ingestion</span>
+                      <span>Ingestão Manual</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                      Trigger a manual scan of the /data directory to process any new configuration files.
+                      Executar uma verificação manual do diretório /data para processar novos arquivos de configuração.
                     </p>
                     
                     {user?.role === 'admin' && (
@@ -132,25 +132,25 @@ export default function Ingestion() {
                         data-testid="button-trigger-ingestion"
                       >
                         <Play className="h-4 w-4 mr-2" />
-                        {triggerIngestionMutation.isPending ? "Processing..." : "Trigger Ingestion"}
+                        {triggerIngestionMutation.isPending ? "Processando..." : "Executar Ingestão"}
                       </Button>
                     )}
 
                     {lastIngestionResult && (
                       <div className="mt-4 p-4 bg-accent rounded-lg">
-                        <h4 className="text-sm font-medium mb-2">Last Ingestion Result</h4>
+                        <h4 className="text-sm font-medium mb-2">Último Resultado de Ingestão</h4>
                         <div className="grid grid-cols-3 gap-4 text-sm">
                           <div className="flex items-center space-x-2">
                             <CheckCircle className="h-4 w-4 text-green-600" />
-                            <span>{lastIngestionResult.processed} processed</span>
+                            <span>{lastIngestionResult.processed} processados</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <XCircle className="h-4 w-4 text-red-600" />
-                            <span>{lastIngestionResult.quarantined} quarantined</span>
+                            <span>{lastIngestionResult.quarantined} em quarentena</span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                            <span>{lastIngestionResult.duplicates} duplicates</span>
+                            <span>{lastIngestionResult.duplicates} duplicados</span>
                           </div>
                         </div>
                       </div>

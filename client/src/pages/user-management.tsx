@@ -86,7 +86,7 @@ export default function UserManagement() {
             {user?.role === 'admin' && (
               <Button data-testid="button-add-user">
                 <Plus className="h-4 w-4 mr-2" />
-                Add User
+                Adicionar Usuário
               </Button>
             )}
           </div>
@@ -96,7 +96,7 @@ export default function UserManagement() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Users className="h-5 w-5" />
-                <span>System Users</span>
+                <span>Usuários do Sistema</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -106,19 +106,19 @@ export default function UserManagement() {
                     <thead>
                       <tr>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          User
+                          Usuário
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Role
+                          Função
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Last Login
+                          Último Login
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                           Status
                         </th>
                         <th className="px-3 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Actions
+                          Ações
                         </th>
                       </tr>
                     </thead>
@@ -149,19 +149,19 @@ export default function UserManagement() {
                             </Badge>
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap text-sm text-muted-foreground" data-testid={`text-user-last-login-${u.id}`}>
-                            {u.lastLogin ? new Date(u.lastLogin).toLocaleString() : 'Never'}
+                            {u.lastLogin ? new Date(u.lastLogin).toLocaleString('pt-BR') : 'Nunca'}
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap">
                             <Badge variant={u.locked ? "destructive" : "default"} data-testid={`badge-user-status-${u.id}`}>
                               {u.locked ? (
                                 <>
                                   <UserX className="h-3 w-3 mr-1" />
-                                  Locked
+                                  Bloqueado
                                 </>
                               ) : (
                                 <>
                                   <UserCheck className="h-3 w-3 mr-1" />
-                                  Active
+                                  Ativo
                                 </>
                               )}
                             </Badge>
@@ -170,15 +170,15 @@ export default function UserManagement() {
                             {user?.role === 'admin' && (
                               <div className="flex space-x-2">
                                 <Button variant="outline" size="sm" data-testid={`button-edit-user-${u.id}`}>
-                                  Edit
+                                  Editar
                                 </Button>
                                 {u.locked ? (
                                   <Button variant="outline" size="sm" data-testid={`button-unlock-user-${u.id}`}>
-                                    Unlock
+                                    Desbloquear
                                   </Button>
                                 ) : (
                                   <Button variant="outline" size="sm" data-testid={`button-lock-user-${u.id}`}>
-                                    Lock
+                                    Bloquear
                                   </Button>
                                 )}
                               </div>
@@ -192,9 +192,9 @@ export default function UserManagement() {
               ) : (
                 <div className="text-center py-12">
                   <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-foreground mb-2">No users found</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-2">Nenhum usuário encontrado</h3>
                   <p className="text-muted-foreground">
-                    {searchTerm ? "No users match your search criteria." : "No users have been created yet."}
+                    {searchTerm ? "Nenhum usuário corresponde aos critérios de busca." : "Nenhum usuário foi criado ainda."}
                   </p>
                 </div>
               )}
@@ -210,7 +210,7 @@ export default function UserManagement() {
                     <Users className="h-6 w-6 text-blue-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Total Users</p>
+                    <p className="text-sm font-medium text-muted-foreground">Total de Usuários</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-total-users">
                       {users.length}
                     </p>

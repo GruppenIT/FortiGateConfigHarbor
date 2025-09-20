@@ -109,20 +109,20 @@ export default function Quarantine() {
                             </Badge>
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap text-sm text-muted-foreground" data-testid={`text-quarantine-size-${item.id}`}>
-                            Unknown
+                            Desconhecido
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap text-sm text-muted-foreground" data-testid={`text-quarantine-date-${item.id}`}>
-                            {new Date(item.createdAt).toLocaleString()}
+                            {new Date(item.createdAt).toLocaleString('pt-BR')}
                           </td>
                           <td className="px-3 py-4 whitespace-nowrap text-sm">
                             <div className="flex space-x-2">
                               <Button variant="outline" size="sm" data-testid={`button-review-${item.id}`}>
                                 <Eye className="h-4 w-4 mr-1" />
-                                Review
+                                Revisar
                               </Button>
                               <Button variant="outline" size="sm" data-testid={`button-delete-${item.id}`}>
                                 <Trash2 className="h-4 w-4 mr-1" />
-                                Delete
+                                Excluir
                               </Button>
                             </div>
                           </td>
@@ -134,9 +134,9 @@ export default function Quarantine() {
               ) : (
                 <div className="text-center py-12">
                   <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-foreground mb-2">No quarantined files</h3>
+                  <h3 className="text-lg font-medium text-foreground mb-2">Nenhum arquivo em quarentena</h3>
                   <p className="text-muted-foreground">
-                    Files that cannot be processed will appear here for manual review.
+                    Arquivos que não podem ser processados aparecerão aqui para revisão manual.
                   </p>
                 </div>
               )}
@@ -152,7 +152,7 @@ export default function Quarantine() {
                     <AlertTriangle className="h-6 w-6 text-yellow-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Total Quarantined</p>
+                    <p className="text-sm font-medium text-muted-foreground">Total em Quarentena</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-total-quarantined">
                       {quarantineItems?.length || 0}
                     </p>
@@ -168,7 +168,7 @@ export default function Quarantine() {
                     <FileX className="h-6 w-6 text-red-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Serial Missing</p>
+                    <p className="text-sm font-medium text-muted-foreground">Serial Ausente</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-serial-missing">
                       {quarantineItems?.filter((item: any) => item.reason.toLowerCase().includes('serial')).length || 0}
                     </p>
@@ -184,7 +184,7 @@ export default function Quarantine() {
                     <AlertTriangle className="h-6 w-6 text-orange-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-muted-foreground">Parse Errors</p>
+                    <p className="text-sm font-medium text-muted-foreground">Erros de Análise</p>
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-parse-errors">
                       {quarantineItems?.filter((item: any) => item.reason.toLowerCase().includes('parse')).length || 0}
                     </p>
