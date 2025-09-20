@@ -2,6 +2,17 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { complianceService } from "./services/compliance";
+import { storage } from "./storage";
+import { scrypt, randomBytes } from "crypto";
+import { promisify } from "util";
+
+const scryptAsync = promisify(scrypt);
+
+async function hashPassword(password: string) {
+  const salt = randomBytes(16).toString("hex");
+  const buf = (await scryptAsync(password, salt, 64)) as Buffer;
+  return `${buf.toString("hex")}.${salt}`;
+}
 
 const app = express();
 app.use(express.json());
@@ -38,6 +49,26 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize default admin user
+  try {
+    log("Checking for default admin user...");
+    const existingAdmin = await storage.getUserByUsername("admin");
+    if (!existingAdmin) {
+      log("Creating default admin user...");
+      await storage.createUser({
+        username: "admin",
+        displayName: "Administrator",
+        password: await hashPassword("admin123"),
+        role: "admin",
+      });
+      log("Default admin user created successfully");
+    } else {
+      log("Default admin user already exists");
+    }
+  } catch (error) {
+    log("Error initializing default admin user:", error);
+  }
+
   // Initialize default compliance rules
   try {
     log("Initializing default compliance rules...");
