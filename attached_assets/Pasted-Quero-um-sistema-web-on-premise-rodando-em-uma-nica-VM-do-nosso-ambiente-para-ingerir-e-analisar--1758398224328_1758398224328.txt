@@ -1,0 +1,102 @@
+Quero um sistema web on-premise, rodando em uma única VM do nosso ambiente, para ingerir e analisar backups de configuração FortiOS (FortiGate), com visualização, consulta (incluindo LLM local opcional) e regras de compliance.
+Sem uso de cloud. Autenticação local (usuários e senhas no banco, com hash forte).
+O ID canônico do dispositivo (PK) é o número de série do FortiGate extraído do arquivo de configuração.
+
+Você pode decidir tema/estética da UI (cores, background, logo placeholder) e pequenos detalhes de UX/implementação, desde que atenda os requisitos abaixo.
+
+Requisitos principais
+1) Ingestão de arquivos (a cada 5 min)
+
+Ler novos arquivos em /data (um SFTP externo gravará ali).
+
+Ignorar arquivos incompletos (ex.: .part).
+
+Calcular sha256 e evitar reprocessamento de duplicatas.
+
+Extrair metadados (hostname, serial, modelo, versão FortiOS, timestamp).
+
+Serial é obrigatório: se não for possível extrair, não processe; mova o arquivo para quarentena em /archive/_quarantine/, registre em log e em uma tabela de erros.
+
+Após processar, mover o original para /archive/<tenant-ou-unknown>/<serial>/<YYYY>/<MM>/<DD>/... mantendo trilha de auditoria.
+
+Agendamento a cada 5 minutos via systemd.timer (ou equivalente); também aceitar disparo manual via endpoint.
+
+2) Parsing FortiOS (MVP, extensível)
+
+Implemente parsers para:
+
+config firewall policy → seq, uuid, src_addr[], dst_addr[], src_intf[], dst_intf[], service[], action, schedule, nat, log, profiles[], geoip_restrict[], inspection_mode (se aplicável), vdom.
+
+config system interface → name, ip_cidr, mode, vlan, zone, status, allowaccess[], vdom.
+
+config system admin → username, profile, trusted_hosts[], two_factor, public_key_set, vdom_scope.
+
+Arquitetura do parser em módulos por seção, com testes unitários. Se alguma seção falhar, armazenar texto bruto e emitir warning, sem travar o pipeline.
+
+3) Extração do número de série (PK)
+
+Função extract_serial(raw_config: str) -> str que tenta, nesta ordem:
+
+Cabeçalhos/comentários do dump (Serial-Number: / serial-number:).
+
+Campos explícitos em config system ... (se existirem).
+
+Validar formato típico (prefixo FG/F + alfanumérico).
+
+Em caso de múltiplas ocorrências, usar a primeira válida e registrar warning.
+
+Sem serial → quarentena + registro em ingest_errors + mensagem clara na UI.
+
+4) Banco de dados (PostgreSQL) e modelo
+
+Use PostgreSQL com migrations. Tabelas (pode adaptar nomes, mantendo o espírito):
+
+tenants(id, name, ...)
+
+devices(serial TEXT PRIMARY KEY, tenant_id NULL, hostname, model, tags[], first_seen, last_seen, vdom_enabled, primary_vdom)
+
+device_versions(id BIGSERIAL PK, device_serial TEXT REFERENCES devices(serial) ON DELETE CASCADE, fortios_version, build, captured_at, file_hash, archive_path)
+
+configs_raw(id BIGSERIAL, device_version_id FK, raw_text TEXT) (opcional)
+
+Objetos (sempre com device_version_id):
+
+firewall_policies(...)
+
+system_interfaces(...)
+
+admins(...)
+
+(estrutura preparada para VIPs, address/addrgrp, services, routes)
+
+object_diffs(id, device_version_id, object_type, object_id, change_type, diff_json)
+
+Compliance:
+
+compliance_rules(id, name, severity, dsl YAML/TEXT, description, enabled)
+
+compliance_results(id, device_version_id, rule_id, status ENUM(pass|fail), evidence_json, measured_at)
+
+Autenticação & auditoria:
+
+users(id, username UNIQUE, display_name, role ENUM(admin|auditor|readonly), password_hash (Argon2id), created_at, last_login, failed_attempts, locked_until)
+
+audit_log(id, when, user, action, target, details_json)
+
+Erros de ingestão:
+
+ingest_errors(id, path, file_hash, reason, created_at, quarantined_path)
+
+Índices: device_serial, device_version_id, fortios_version, model; GIN para arrays (service, src_addr, etc.).
+
+pgvector habilitado para embeddings (RAG).
+
+5) Compliance com DSL (YAML)
+
+Cada regra possui target (tabela), where (filtro), assert (expressão booleana; ou false para regra proibitiva), e evidence.select (campos retornados).
+
+Executor roda após cada ingestão e grava resultados.
+
+Exemplos que já devem vir implementados:
+
+Regra 1 — Admins com trusted hosts
