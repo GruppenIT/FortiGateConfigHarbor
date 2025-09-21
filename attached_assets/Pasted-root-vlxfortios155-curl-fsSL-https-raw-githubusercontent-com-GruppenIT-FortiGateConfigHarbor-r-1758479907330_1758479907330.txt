@@ -1,0 +1,134 @@
+root@vlxfortios155:~# curl -fsSL https://raw.githubusercontent.com/GruppenIT/FortiGateConfigHarbor/refs/heads/main/install.sh | sudo bash
+[INFO] Iniciando instalação do FortiGate ConfigHarbor...
+[INFO] Ubuntu 24.04 detectado - continuando instalação
+[INFO] === FASE 1: Instalação de dependências ===
+[INFO] Atualizando pacotes do sistema...
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Instalando dependências básicas...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (8.5.0-2ubuntu10.6).
+wget is already the newest version (1.21.4-1ubuntu4.1).
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+build-essential is already the newest version (12.10ubuntu1).
+software-properties-common is already the newest version (0.99.49.3).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Instalando Node.js 20.x...
+2025-09-21 15:38:47 - Installing pre-requisites
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+apt-transport-https is already the newest version (2.8.3).
+ca-certificates is already the newest version (20240203).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+gnupg is already the newest version (2.4.4-2ubuntu17.3).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+2025-09-21 15:38:51 - Repository configured successfully.
+2025-09-21 15:38:51 - To install Node.js, run: apt-get install nodejs -y
+2025-09-21 15:38:51 - You can use N|solid Runtime as a node.js alternative
+2025-09-21 15:38:51 - To install N|solid Runtime, run: apt-get install nsolid -y
+
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nodejs is already the newest version (20.19.5-1nodesource1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Node.js instalado: v20.19.5
+[INFO] NPM instalado: 10.8.2
+[INFO] === FASE 2: Configuração do PostgreSQL ===
+[INFO] Instalando PostgreSQL...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+postgresql is already the newest version (16+257build1.1).
+postgresql-contrib is already the newest version (16+257build1.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Senha do banco de dados gerada com segurança
+Synchronizing state of postgresql.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable postgresql
+[INFO] Configurando banco de dados PostgreSQL...
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+CREATE DATABASE
+GRANT
+[INFO] PostgreSQL configurado com sucesso
+[INFO] === FASE 3: Configuração de diretórios ===
+[INFO] Criando estrutura de diretórios...
+[INFO] Estrutura de diretórios criada em /opt/FortiGateConfigHarbor
+[INFO] === FASE 4: Deploy da aplicação ===
+[INFO] Copiando aplicação para produção...
+[INFO] Arquivos da aplicação não encontrados localmente. Baixando do GitHub...
+[INFO] Baixando arquivos do repositório (ref: main)...
+[INFO] Arquivos baixados com sucesso do GitHub
+[INFO] Instalando dependências da aplicação...
+npm warn config production Use `--omit=dev` instead.
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+
+added 480 packages, and audited 481 packages in 8s
+
+65 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (3 low, 5 moderate)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.6.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.0
+npm notice To update run: npm install -g npm@11.6.0
+npm notice
+[INFO] Fazendo build da aplicação...
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v5.4.20 building for production...
+transforming (3) src/main.tsxBrowserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 1685 modules transformed.
+x Build failed in 2.62s
+error during build:
+[vite:asset] Could not load /opt/FortiGateConfigHarbor/attached_assets/logo-configharbor.png (imported by client/src/components/layout/sidebar.tsx): ENOENT: no such file or directory, open '/opt/FortiGateConfigHarbor/attached_assets/logo-configharbor.png'
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.readFile (node:internal/fs/promises:1246:14)
+    at async fileToBuiltUrl (file:///opt/FortiGateConfigHarbor/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20428:19)
+    at async Object.load (file:///opt/FortiGateConfigHarbor/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:20328:17)
+    at async PluginDriver.hookFirstAndGetPlugin (file:///opt/FortiGateConfigHarbor/node_modules/rollup/dist/es/shared/node-entry.js:20689:28)
+    at async file:///opt/FortiGateConfigHarbor/node_modules/rollup/dist/es/shared/node-entry.js:19809:33
+    at async Queue.work (file:///opt/FortiGateConfigHarbor/node_modules/rollup/dist/es/shared/node-entry.js:20899:32)
+root@vlxfortios155:~#

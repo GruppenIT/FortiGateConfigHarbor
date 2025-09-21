@@ -14,7 +14,6 @@ import {
   LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoConfigHarbor from "@assets/logo-configharbor.png";
 
 const navigation = [
   { name: "Painel Geral", href: "/", icon: ChartPie },
@@ -41,13 +40,14 @@ export function Sidebar() {
     <div className="hidden lg:flex lg:w-64 lg:flex-col">
       <div className="flex flex-col flex-grow pt-5 bg-card border-r border-border overflow-y-auto">
         {/* Logo and Title */}
-        <div className="flex items-center flex-shrink-0 px-4 py-4">
-          <img 
-            src={logoConfigHarbor} 
-            alt="ConfigHarbor Logo" 
-            className="w-[150px] h-[58px] object-contain"
-            data-testid="img-logo-configharbor"
-          />
+        <div className="flex items-center flex-shrink-0 px-4">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <Shield className="text-primary-foreground text-sm h-4 w-4" />
+          </div>
+          <div className="ml-3">
+            <h1 className="text-lg font-semibold text-foreground">ConfigHarbor</h1>
+            <p className="text-xs text-muted-foreground">FortiGate Management</p>
+          </div>
         </div>
 
         {/* Navigation Menu */}
