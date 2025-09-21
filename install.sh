@@ -4,6 +4,7 @@
 # Este script faz o deploy completo do sistema com hard-reset do banco de dados
 
 set -e
+set -o pipefail
 
 # Cores para output
 RED='\033[0;31m'
@@ -17,14 +18,16 @@ log() {
     echo -e "${GREEN}[INFO]${NC} $1"
 }
 
+# Função para log de erros (sai do script)
+error() {
+    echo -e "${RED}[ERRO]${NC} $1" >&2
+    exit 1
+}
+
 warn() {
     echo -e "${YELLOW}[WARN]${NC} $1"
 }
 
-error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-    exit 1
-}
 
 # Verificar se é Ubuntu 24.04
 check_ubuntu_version() {
@@ -120,6 +123,40 @@ deploy_application() {
     
     APP_DIR="/opt/FortiGateConfigHarbor"
     CURRENT_DIR=$(pwd)
+    GITHUB_REPO="https://github.com/GruppenIT/FortiGateConfigHarbor"
+    # Use uma tag específica ou commit hash para garantir reprodutibilidade
+    GITHUB_TAG="main"  # Em produção, use uma tag específica como "v1.0.0"
+    
+    
+    # Verificar se os arquivos da aplicação existem localmente
+    if [ ! -d "$CURRENT_DIR/client" ] || [ ! -d "$CURRENT_DIR/server" ]; then
+        log "Arquivos da aplicação não encontrados localmente. Baixando do GitHub..."
+        
+        # Criar diretório temporário para download
+        TEMP_DIR="/tmp/configharbor-download"
+        rm -rf "$TEMP_DIR"
+        mkdir -p "$TEMP_DIR"
+        cd "$TEMP_DIR"
+        
+        # Baixar arquivos do repositório GitHub com verificação de integridade
+        log "Baixando arquivos do repositório (ref: $GITHUB_TAG)..."
+        if ! curl -fsSL "$GITHUB_REPO/archive/refs/heads/$GITHUB_TAG.tar.gz" | tar -xz --strip-components=1; then
+            error "Falha ao baixar ou extrair arquivos da aplicação do GitHub"
+        fi
+        
+        # Verificar se todos os arquivos necessários foram baixados
+        REQUIRED_FILES=("client" "server" "shared" "package.json" "package-lock.json" "tsconfig.json" "vite.config.ts" "tailwind.config.ts" "postcss.config.js" "drizzle.config.ts")
+        for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -e "$file" ]; then
+                error "Arquivo obrigatório não encontrado após download: $file"
+            fi
+        done
+        
+        CURRENT_DIR="$TEMP_DIR"
+        log "Arquivos baixados com sucesso do GitHub"
+    else
+        log "Usando arquivos da aplicação encontrados localmente"
+    fi
     
     # Copiar todos os arquivos necessários
     cp -r "$CURRENT_DIR/client" "$APP_DIR/"
@@ -142,7 +179,12 @@ deploy_application() {
     log "Fazendo build da aplicação..."
     npm run build
     
-    cd "$CURRENT_DIR"
+    # Limpar diretório temporário se foi usado
+    if [ -d "/tmp/configharbor-download" ]; then
+        rm -rf "/tmp/configharbor-download"
+        log "Limpeza do diretório temporário concluída"
+    fi
+    
     log "Aplicação deployada com sucesso"
 }
 
@@ -292,7 +334,8 @@ Group=configharbor
 WorkingDirectory=/opt/FortiGateConfigHarbor
 Environment=NODE_ENV=production
 EnvironmentFile=/opt/FortiGateConfigHarbor/.env
-ExecStart=/usr/bin/npm run start
+ExecStartPre=/usr/bin/test -f /opt/FortiGateConfigHarbor/dist/server/index.js
+ExecStart=/usr/bin/node dist/server/index.js
 Restart=always
 RestartSec=10
 
