@@ -1,0 +1,46 @@
+
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+apt-transport-https is already the newest version (2.8.3).
+ca-certificates is already the newest version (20240203).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+gnupg is already the newest version (2.4.4-2ubuntu17.3).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+2025-09-22 11:27:14 - Repository configured successfully.
+2025-09-22 11:27:14 - To install Node.js, run: apt-get install nodejs -y
+2025-09-22 11:27:14 - You can use N|solid Runtime as a node.js alternative
+2025-09-22 11:27:14 - To install N|solid Runtime, run: apt-get install nsolid -y
+
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nodejs is already the newest version (20.19.5-1nodesource1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Node.js instalado: v20.19.5
+[INFO] NPM instalado: 10.8.2
+[INFO] === FASE 2: Configuração do PostgreSQL ===
+[INFO] Instalando PostgreSQL...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+postgresql is already the newest version (16+257build1.1).
+postgresql-contrib is already the newest version (16+257build1.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Senha do banco de dados gerada com segurança
+Synchronizing state of postgresql.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable postgresql
+[INFO] Configurando banco de dados PostgreSQL...
+[INFO] Backup de pg_hba.conf criado
+[INFO] Configurando autenticação PostgreSQL SCRAM-SHA-256...
+[INFO] PostgreSQL reconfigurado para autenticação SCRAM-SHA-256
+Password for user postgres:

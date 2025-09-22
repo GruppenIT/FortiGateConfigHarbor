@@ -85,8 +85,17 @@ setup_postgresql() {
     
     log "Configurando banco de dados PostgreSQL..."
     
-    # Configurar pg_hba.conf para permitir conexões locais com senha SCRAM (seguro)
-    PG_MAJOR=$(sudo -u postgres psql -Atc "SHOW server_version;" | cut -d. -f1)
+    # Detectar versão do PostgreSQL sem precisar conectar ao banco
+    PG_MAJOR=$(ls -1d /etc/postgresql/[0-9]* 2>/dev/null | sed 's#.*/##' | sort -Vr | head -n1)
+    if [ -z "$PG_MAJOR" ]; then
+        # Fallback: detectar pela instalação do package
+        PG_MAJOR=$(apt-cache policy postgresql | grep -o 'postgresql-[0-9][0-9]*' | head -n1 | cut -d'-' -f2)
+    fi
+    if [ -z "$PG_MAJOR" ]; then
+        PG_MAJOR="16"  # Default para Ubuntu 24.04
+    fi
+    
+    log "Versão PostgreSQL detectada: $PG_MAJOR"
     PG_HBA_FILE="/etc/postgresql/$PG_MAJOR/main/pg_hba.conf"
     
     # Verificar se arquivo existe
@@ -110,17 +119,28 @@ setup_postgresql() {
     sed -i '/^host[[:space:]]\+all[[:space:]]\+all[[:space:]]\+::1\/128/d' "$PG_HBA_FILE"
     
     # Adicionar configurações seguras no topo (antes de qualquer regra)
-    sed -i '1i# ConfigHarbor - Conexões locais seguras' "$PG_HBA_FILE"
-    sed -i '2i\local   all             all                                     scram-sha-256' "$PG_HBA_FILE"
-    sed -i '3i\host    all             all             127.0.0.1/32            scram-sha-256' "$PG_HBA_FILE"
-    sed -i '4i\host    all             all             ::1/128                 scram-sha-256' "$PG_HBA_FILE"
+    sed -i '1i# ConfigHarbor - Configuração de autenticação' "$PG_HBA_FILE"
+    sed -i '2i# Permitir usuário postgres com peer auth para operações administrativas' "$PG_HBA_FILE"
+    sed -i '3i\local   all             postgres                                peer' "$PG_HBA_FILE"
+    sed -i '4i# Usuário da aplicação com senha SCRAM (seguro)' "$PG_HBA_FILE"
+    sed -i '5i\local   configharbor    configharbor_user                       scram-sha-256' "$PG_HBA_FILE"
+    sed -i '6i\host    configharbor    configharbor_user       127.0.0.1/32    scram-sha-256' "$PG_HBA_FILE"
+    sed -i '7i\host    configharbor    configharbor_user       ::1/128         scram-sha-256' "$PG_HBA_FILE"
+    sed -i '8i# Bloquear outras conexões por segurança' "$PG_HBA_FILE"
+    sed -i '9i\local   all             all                                     reject' "$PG_HBA_FILE"
+    sed -i '10i\host    all             all             127.0.0.1/32           reject' "$PG_HBA_FILE"
+    sed -i '11i\host    all             all             ::1/128                reject' "$PG_HBA_FILE"
     
     # Recarregar configuração PostgreSQL
     systemctl reload postgresql
     log "PostgreSQL reconfigurado para autenticação SCRAM-SHA-256"
     
+    # Aguardar PostgreSQL processar alterações de configuração
+    sleep 3
+    log "Aguardando PostgreSQL processar configurações..."
+    
     # Criar usuário e banco de dados para ConfigHarbor
-    sudo -u postgres psql <<EOF
+    sudo -u postgres psql -h /var/run/postgresql -U postgres -w -v ON_ERROR_STOP=1 <<EOF
 -- Remover banco e usuário existentes (hard reset)
 DROP DATABASE IF EXISTS configharbor;
 DROP USER IF EXISTS configharbor_user;
@@ -146,8 +166,9 @@ EOF
         log "DEBUG: Banco: configharbor"
         log "DEBUG: Host: 127.0.0.1"
         
-        # Verificar se usuário existe
-        if sudo -u postgres psql -c "\du" | grep configharbor_user; then
+        # Verificar se usuário existe (aguardar recarregamento do config)
+        sleep 2
+        if sudo -u postgres psql -h /var/run/postgresql -U postgres -w -c "\du" | grep configharbor_user; then
             log "DEBUG: Usuário configharbor_user existe no PostgreSQL"
         else
             log "DEBUG: Usuário configharbor_user NÃO existe no PostgreSQL"
@@ -193,8 +214,8 @@ fi
 NEW_DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
 log "Nova senha do banco gerada"
 
-# Alterar senha no PostgreSQL (executar como root pois script pode ser chamado pelo systemd)
-if /usr/bin/sudo -u postgres psql <<EOF
+# Alterar senha no PostgreSQL 
+if sudo -u postgres psql -h /var/run/postgresql -U postgres -w -v ON_ERROR_STOP=1 <<EOF
 ALTER ROLE configharbor_user WITH PASSWORD '$NEW_DB_PASSWORD';
 \q
 EOF
@@ -248,7 +269,7 @@ fix_database_password() {
     log "Nova senha do banco gerada"
     
     # Alterar senha no PostgreSQL
-    if sudo -u postgres psql <<RESET_EOF
+    if sudo -u postgres psql -h /var/run/postgresql -U postgres -w -v ON_ERROR_STOP=1 <<RESET_EOF
 ALTER ROLE configharbor_user WITH PASSWORD '$NEW_DB_PASSWORD';
 \q
 RESET_EOF
@@ -688,8 +709,7 @@ main() {
     # Configurar sudoers para permitir que configharbor execute recovery script
     log "Configurando permissões de sudo para recuperação automática..."
     cat > /etc/sudoers.d/configharbor-recovery << SUDOERS_EOF
-# Permitir que usuário configharbor execute recuperação de autenticação PostgreSQL
-configharbor ALL=(postgres) NOPASSWD: /usr/bin/psql
+# Permitir que usuário configharbor execute apenas o script de recuperação específico
 configharbor ALL=(root) NOPASSWD: /opt/FortiGateConfigHarbor/fix_db_auth.sh
 SUDOERS_EOF
     chmod 440 /etc/sudoers.d/configharbor-recovery
