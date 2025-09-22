@@ -1,0 +1,41 @@
+[INFO] === INSTALAÇÃO CONCLUÍDA COM SUCESSO! ===
+
+╔══════════════════════════════════════════════════════════════╗
+║                   INSTALAÇÃO CONCLUÍDA                      ║
+╠══════════════════════════════════════════════════════════════╣
+║ Sistema: FortiGate ConfigHarbor                            ║
+║ URL:     http://192.168.100.155:3000                      ║
+║                                                              ║
+║ Credenciais do administrador:                             ║
+║ Usuário: admin@local                                      ║
+║ Arquivo: /opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL     ║
+║                                                              ║
+║ Para iniciar o sistema:                                  ║
+║ sudo systemctl start configharbor                        ║
+║                                                              ║
+║ Para ver logs:                                           ║
+║ sudo journalctl -u configharbor -f                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+[INFO] Configurando permissões de sudo para recuperação automática...
+[INFO] Iniciando serviço ConfigHarbor...
+[INFO] Serviço iniciado com sucesso!
+root@vlxfortios155:~# sudo journalctl -u configharbor -f
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at async PGStore._asyncQuery (/opt/FortiGateConfigHarbor/node_modules/connect-pg-simple/index.js:322:21)
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]: error: password authentication failed for user "configharbor_user"
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at /opt/FortiGateConfigHarbor/node_modules/pg-pool/index.js:45:11
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at async PGStore._asyncQuery (/opt/FortiGateConfigHarbor/node_modules/connect-pg-simple/index.js:322:21)
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]: error: password authentication failed for user "configharbor_user"
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at /opt/FortiGateConfigHarbor/node_modules/pg-pool/index.js:45:11
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sep 22 11:50:03 vlxfortios155 configharbor[4155120]:     at async PGStore._asyncQuery (/opt/FortiGateConfigHarbor/node_modules/connect-pg-simple/index.js:322:21)
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]: error: password authentication failed for user "configharbor_user"
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]:     at /opt/FortiGateConfigHarbor/node_modules/pg-pool/index.js:45:11
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]:     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]:     at async PGStore._asyncQuery (/opt/FortiGateConfigHarbor/node_modules/connect-pg-simple/index.js:322:21)
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]: error: password authentication failed for user "configharbor_user"
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]:     at /opt/FortiGateConfigHarbor/node_modules/pg-pool/index.js:45:11
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]:     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sep 22 11:50:10 vlxfortios155 configharbor[4155120]:     at async PGStore._asyncQuery (/opt/FortiGateConfigHarbor/node_modules/connect-pg-simple/index.js:322:21)
