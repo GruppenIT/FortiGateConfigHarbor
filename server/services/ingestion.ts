@@ -4,23 +4,33 @@ import { createHash } from 'crypto';
 import { storage } from '../storage';
 import { parseFortiOSConfig } from './parser';
 
-// Use diretório local data (usuario pode colocar arquivos aqui)
-const DATA_DIR = process.env.DATA_DIR || './data';
-
-const ARCHIVE_DIR = process.env.ARCHIVE_DIR || './archive';
-const QUARANTINE_DIR = process.env.QUARANTINE_DIR || './archive/_quarantine';
+// Use diretório correto baseado no ambiente
+const DATA_DIR = process.env.DATA_DIR || (process.env.NODE_ENV === 'development' ? './data' : '/data');
+const ARCHIVE_DIR = process.env.ARCHIVE_DIR || (process.env.NODE_ENV === 'development' ? './archive' : '/archive');
+const QUARANTINE_DIR = process.env.QUARANTINE_DIR || (process.env.NODE_ENV === 'development' ? './archive/_quarantine' : '/archive/_quarantine');
 
 export class IngestionService {
   private processing = false;
 
   async triggerManualIngestion(): Promise<{ processed: number; quarantined: number; duplicates: number }> {
+    console.log('🔄 [INGESTÃO MANUAL] Iniciando processamento manual...');
+    console.log(`📁 [INGESTÃO MANUAL] Diretório de dados: ${DATA_DIR}`);
+    console.log(`📦 [INGESTÃO MANUAL] Diretório de arquivo: ${ARCHIVE_DIR}`);
+    console.log(`⚠️ [INGESTÃO MANUAL] Diretório de quarentena: ${QUARANTINE_DIR}`);
+    
     if (this.processing) {
+      console.log('⚠️ [INGESTÃO MANUAL] Ingestão já em andamento');
       throw new Error('Ingestion already in progress');
     }
 
     this.processing = true;
     try {
-      return await this.processFiles();
+      const result = await this.processFiles();
+      console.log(`✅ [INGESTÃO MANUAL] Processamento concluído:`, result);
+      return result;
+    } catch (error) {
+      console.error('❌ [INGESTÃO MANUAL] Erro no processamento:', error);
+      throw error;
     } finally {
       this.processing = false;
     }
@@ -32,24 +42,33 @@ export class IngestionService {
     let duplicates = 0;
 
     try {
+      console.log('📂 [PROCESSAMENTO] Garantindo que diretórios existam...');
       // Ensure directories exist
       await this.ensureDirectories();
 
+      console.log(`📂 [PROCESSAMENTO] Lendo arquivos do diretório: ${DATA_DIR}`);
       // Read files from data directory
       const files = await fs.readdir(DATA_DIR);
+      console.log(`📂 [PROCESSAMENTO] Encontrados ${files.length} itens no diretório:`, files);
       
       for (const filename of files) {
         // Skip incomplete files
         if (filename.endsWith('.part') || filename.startsWith('.')) {
+          console.log(`⏭️ [PROCESSAMENTO] Pulando arquivo: ${filename} (arquivo temporário ou oculto)`);
           continue;
         }
 
         const filePath = path.join(DATA_DIR, filename);
+        console.log(`🔍 [PROCESSAMENTO] Processando: ${filename} (${filePath})`);
         
         try {
           const stat = await fs.stat(filePath);
-          if (!stat.isFile()) continue;
+          if (!stat.isFile()) {
+            console.log(`⏭️ [PROCESSAMENTO] Pulando: ${filename} (não é arquivo)`);
+            continue;
+          }
 
+          console.log(`📄 [PROCESSAMENTO] Processando arquivo: ${filename} (${stat.size} bytes)`);
           const result = await this.processFile(filePath, filename);
           
           switch (result.status) {
