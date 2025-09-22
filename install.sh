@@ -203,7 +203,7 @@ setup_environment() {
     # Criar arquivo .env
     cat > "$APP_DIR/.env" << EOF
 # Configuração do Banco de Dados
-DATABASE_URL="postgresql://configharbor_user:$DB_PASSWORD@localhost:5432/configharbor"
+DATABASE_URL=postgresql://configharbor_user:$DB_PASSWORD@localhost:5432/configharbor
 PGHOST=localhost
 PGPORT=5432
 PGUSER=configharbor_user
@@ -211,7 +211,7 @@ PGPASSWORD=$DB_PASSWORD
 PGDATABASE=configharbor
 
 # Configuração de Sessão
-SESSION_SECRET="$SESSION_SECRET"
+SESSION_SECRET=$SESSION_SECRET
 
 # Configuração de Ambiente
 NODE_ENV=production
@@ -378,41 +378,37 @@ Group=configharbor
 WorkingDirectory=/opt/FortiGateConfigHarbor
 Environment=NODE_ENV=production
 EnvironmentFile=/opt/FortiGateConfigHarbor/.env
+
+# Debug steps para diagnosticar problemas
+ExecStartPre=/bin/bash -c 'echo "=== ConfigHarbor Debug Info ===" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "Timestamp: $(date)" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "Working Directory: $(pwd)" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "User: $(whoami)" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "Node version: $(node --version)" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "Checking files..." >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'ls -la /opt/FortiGateConfigHarbor/dist/ >> /tmp/configharbor-debug.log 2>&1'
+ExecStartPre=/bin/bash -c 'echo "Environment variables:" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "NODE_ENV=$NODE_ENV PORT=$PORT" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "DATABASE_URL status: $(test -n \"$DATABASE_URL\" && echo \"SET\" || echo \"NOT_SET\")" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "Testing file access..." >> /tmp/configharbor-debug.log'
 ExecStartPre=/usr/bin/test -f /opt/FortiGateConfigHarbor/dist/index.js
+ExecStartPre=/bin/bash -c 'echo "File test passed, starting application..." >> /tmp/configharbor-debug.log'
+
 ExecStart=/usr/bin/node /opt/FortiGateConfigHarbor/dist/index.js
 Restart=always
 RestartSec=10
 
-# Security hardening completo
+# Security hardening mínimo necessário 
 NoNewPrivileges=true
-PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ProtectKernelTunables=true
-ProtectKernelModules=true
-ProtectControlGroups=true
-LockPersonality=true
-MemoryDenyWriteExecute=false
-RestrictRealtime=true
-RestrictSUIDSGID=true
-RemoveIPC=true
+PrivateNetwork=false
 
 # Diretórios acessíveis pelo serviço
 ReadWritePaths=/opt/FortiGateConfigHarbor/data
 ReadWritePaths=/opt/FortiGateConfigHarbor/logs
 ReadWritePaths=/opt/FortiGateConfigHarbor/quarantine
-
-# Capacidades restritas
-CapabilityBoundingSet=
-AmbientCapabilities=
-
-# Famílias de endereços permitidas
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
-
-# Namespaces privados
-PrivateNetwork=false
-PrivateUsers=true
-PrivateDevices=true
+ReadWritePaths=/tmp
 
 # Logs
 StandardOutput=journal

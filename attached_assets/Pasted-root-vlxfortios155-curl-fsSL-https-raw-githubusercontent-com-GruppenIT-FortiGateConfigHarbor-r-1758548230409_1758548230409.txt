@@ -1,0 +1,198 @@
+root@vlxfortios155:~# curl -fsSL https://raw.githubusercontent.com/GruppenIT/FortiGateConfigHarbor/refs/heads/main/install.sh | sudo bash
+[INFO] Iniciando instalação do FortiGate ConfigHarbor...
+[INFO] Ubuntu 24.04 detectado - continuando instalação
+[INFO] === FASE 1: Instalação de dependências ===
+[INFO] Atualizando pacotes do sistema...
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Instalando dependências básicas...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (8.5.0-2ubuntu10.6).
+wget is already the newest version (1.21.4-1ubuntu4.1).
+git is already the newest version (1:2.43.0-1ubuntu7.3).
+build-essential is already the newest version (12.10ubuntu1).
+software-properties-common is already the newest version (0.99.49.3).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Instalando Node.js 20.x...
+2025-09-22 10:35:07 - Installing pre-requisites
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+apt-transport-https is already the newest version (2.8.3).
+ca-certificates is already the newest version (20240203).
+curl is already the newest version (8.5.0-2ubuntu10.6).
+gnupg is already the newest version (2.4.4-2ubuntu17.3).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Hit:1 https://deb.nodesource.com/node_20.x nodistro InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+2025-09-22 10:35:11 - Repository configured successfully.
+2025-09-22 10:35:11 - To install Node.js, run: apt-get install nodejs -y
+2025-09-22 10:35:11 - You can use N|solid Runtime as a node.js alternative
+2025-09-22 10:35:11 - To install N|solid Runtime, run: apt-get install nsolid -y
+
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nodejs is already the newest version (20.19.5-1nodesource1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Node.js instalado: v20.19.5
+[INFO] NPM instalado: 10.8.2
+[INFO] === FASE 2: Configuração do PostgreSQL ===
+[INFO] Instalando PostgreSQL...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+postgresql is already the newest version (16+257build1.1).
+postgresql-contrib is already the newest version (16+257build1.1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+[INFO] Senha do banco de dados gerada com segurança
+Synchronizing state of postgresql.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable postgresql
+[INFO] Configurando banco de dados PostgreSQL...
+DROP DATABASE
+DROP ROLE
+CREATE ROLE
+CREATE DATABASE
+GRANT
+[INFO] PostgreSQL configurado com sucesso
+[INFO] === FASE 3: Configuração de diretórios ===
+[INFO] Criando estrutura de diretórios...
+[INFO] Estrutura de diretórios criada em /opt/FortiGateConfigHarbor
+[INFO] === FASE 4: Deploy da aplicação ===
+[INFO] Copiando aplicação para produção...
+[INFO] Arquivos da aplicação não encontrados localmente. Baixando do GitHub...
+[INFO] Baixando arquivos do repositório (ref: main)...
+[INFO] Arquivos baixados com sucesso do GitHub
+[INFO] Instalando dependências da aplicação...
+npm warn config production Use `--omit=dev` instead.
+npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+
+added 480 packages, and audited 481 packages in 5s
+
+65 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (3 low, 5 moderate)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[INFO] Fazendo build da aplicação...
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v5.4.20 building for production...
+transforming (3) src/main.tsxBrowserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 1735 modules transformed.
+../dist/public/index.html                   1.95 kB │ gzip:   0.74 kB
+../dist/public/assets/index-Bo2ZM2GZ.css   63.52 kB │ gzip:  11.12 kB
+../dist/public/assets/index-ceg9J19r.js   410.53 kB │ gzip: 119.47 kB
+✓ built in 3.47s
+
+  dist/index.js  55.0kb
+
+⚡ Done in 6ms
+[INFO] Limpeza do diretório temporário concluída
+[INFO] Aplicação deployada com sucesso
+[INFO] === FASE 5: Configuração de ambiente ===
+[INFO] Configurando variáveis de ambiente...
+[INFO] Variáveis de ambiente configuradas
+[INFO] Credenciais salvas em: /opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL
+[INFO] === FASE 6: Inicialização do banco de dados ===
+[INFO] Inicializando banco de dados...
+[INFO] Aplicando schema do banco de dados...
+Reading config file '/opt/FortiGateConfigHarbor/drizzle.config.ts'
+Using 'pg' driver for database querying
+[✓] Pulling schema from database...
+[✓] Changes applied
+[INFO] Schema aplicado via drizzle-kit com sucesso
+[INFO] Gerando hash seguro da senha administrador...
+[INFO] Criando usuário administrador padrão...
+DELETE 0
+INSERT 0 1
+[INFO] Banco de dados inicializado com usuário admin@local
+[INFO] === FASE 7: Criação de usuário de sistema ===
+[INFO] Criando usuário de sistema configharbor...
+[INFO] Usuário de sistema configharbor criado com segurança
+[INFO] === FASE 8: Configuração do serviço ===
+[INFO] Criando serviço systemd...
+[INFO] Serviço systemd criado e habilitado
+[INFO] === FASE 9: Configuração do firewall ===
+[INFO] Configurando firewall...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+ufw is already the newest version (0.36.2-6).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Backing up 'user.rules' to '/etc/ufw/user.rules.20250922_103545'
+Backing up 'before.rules' to '/etc/ufw/before.rules.20250922_103545'
+Backing up 'after.rules' to '/etc/ufw/after.rules.20250922_103545'
+Backing up 'user6.rules' to '/etc/ufw/user6.rules.20250922_103545'
+Backing up 'before6.rules' to '/etc/ufw/before6.rules.20250922_103545'
+Backing up 'after6.rules' to '/etc/ufw/after6.rules.20250922_103545'
+
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+Rules updated
+Rules updated (v6)
+Rules updated
+Rules updated (v6)
+Firewall is active and enabled on system startup
+[INFO] Firewall configurado - porta 3000 liberada
+[INFO] === INSTALAÇÃO CONCLUÍDA COM SUCESSO! ===
+
+╔══════════════════════════════════════════════════════════════╗
+║                   INSTALAÇÃO CONCLUÍDA                      ║
+╠══════════════════════════════════════════════════════════════╣
+║ Sistema: FortiGate ConfigHarbor                            ║
+║ URL:     http://192.168.100.155:3000                      ║
+║                                                              ║
+║ Credenciais do administrador:                             ║
+║ Usuário: admin@local                                      ║
+║ Arquivo: /opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL     ║
+║                                                              ║
+║ Para iniciar o sistema:                                  ║
+║ sudo systemctl start configharbor                        ║
+║                                                              ║
+║ Para ver logs:                                           ║
+║ sudo journalctl -u configharbor -f                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+[INFO] Iniciando serviço ConfigHarbor...
+Job for configharbor.service failed because the control process exited with error code.
+See "systemctl status configharbor.service" and "journalctl -xeu configharbor.service" for details.
+root@vlxfortios155:~#
