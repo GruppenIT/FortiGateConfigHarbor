@@ -54,27 +54,36 @@ export function parseFortiOSConfig(content: string): ParsedConfig {
 }
 
 function extractHostname(content: string): string | undefined {
-  const match = content.match(/set hostname\s+"?([^"\s\n]+)"?/);
+  const match = content.match(/set hostname\s+"([^"]+)"/);
   return match ? match[1] : undefined;
 }
 
 function extractModel(content: string): string | undefined {
-  // Try to extract from version info or comments
-  const versionMatch = content.match(/FortiGate-(\w+)/);
-  if (versionMatch) return `FortiGate-${versionMatch[1]}`;
-
-  const modelMatch = content.match(/model:\s*(\w+)/i);
-  return modelMatch ? modelMatch[1] : undefined;
+  // Try to extract from config version header
+  const headerMatch = content.match(/#config-version=FGT(\w+)-/);
+  if (headerMatch) return `FortiGate-${headerMatch[1]}`;
+  
+  // Try to extract from alias
+  const aliasMatch = content.match(/set alias\s+"([^"]+)"/);
+  if (aliasMatch) return aliasMatch[1];
+  
+  return undefined;
 }
 
 function extractVersion(content: string): string | undefined {
-  const match = content.match(/FortiOS\s+v(\d+\.\d+\.\d+)/);
+  // Try to extract from config version header
+  const match = content.match(/#config-version=FGT\w+-(\d+\.\d+\.\d+)-FW-build/);
   return match ? match[1] : undefined;
 }
 
 function extractBuild(content: string): string | undefined {
-  const match = content.match(/build(\d+)/);
-  return match ? match[1] : undefined;
+  // Try to extract from config version header
+  const match = content.match(/#config-version=.*-build(\d+)-/);
+  if (match) return match[1];
+  
+  // Try to extract from buildno comment
+  const buildnoMatch = content.match(/#buildno=(\d+)/);
+  return buildnoMatch ? buildnoMatch[1] : undefined;
 }
 
 function extractVdomEnabled(content: string): boolean {
@@ -90,8 +99,9 @@ function parseFirewallPolicies(content: string): any[] {
   console.log(`🛡️ [PARSER] Buscando blocos de firewall policy...`);
   const policies: any[] = [];
   
-  // Find firewall policy configuration blocks
-  const policyBlocks = content.match(/config firewall policy([\s\S]*?)(?=config\s+\w+|$)/g);
+  // Find firewall policy configuration blocks - corrigido para formato .conf
+  const policyBlockRegex = /config firewall policy([\s\S]*?)end/g;
+  const policyBlocks = content.match(policyBlockRegex);
   
   if (!policyBlocks) {
     console.log(`⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado`);
@@ -101,7 +111,8 @@ function parseFirewallPolicies(content: string): any[] {
   console.log(`🛡️ [PARSER] Encontrados ${policyBlocks.length} blocos de firewall policy`);
 
   for (const block of policyBlocks) {
-    const policyMatches = block.match(/edit\s+(\d+)([\s\S]*?)(?=edit|\s*end)/g);
+    // Extrair políticas individuais com edit X ... next
+    const policyMatches = block.match(/edit\s+(\d+)[\s\S]*?next/g);
     
     if (policyMatches) {
       console.log(`🛡️ [PARSER] Encontradas ${policyMatches.length} políticas individuais no bloco`);
@@ -118,6 +129,9 @@ function parseFirewallPolicies(content: string): any[] {
       }
     } else {
       console.log(`⚠️ [PARSER] Nenhuma política 'edit' encontrada no bloco`);
+      console.log(`🔍 [PARSER] Amostra do bloco (${block.length} chars):`);
+      console.log(block.substring(0, 800));
+      console.log(`🔍 [PARSER] Regex usada: /edit\\s+(\\d+)([\\s\\S]*?)(?=\\s*next|\\s*end)/g`);
     }
   }
 
@@ -153,8 +167,9 @@ function parseSystemInterfaces(content: string): any[] {
   console.log(`🌐 [PARSER] Buscando blocos de system interface...`);
   const interfaces: any[] = [];
   
-  // Find system interface configuration blocks
-  const interfaceBlocks = content.match(/config system interface([\s\S]*?)(?=config\s+\w+|$)/g);
+  // Find system interface configuration blocks - corrigido para formato .conf
+  const interfaceBlockRegex = /config system interface([\s\S]*?)end/g;
+  const interfaceBlocks = content.match(interfaceBlockRegex);
   
   if (!interfaceBlocks) {
     console.log(`⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado`);
@@ -164,7 +179,8 @@ function parseSystemInterfaces(content: string): any[] {
   console.log(`🌐 [PARSER] Encontrados ${interfaceBlocks.length} blocos de system interface`);
 
   for (const block of interfaceBlocks) {
-    const interfaceMatches = block.match(/edit\s+"([^"]+)"([\s\S]*?)(?=edit|\s*end)/g);
+    // Extrair interfaces individuais com edit "nome" ... next
+    const interfaceMatches = block.match(/edit\s+"([^"]+)"[\s\S]*?next/g);
     
     if (interfaceMatches) {
       console.log(`🌐 [PARSER] Encontradas ${interfaceMatches.length} interfaces individuais no bloco`);
@@ -181,6 +197,9 @@ function parseSystemInterfaces(content: string): any[] {
       }
     } else {
       console.log(`⚠️ [PARSER] Nenhuma interface 'edit' encontrada no bloco`);
+      console.log(`🔍 [PARSER] Amostra do bloco (${block.length} chars):`);
+      console.log(block.substring(0, 800));
+      console.log(`🔍 [PARSER] Regex usada: /edit\\s+\"([^\"]+)\"[\\s\\S]*?next/g`);
     }
   }
 
@@ -209,8 +228,9 @@ function parseSystemAdmins(content: string): any[] {
   console.log(`👤 [PARSER] Buscando blocos de system admin...`);
   const admins: any[] = [];
   
-  // Find system admin configuration blocks
-  const adminBlocks = content.match(/config system admin([\s\S]*?)(?=config\s+\w+|$)/g);
+  // Find system admin configuration blocks - corrigido para formato .conf
+  const adminBlockRegex = /config system admin([\s\S]*?)end/g;
+  const adminBlocks = content.match(adminBlockRegex);
   
   if (!adminBlocks) {
     console.log(`⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado`);
@@ -220,7 +240,8 @@ function parseSystemAdmins(content: string): any[] {
   console.log(`👤 [PARSER] Encontrados ${adminBlocks.length} blocos de system admin`);
 
   for (const block of adminBlocks) {
-    const adminMatches = block.match(/edit\s+"([^"]+)"([\s\S]*?)(?=edit|\s*end)/g);
+    // Extrair admins individuais com edit "nome" ... next
+    const adminMatches = block.match(/edit\s+"([^"]+)"[\s\S]*?next/g);
     
     if (adminMatches) {
       console.log(`👤 [PARSER] Encontrados ${adminMatches.length} admins individuais no bloco`);
@@ -237,6 +258,9 @@ function parseSystemAdmins(content: string): any[] {
       }
     } else {
       console.log(`⚠️ [PARSER] Nenhum admin 'edit' encontrado no bloco`);
+      console.log(`🔍 [PARSER] Amostra do bloco (${block.length} chars):`);
+      console.log(block.substring(0, 800));
+      console.log(`🔍 [PARSER] Regex usada: /edit\\s+\"([^\"]+)\"[\\s\\S]*?next/g`);
     }
   }
 
@@ -260,9 +284,15 @@ function parseSingleAdmin(adminText: string): any | null {
 }
 
 function extractConfigValue(text: string, key: string): string | undefined {
-  const regex = new RegExp(`set\\s+${key}\\s+"?([^"\\s\\n]+)"?`, 'i');
-  const match = text.match(regex);
-  return match ? match[1] : undefined;
+  // Tenta primeiro com aspas
+  const quotedRegex = new RegExp(`set\\s+${key}\\s+"([^"]+)"`, 'i');
+  const quotedMatch = text.match(quotedRegex);
+  if (quotedMatch) return quotedMatch[1];
+  
+  // Tenta sem aspas para valores simples
+  const unquotedRegex = new RegExp(`set\\s+${key}\\s+([^\\s\\n]+)`, 'i');
+  const unquotedMatch = text.match(unquotedRegex);
+  return unquotedMatch ? unquotedMatch[1] : undefined;
 }
 
 function extractConfigNumber(text: string, key: string): number | undefined {
@@ -271,10 +301,14 @@ function extractConfigNumber(text: string, key: string): number | undefined {
 }
 
 function extractConfigArray(text: string, key: string): string[] | undefined {
-  const regex = new RegExp(`set\\s+${key}\\s+"([^"]+)"`, 'i');
-  const match = text.match(regex);
-  if (!match) return undefined;
+  const value = extractConfigValue(text, key);
+  if (!value) return undefined;
   
-  // Split by space and filter empty strings
-  return match[1].split(/\s+/).filter(item => item.length > 0);
+  // Se o valor contém espaços, provavelmente é uma lista
+  if (value.includes(' ')) {
+    return value.split(/\s+/).filter(v => v.length > 0);
+  }
+  
+  // Senão, é um valor único
+  return [value];
 }

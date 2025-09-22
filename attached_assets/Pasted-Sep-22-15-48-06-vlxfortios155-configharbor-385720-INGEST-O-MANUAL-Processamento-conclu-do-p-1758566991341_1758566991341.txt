@@ -1,0 +1,206 @@
+Sep 22 15:48:06 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO MANUAL] Processamento concluído: { processed: 0, quarantined: 0, duplicates: 0 }
+Sep 22 15:48:06 vlxfortios155 configharbor[385720]: 3:48:06 PM [express] 📭 Nenhum arquivo novo encontrado na verificação inicial
+Sep 22 15:48:06 vlxfortios155 configharbor[385720]: 3:48:06 PM [express] ✅ Serviço de ingestão automática configurado (verificação a cada 5 minutos)
+Sep 22 15:50:03 vlxfortios155 configharbor[385720]: 3:50:03 PM [express] GET /api/user 401 in 2ms
+Sep 22 15:50:07 vlxfortios155 configharbor[385720]: 3:50:07 PM [express] POST /api/login 200 in 70ms
+Sep 22 15:50:07 vlxfortios155 configharbor[385720]: 3:50:07 PM [express] GET /api/dashboard/metrics 304 in 19ms
+Sep 22 15:50:07 vlxfortios155 configharbor[385720]: 3:50:07 PM [express] GET /api/audit 304 in 29ms
+Sep 22 15:50:07 vlxfortios155 configharbor[385720]: 3:50:07 PM [express] GET /api/quarantine 304 in 26ms
+Sep 22 15:50:07 vlxfortios155 configharbor[385720]: 3:50:07 PM [express] GET /api/devices 200 in 29ms
+Sep 22 15:50:07 vlxfortios155 configharbor[385720]: 3:50:07 PM [express] GET /api/compliance/rules 200 in 32ms
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔄 [INGESTÃO MANUAL] Iniciando processamento manual...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📁 [INGESTÃO MANUAL] Diretório de dados: /opt/FortiGateConfigHarbor/data
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO MANUAL] Diretório de arquivo: /opt/FortiGateConfigHarbor/archive
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [INGESTÃO MANUAL] Diretório de quarentena: /opt/FortiGateConfigHarbor/quarantine
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📂 [PROCESSAMENTO] Garantindo que diretórios existam...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📂 [PROCESSAMENTO] Lendo arquivos do diretório: /opt/FortiGateConfigHarbor/data
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📂 [PROCESSAMENTO] Encontrados 6 itens no diretório: [
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]:   'FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml',
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]:   'FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml',
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]:   'FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml',
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]:   'FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml',
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]:   'FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml',
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]:   'FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml'
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ]
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PROCESSAMENTO] Processando: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml (316584 bytes)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [INGESTÃO] Processando arquivo: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [INGESTÃO] Arquivo lido: 316584 caracteres, hash: 1cb6e053...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🏷️ [INGESTÃO] Serial extraído: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PARSER] Iniciando parsing de configuração (316584 chars)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Sistema identificado: hostname=undefined, model=FortiGate-40F, version=undefined
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Firewall policies encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] System interfaces encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] System admins encontrados: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [PARSER] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Versão criada: ID 1
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🗑️ [INGESTÃO] Removendo arquivo original: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PROCESSAMENTO] Processando: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml (337886 bytes)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [INGESTÃO] Processando arquivo: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [INGESTÃO] Arquivo lido: 337883 caracteres, hash: c9e26630...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🏷️ [INGESTÃO] Serial extraído: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PARSER] Iniciando parsing de configuração (337883 chars)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Sistema identificado: hostname=undefined, model=FortiGate-40F, version=undefined
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Firewall policies encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] System interfaces encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] System admins encontrados: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [PARSER] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Versão criada: ID 2
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🗑️ [INGESTÃO] Removendo arquivo original: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PROCESSAMENTO] Processando: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml (337840 bytes)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [INGESTÃO] Processando arquivo: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [INGESTÃO] Arquivo lido: 337837 caracteres, hash: 72f00ee3...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🏷️ [INGESTÃO] Serial extraído: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PARSER] Iniciando parsing de configuração (337837 chars)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Sistema identificado: hostname=undefined, model=FortiGate-40F, version=undefined
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Firewall policies encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] System interfaces encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] System admins encontrados: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [PARSER] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FGT40F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Versão criada: ID 3
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🗑️ [INGESTÃO] Removendo arquivo original: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PROCESSAMENTO] Processando: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml (455525 bytes)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [INGESTÃO] Processando arquivo: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [INGESTÃO] Arquivo lido: 455466 caracteres, hash: cdd2af7a...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🏷️ [INGESTÃO] Serial extraído: FGT60F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PARSER] Iniciando parsing de configuração (455466 chars)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Sistema identificado: hostname=undefined, model=FortiGate-60F, version=undefined
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Firewall policies encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] System interfaces encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] System admins encontrados: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [PARSER] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FGT60F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FGT60F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Versão criada: ID 4
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PROCESSAMENTO] Processando: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml (455547 bytes)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [INGESTÃO] Processando arquivo: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [INGESTÃO] Arquivo lido: 455488 caracteres, hash: 120730a9...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🏷️ [INGESTÃO] Serial extraído: FGT60F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PARSER] Iniciando parsing de configuração (455488 chars)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Sistema identificado: hostname=undefined, model=FortiGate-60F, version=undefined
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Firewall policies encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] System interfaces encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] System admins encontrados: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [PARSER] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FGT60F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FGT60F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Versão criada: ID 5
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PROCESSAMENTO] Processando: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml (/opt/FortiGateConfigHarbor/data/FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [PROCESSAMENTO] Processando arquivo: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml (514599 bytes)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📄 [INGESTÃO] Processando arquivo: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml (/opt/FortiGateConfigHarbor/data/FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [INGESTÃO] Arquivo lido: 514579 caracteres, hash: b37554f0...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🏷️ [INGESTÃO] Serial extraído: FG100F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔍 [PARSER] Iniciando parsing de configuração (514579 chars)
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📝 [PARSER] Sistema identificado: hostname=undefined, model=FortiGate-100F, version=undefined
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🛡️ [PARSER] Firewall policies encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🌐 [PARSER] System interfaces encontradas: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 👤 [PARSER] System admins encontrados: 0
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [PARSER] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Parsing concluído: 0 políticas, 0 interfaces, 0 admins
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FG100F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FG100F
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO] Versão criada: ID 6
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🗑️ [INGESTÃO] Removendo arquivo original: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: ✅ [INGESTÃO MANUAL] Processamento concluído: { processed: 6, quarantined: 0, duplicates: 0 }
+Sep 22 15:50:22 vlxfortios155 configharbor[385720]: 3:50:22 PM [express] POST /api/ingestion/trigger 200 in 88ms
