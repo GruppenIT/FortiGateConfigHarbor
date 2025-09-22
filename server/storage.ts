@@ -93,6 +93,11 @@ export interface IStorage {
   // Error handling
   logIngestError(error: Omit<IngestError, 'id' | 'createdAt'>): Promise<void>;
   getIngestErrors(limit?: number): Promise<IngestError[]>;
+  
+  // Configuration retrieval
+  getFirewallPolicies(deviceSerial: string): Promise<FirewallPolicy[]>;
+  getSystemInterfaces(deviceSerial: string): Promise<SystemInterface[]>;
+  getSystemAdmins(deviceSerial: string): Promise<SystemAdmin[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -409,6 +414,33 @@ export class DatabaseStorage implements IStorage {
       warnings: 0, // We don't have warnings in our current schema
       lastCheck: lastCheckResult?.measuredAt || null,
     };
+  }
+
+  async getFirewallPolicies(deviceSerial: string): Promise<FirewallPolicy[]> {
+    return await db
+      .select()
+      .from(firewallPolicies)
+      .innerJoin(deviceVersions, eq(firewallPolicies.deviceVersionId, deviceVersions.id))
+      .where(eq(deviceVersions.deviceSerial, deviceSerial))
+      .then(rows => rows.map(row => row.firewall_policies));
+  }
+
+  async getSystemInterfaces(deviceSerial: string): Promise<SystemInterface[]> {
+    return await db
+      .select()
+      .from(systemInterfaces)
+      .innerJoin(deviceVersions, eq(systemInterfaces.deviceVersionId, deviceVersions.id))
+      .where(eq(deviceVersions.deviceSerial, deviceSerial))
+      .then(rows => rows.map(row => row.system_interfaces));
+  }
+
+  async getSystemAdmins(deviceSerial: string): Promise<SystemAdmin[]> {
+    return await db
+      .select()
+      .from(systemAdmins)
+      .innerJoin(deviceVersions, eq(systemAdmins.deviceVersionId, deviceVersions.id))
+      .where(eq(deviceVersions.deviceSerial, deviceSerial))
+      .then(rows => rows.map(row => row.system_admins));
   }
 }
 

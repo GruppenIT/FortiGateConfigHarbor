@@ -61,6 +61,43 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Configuration endpoints
+  app.get("/api/devices/:serial/firewall-policies", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const policies = await storage.getFirewallPolicies(req.params.serial);
+      res.json(policies);
+    } catch (error) {
+      console.error("Error fetching firewall policies:", error);
+      res.status(500).json({ message: "Failed to fetch firewall policies" });
+    }
+  });
+
+  app.get("/api/devices/:serial/system-interfaces", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const interfaces = await storage.getSystemInterfaces(req.params.serial);
+      res.json(interfaces);
+    } catch (error) {
+      console.error("Error fetching system interfaces:", error);
+      res.status(500).json({ message: "Failed to fetch system interfaces" });
+    }
+  });
+
+  app.get("/api/devices/:serial/system-admins", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const admins = await storage.getSystemAdmins(req.params.serial);
+      res.json(admins);
+    } catch (error) {
+      console.error("Error fetching system admins:", error);
+      res.status(500).json({ message: "Failed to fetch system admins" });
+    }
+  });
+
   // Compliance
   app.get("/api/compliance/rules", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
