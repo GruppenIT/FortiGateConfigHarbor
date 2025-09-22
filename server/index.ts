@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { complianceService } from "./services/compliance";
+import { ingestionService } from "./services/ingestion";
 import { storage } from "./storage";
 import { scrypt, randomBytes } from "crypto";
 import { promisify } from "util";
@@ -240,12 +241,47 @@ app.use((req, res, next) => {
     port,
     host: "0.0.0.0",
     reusePort: true,
-  }, () => {
+  }, async () => {
     log(`🎆 ConfigHarbor FUNCIONANDO! Servidor rodando na porta ${port}`);
     log(`🔗 Acesse: http://localhost:${port}`);
     console.log(`
 🎉🎉🎉 ConfigHarbor INICIALIZADO COM SUCESSO! 🎉🎉🎉`);
     console.log(`🌍 Servidor funcionando na porta ${port}`);
     console.log(`🔗 URL: http://localhost:${port}\n`);
+    
+    // Initialize automatic file ingestion service AFTER server is running
+    log("🔄 Iniciando serviço de ingestão automática...");
+    try {
+      // Run initial ingestion check
+      log("📂 Executando verificação inicial de arquivos...");
+      const initialResult = await ingestionService.triggerManualIngestion();
+      if (initialResult.processed > 0 || initialResult.quarantined > 0 || initialResult.duplicates > 0) {
+        log(`✅ Ingestão inicial: ${initialResult.processed} processados, ${initialResult.quarantined} em quarentena, ${initialResult.duplicates} duplicados`);
+      } else {
+        log("📭 Nenhum arquivo novo encontrado na verificação inicial");
+      }
+      
+      // Set up automatic ingestion every 5 minutes
+      const INGESTION_INTERVAL = 5 * 60 * 1000; // 5 minutes in milliseconds
+      setInterval(async () => {
+        try {
+          log("🔄 Executando ingestão automática...");
+          const result = await ingestionService.triggerManualIngestion();
+          if (result.processed > 0 || result.quarantined > 0 || result.duplicates > 0) {
+            log(`✅ Ingestão automática: ${result.processed} processados, ${result.quarantined} em quarentena, ${result.duplicates} duplicados`);
+          } else {
+            log("📭 Ingestão automática: nenhum arquivo novo encontrado");
+          }
+        } catch (error) {
+          log(`❌ Erro na ingestão automática: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+          console.error("Automatic ingestion error:", error);
+        }
+      }, INGESTION_INTERVAL);
+      
+      log(`✅ Serviço de ingestão automática configurado (verificação a cada 5 minutos)`);
+    } catch (error) {
+      log(`⚠️ Erro ao inicializar ingestão automática: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+      console.error("Error initializing automatic ingestion:", error);
+    }
   });
 })();

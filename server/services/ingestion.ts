@@ -4,9 +4,11 @@ import { createHash } from 'crypto';
 import { storage } from '../storage';
 import { parseFortiOSConfig } from './parser';
 
-const DATA_DIR = process.env.DATA_DIR || (process.env.NODE_ENV === 'development' ? './test-data' : '/data');
-const ARCHIVE_DIR = process.env.ARCHIVE_DIR || (process.env.NODE_ENV === 'development' ? './test-archive' : '/archive');
-const QUARANTINE_DIR = process.env.QUARANTINE_DIR || (process.env.NODE_ENV === 'development' ? './test-archive/_quarantine' : '/archive/_quarantine');
+// Use diretório local data (usuario pode colocar arquivos aqui)
+const DATA_DIR = process.env.DATA_DIR || './data';
+
+const ARCHIVE_DIR = process.env.ARCHIVE_DIR || './archive';
+const QUARANTINE_DIR = process.env.QUARANTINE_DIR || './archive/_quarantine';
 
 export class IngestionService {
   private processing = false;

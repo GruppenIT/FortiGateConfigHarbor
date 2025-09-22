@@ -1,0 +1,1 @@
+# FortiGate Configuration Test File\nconfig system global\n    set hostname "FGT001"\n    set serial-number "FGT001234567890"\nend
