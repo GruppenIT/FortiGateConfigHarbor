@@ -37,6 +37,9 @@ const PostgresSessionStore = connectPg(session);
 export interface IStorage {
   sessionStore: session.Store;
   
+  // Database connection
+  testConnection(): Promise<void>;
+  
   // User management
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -100,6 +103,25 @@ export class DatabaseStorage implements IStorage {
       pool, 
       createTableIfMissing: true 
     });
+  }
+
+  async testConnection(): Promise<void> {
+    try {
+      const startTime = Date.now();
+      // Teste robusto de conectividade usando pool diretamente
+      const result = await pool.query('SELECT 1 as connection_test, NOW() as timestamp');
+      const duration = Date.now() - startTime;
+      
+      if (result.rows.length === 0) {
+        throw new Error('Query retornou resultado vazio');
+      }
+      
+      console.log(`✅ Conectividade com banco OK (${duration}ms) - Timestamp: ${result.rows[0].timestamp}`);
+    } catch (error) {
+      const errorMsg = `Falha na conectividade com PostgreSQL: ${String(error)}`;
+      console.error(`❌ ${errorMsg}`);
+      throw new Error(errorMsg);
+    }
   }
 
   async getUser(id: string): Promise<User | undefined> {

@@ -59,7 +59,34 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Initialize default admin user
+  try {
+    log("🚀 ConfigHarbor iniciando...");
+    log(`📍 NODE_ENV: ${process.env.NODE_ENV || 'undefined'}`);
+    log(`📍 PORT: ${process.env.PORT || 'undefined'}`);
+    log(`📍 DATABASE_URL: ${process.env.DATABASE_URL ? 'definido' : 'UNDEFINED'}`);
+    
+    // Teste de conectividade com banco de dados
+    log("🔍 Testando conectividade com banco de dados...");
+    await storage.testConnection();
+    log("✅ Conectividade com banco de dados OK");
+    
+    // Initialize default admin user
+    log("👤 Verificando usuário admin padrão...");
+    const existingAdmin = await storage.getUserByUsername("admin@local");
+    if (existingAdmin) {
+      log("✅ Usuário admin@local já existe");
+    } else {
+      log("⚠️  Usuário admin@local não encontrado - criando...");
+    }
+  } catch (initialError) {
+    const errorMsg = `💥 ERRO CRÍTICO na inicialização: ${String(initialError)}`;
+    log(errorMsg);
+    console.error(errorMsg);
+    console.error('Stack trace:', initialError);
+    process.exit(1);
+  }
+
+  // Initialize default admin user  
   try {
     log("Checking for default admin user...");
     const existingAdmin = await storage.getUserByUsername("admin@local");
@@ -107,7 +134,10 @@ app.use((req, res, next) => {
       log("Default admin user already exists");
     }
   } catch (error) {
-    log("Error initializing default admin user:", String(error));
+    const errorMsg = `💥 ERRO ao inicializar usuário admin: ${String(error)}`;
+    log(errorMsg);
+    console.error(errorMsg);
+    console.error('Stack trace completo:', error);
   }
 
   // Initialize default compliance rules
@@ -116,10 +146,15 @@ app.use((req, res, next) => {
     await complianceService.initializeDefaultRules();
     log("Compliance rules initialized successfully");
   } catch (error) {
-    log("Error initializing compliance rules:", String(error));
+    const errorMsg = `💥 ERRO ao inicializar regras de conformidade: ${String(error)}`;
+    log(errorMsg);
+    console.error(errorMsg);
+    console.error('Stack trace completo:', error);
   }
 
+  log("🔌 Registrando rotas da API...");
   const server = await registerRoutes(app);
+  log("✅ Rotas da API registradas com sucesso");
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -132,22 +167,50 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
+  log("📏 Configurando servico de arquivos estaticos...");
   if (app.get("env") === "development") {
+    log("👷 Modo desenvolvimento: configurando Vite");
     await setupVite(app, server);
   } else {
+    log("📦 Modo produção: servindo arquivos estaticos");
     serveStatic(app);
   }
+  log("✅ Servico de arquivos configurado");
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
   // Other ports are firewalled. Default to 5000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || '5000', 10);
+  log(`🌍 Iniciando servidor HTTP na porta ${port}...`);
+  log(`🔗 Host: 0.0.0.0 (todas as interfaces)`);
+  
+  // Handler para erros de servidor (porta ocupada, permissões, etc.)
+  server.on('error', (err) => {
+    const errorMsg = `💥 ERRO CRÍTICO no servidor HTTP: ${err.message}`;
+    log(errorMsg);
+    console.error(errorMsg);
+    console.error('Detalhes do erro:', err);
+    
+    if ((err as any).code === 'EADDRINUSE') {
+      console.error(`🚫 Porta ${port} já está em uso. Verifique se outro processo está usando a porta.`);
+    } else if ((err as any).code === 'EACCES') {
+      console.error(`🚫 Sem permissão para usar a porta ${port}. Use sudo ou configure uma porta > 1024.`);
+    }
+    
+    process.exit(1);
+  });
+  
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    log(`🎆 ConfigHarbor FUNCIONANDO! Servidor rodando na porta ${port}`);
+    log(`🔗 Acesse: http://localhost:${port}`);
+    console.log(`
+🎉🎉🎉 ConfigHarbor INICIALIZADO COM SUCESSO! 🎉🎉🎉`);
+    console.log(`🌍 Servidor funcionando na porta ${port}`);
+    console.log(`🔗 URL: http://localhost:${port}\n`);
   });
 })();
