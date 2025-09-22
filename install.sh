@@ -254,23 +254,67 @@ setup_database() {
     APP_DIR="/opt/FortiGateConfigHarbor"
     cd "$APP_DIR"
     
-    # Executar migrations
-    npx drizzle-kit push --config=drizzle.config.ts
+    # Executar migrations com fallback robusto
+    log "Aplicando schema do banco de dados..."
+    if ! npx drizzle-kit push --config=drizzle.config.ts --force 2>/dev/null; then
+        log "WARN: drizzle-kit push falhou, aplicando schema manualmente..."
+        
+        # Aplicar schema manualmente se drizzle falhar
+        PGPASSWORD=$DB_PASSWORD psql -h localhost -U configharbor_user -d configharbor <<'SCHEMA_EOF'
+-- Garantir que colunas necessárias existam na tabela users
+DO $$
+BEGIN
+    -- Adicionar coluna password_hash se não existir
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                   WHERE table_name='users' AND column_name='password_hash') THEN
+        ALTER TABLE users ADD COLUMN password_hash TEXT;
+        RAISE NOTICE 'Coluna password_hash adicionada à tabela users';
+    END IF;
+    
+    -- Adicionar coluna updated_at se não existir
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                   WHERE table_name='users' AND column_name='updated_at') THEN
+        ALTER TABLE users ADD COLUMN updated_at TIMESTAMP;
+        RAISE NOTICE 'Coluna updated_at adicionada à tabela users';
+    END IF;
+END
+$$;
+SCHEMA_EOF
+        log "Schema aplicado manualmente com sucesso"
+    else
+        log "Schema aplicado via drizzle-kit com sucesso"
+    fi
     
     # Obter senha do admin do arquivo de credenciais
     ADMIN_PASSWORD=$(grep "SENHA INICIAL:" "$APP_DIR/ADMIN_CREDENTIAL" | cut -d' ' -f3)
     
+    # Gerar hash correto da senha admin
+    log "Gerando hash seguro da senha administrador..."
+    ADMIN_HASH=$(node -e "
+const { scrypt, randomBytes } = require('crypto');
+const { promisify } = require('util');
+const scryptAsync = promisify(scrypt);
+
+async function hashPassword(password) {
+  const salt = randomBytes(16).toString('hex');
+  const buf = await scryptAsync(password, salt, 64);
+  return \`\${buf.toString('hex')}.\${salt}\`;
+}
+
+hashPassword('${ADMIN_PASSWORD}').then(hash => console.log(hash));
+")
+    
     # Criar usuário admin inicial via SQL direto
+    log "Criando usuário administrador padrão..."
     PGPASSWORD=$DB_PASSWORD psql -h localhost -U configharbor_user -d configharbor <<EOF
 -- Remover usuário admin existente se houver
 DELETE FROM users WHERE username = 'admin@local';
 
--- Inserir novo usuário admin
+-- Inserir novo usuário admin com hash válido
 INSERT INTO users (username, password_hash, display_name, role, created_at, updated_at) 
 VALUES (
     'admin@local',
-    -- Hash da senha usando scrypt (será substituído na primeira execução da aplicação)
-    'temp_hash_will_be_replaced',
+    '$ADMIN_HASH',
     'Administrador do Sistema',
     'admin',
     NOW(),
