@@ -1,0 +1,1383 @@
+root@vlxfortios155:~# sudo journalctl -u configharbor -f
+Sep 22 16:55:22 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO MANUAL] Processamento concluído: { processed: 0, quarantined: 0, duplicates: 0 }
+Sep 22 16:55:22 vlxfortios155 configharbor[469735]: 4:55:22 PM [express] 📭 Nenhum arquivo novo encontrado na verificação inicial
+Sep 22 16:55:22 vlxfortios155 configharbor[469735]: 4:55:22 PM [express] ✅ Serviço de ingestão automática configurado (verificação a cada 5 minutos)
+Sep 22 16:56:30 vlxfortios155 configharbor[469735]: 4:56:30 PM [express] GET /api/user 401 in 2ms
+Sep 22 16:56:34 vlxfortios155 configharbor[469735]: 4:56:34 PM [express] POST /api/login 200 in 77ms
+Sep 22 16:56:34 vlxfortios155 configharbor[469735]: 4:56:34 PM [express] GET /api/dashboard/metrics 304 in 15ms
+Sep 22 16:56:34 vlxfortios155 configharbor[469735]: 4:56:34 PM [express] GET /api/devices 200 in 19ms
+Sep 22 16:56:34 vlxfortios155 configharbor[469735]: 4:56:34 PM [express] GET /api/audit 304 in 25ms
+Sep 22 16:56:34 vlxfortios155 configharbor[469735]: 4:56:34 PM [express] GET /api/compliance/rules 200 in 26ms
+Sep 22 16:56:34 vlxfortios155 configharbor[469735]: 4:56:34 PM [express] GET /api/quarantine 304 in 24ms
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔄 [INGESTÃO MANUAL] Iniciando processamento manual...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📁 [INGESTÃO MANUAL] Diretório de dados: /opt/FortiGateConfigHarbor/data
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO MANUAL] Diretório de arquivo: /opt/FortiGateConfigHarbor/archive
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ⚠️ [INGESTÃO MANUAL] Diretório de quarentena: /opt/FortiGateConfigHarbor/quarantine
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📂 [PROCESSAMENTO] Garantindo que diretórios existam...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📂 [PROCESSAMENTO] Lendo arquivos do diretório: /opt/FortiGateConfigHarbor/data
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📂 [PROCESSAMENTO] Encontrados 15 itens no diretório: [
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG100F-GEDORE-1_7-2_1688_202508260941.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG40F-EXCEL-POA_7-0_0632_202508281849.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG40F-PLATA-01_2025-09-22.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG40F-UY3-POA_2025-09-22_20250922164947.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG60F-DRC-POA_7-2_1740_202508270920.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG60F-FARSUL-01_2025-09-21.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG60F-TELTEX-01_7-4_2795_202509172216.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FG81E-FONTANA-01_7-2_1740_202509091639.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FGT100F-NGS-POA-A_7-2_1706_202509191420.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'FGT60F-SLC-ELS_7-0_0682_202509191352.conf',
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]:   'PIA-FG100F-01_6-4_2000_202508021038.conf'
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ]
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG100F-GEDORE-1_7-2_1688_202508260941.conf (/opt/FortiGateConfigHarbor/data/FG100F-GEDORE-1_7-2_1688_202508260941.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG100F-GEDORE-1_7-2_1688_202508260941.conf (798528 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG100F-GEDORE-1_7-2_1688_202508260941.conf (/opt/FortiGateConfigHarbor/data/FG100F-GEDORE-1_7-2_1688_202508260941.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 798483 caracteres, hash: c1492d87...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (798483 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG100F-GEDORE-1, model=FortiGate-100F, version=undefined
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 281 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 310 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 311 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 300 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 140 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 43 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 305 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 314 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 315 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 306 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 307 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 316 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 317 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 312 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 308 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 309 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 297 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 304 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 51 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 214 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 215 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 216 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 217 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 243 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 244 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 222 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 220 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 221 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 218 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 87 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 136 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 170 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 135 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 171 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 245 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 134 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 236 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 124 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 23 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 24 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 280 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 265 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 266 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 36 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 83 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 35 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 45 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 115 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 219 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 278 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 296 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 132 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 268 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 303 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 7 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 288 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 287 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 289 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 127 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 108 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 109 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 292 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 263 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 46 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 230 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 253 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 298 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 264 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 285 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 286 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 272 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 252 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 205 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 235 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 196 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 231 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 14 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 209 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 246 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 110 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 224 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 262 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 85 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 247 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 248 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 86 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 38 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 203 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 152 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 57 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 193 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 195 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 213 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 88 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 257 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 92 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 174 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 153 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 198 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 232 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 157 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 112 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 129 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 111 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 56 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 301 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 175 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 178 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 179 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 295 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 70 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 98 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 71 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 72 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 73 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 117 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 223 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 93 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 121 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 95 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 233 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 16 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 17 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 240 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 18 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 167 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 19 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 20 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 22 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 164 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 279 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 202 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 208 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 228 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 207 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 234 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 25 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 186 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 49 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 42 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 184 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 80 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 63 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 294 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 97 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 60 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 59 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 58 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 68 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 61 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 26 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 204 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 273 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 128 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 274 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 269 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 276 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 270 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 271 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 90 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 290 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 91 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 94 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 28 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 277 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 29 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 259 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 260 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 30 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 241 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 242 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 239 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 31 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 122 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 293 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 107 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 226 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 212 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 32 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 256 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 165 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 163 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 302 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 172 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 33 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 101 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 102 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 120 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 34 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 261 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 255 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 254 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 64 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 89 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 39 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 37 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 281 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 41 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 166 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 291 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 44 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 275 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 47 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 50 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 48 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 156 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 319 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 318 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 81 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 103 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 54 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 191 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 210 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 114 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 65 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 225 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 251 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 145 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 67 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 168 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 169 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 206 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 69 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 211 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 158 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 76 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 77 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 74 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 78 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 126 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 75 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 104 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 106 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 249 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 250 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 125 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 113 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 116 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 123 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 284 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 180 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 267 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 130 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 131 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 141 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 144 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 142 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 143 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 313 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 146 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 154 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 155 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 229 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 187 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 190 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 192 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 159 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 160 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 185 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 161 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 227 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 188 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 189 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 162 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 258 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 181 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 183 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 299 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 199 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 282 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 283 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 200 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 201 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 281
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 71 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'mgmt' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ha1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ha2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port6' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port7' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port8' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port9' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port10' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port11' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port12' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'x1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'x2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port13' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port14' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port15' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port16' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port17' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port18' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port19' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port20' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-GDE-1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-GDE-2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SP-1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'loopback-1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-CDSL-1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-CDSL-2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'LAG-20Gbps' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1051' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1200' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1052' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1053' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v20' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v140' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v30' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v40' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v50' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v60' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v70' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v80' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v90' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v100' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v110' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v111' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v120' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v130' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v220' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v230' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v235' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v240' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v245' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v250' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v255' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v10' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v665' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v666' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v667' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v253' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-FULLSOFT-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-FULLSOFT-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 71
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 281 políticas, 71 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 281 políticas, 71 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 281 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 71 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG100F-GEDORE-1_7-2_1688_202508260941.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG100F-GEDORE-1_7-2_1688_202508260941.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf (/opt/FortiGateConfigHarbor/data/FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf (447924 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf (/opt/FortiGateConfigHarbor/data/FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 447909 caracteres, hash: 71851303...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: NÃO ENCONTRADO
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ❌ [INGESTÃO] Serial não encontrado, movendo para quarentena: FG40F-AGZA-CXS-01_7-0_0682_202509161821.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG40F-EXCEL-POA_7-0_0632_202508281849.conf (/opt/FortiGateConfigHarbor/data/FG40F-EXCEL-POA_7-0_0632_202508281849.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-EXCEL-POA_7-0_0632_202508281849.conf (411562 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG40F-EXCEL-POA_7-0_0632_202508281849.conf (/opt/FortiGateConfigHarbor/data/FG40F-EXCEL-POA_7-0_0632_202508281849.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 411527 caracteres, hash: 8f5f5660...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (411527 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG40F-EXCEL-POA, model=FortiGate-40F, version=7.0.15
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 23 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 19 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 22 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 21 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 7 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 23 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 17 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 16 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 14 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 12 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 15 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 18 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 20 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 23
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 9 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 9
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 23 políticas, 9 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 23 políticas, 9 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 2
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 23 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 9 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG40F-EXCEL-POA_7-0_0632_202508281849.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG40F-EXCEL-POA_7-0_0632_202508281849.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG40F-PLATA-01_2025-09-22.conf (/opt/FortiGateConfigHarbor/data/FG40F-PLATA-01_2025-09-22.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-PLATA-01_2025-09-22.conf (466730 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG40F-PLATA-01_2025-09-22.conf (/opt/FortiGateConfigHarbor/data/FG40F-PLATA-01_2025-09-22.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 466727 caracteres, hash: 512a4fb7...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (466727 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG40F-PLATA-01, model=FortiGate-40F, version=7.2.11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 52 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 64 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 22 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 63 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 23 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 47 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 59 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 49 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 45 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 46 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 58 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 60 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 61 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 48 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 36 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 29 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 24 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 33 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 62 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 52 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 21 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 15 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 14 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 39 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 41 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 42 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 30 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 16 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 51 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 54 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 20 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 17 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 55 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 18 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 37 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 43 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 50 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 40 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 44 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 19 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 56 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 57 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 38 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 34 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 53 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 52
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 15 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-B3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v60' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v30' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-ZBX-01' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-ZBX-02' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v20' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 15
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 52 políticas, 15 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 52 políticas, 15 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 3
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 52 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 15 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG40F-PLATA-01_2025-09-22.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG40F-PLATA-01_2025-09-22.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG40F-UY3-POA_2025-09-22_20250922164947.conf (/opt/FortiGateConfigHarbor/data/FG40F-UY3-POA_2025-09-22_20250922164947.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-UY3-POA_2025-09-22_20250922164947.conf (415837 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG40F-UY3-POA_2025-09-22_20250922164947.conf (/opt/FortiGateConfigHarbor/data/FG40F-UY3-POA_2025-09-22_20250922164947.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 415837 caracteres, hash: eb3c1acf...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (415837 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG40F-UY3-POA, model=FortiGate-40F, version=7.2.11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 19 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 7 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 15 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 16 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 14 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 12 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 22 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 21 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 19 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 20 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 17 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 18 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 19
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 19 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wqt.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UY3-SP-1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UY3-SP-2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'UY3_CORP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wqtn.12.UY3_COR' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'UY3_MOBILE' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wqtn.15.UY3_MOB' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-CLIENT-01' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-ZBX-01' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-ZBX-02' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 19
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 19 políticas, 19 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 19 políticas, 19 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 4
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 19 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 19 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG40F-UY3-POA_2025-09-22_20250922164947.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG40F-UY3-POA_2025-09-22_20250922164947.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf (/opt/FortiGateConfigHarbor/data/FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf (370759 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf (/opt/FortiGateConfigHarbor/data/FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 370734 caracteres, hash: 7070d423...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (370734 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG60F-COOBRASTUR-GRA-2, model=FortiGate-60F, version=7.0.17
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 18 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 17 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 14 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 16 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 7 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 15 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 12 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 18 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 18
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 18 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'b' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v10' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-Matriz-1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-Matriz-2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-Matriz-3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 18
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 18 políticas, 18 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 18 políticas, 18 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 5
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 18 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 18 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-COOBRASTUR-GRA-2_7-0_0682_202508291446.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG60F-DRC-POA_7-2_1740_202508270920.conf (/opt/FortiGateConfigHarbor/data/FG60F-DRC-POA_7-2_1740_202508270920.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-DRC-POA_7-2_1740_202508270920.conf (361555 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG60F-DRC-POA_7-2_1740_202508270920.conf (/opt/FortiGateConfigHarbor/data/FG60F-DRC-POA_7-2_1740_202508270920.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 361555 caracteres, hash: 7c2e5c12...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (361555 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG60F-DRC-POA, model=FortiGate-60F, version=7.2.11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 10 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 10
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 14 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'b' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 14
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 10 políticas, 14 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 10 políticas, 14 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 6
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 10 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 14 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-DRC-POA_7-2_1740_202508270920.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-DRC-POA_7-2_1740_202508270920.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG60F-FARSUL-01_2025-09-21.conf (/opt/FortiGateConfigHarbor/data/FG60F-FARSUL-01_2025-09-21.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-FARSUL-01_2025-09-21.conf (369751 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG60F-FARSUL-01_2025-09-21.conf (/opt/FortiGateConfigHarbor/data/FG60F-FARSUL-01_2025-09-21.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 369727 caracteres, hash: f5f383a9...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (369727 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG60F-FARSUL-01, model=FortiGate-60F, version=7.2.11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 9 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 9
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 16 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'b' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-ZBX-01' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-ZBX-02' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 16
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 9 políticas, 16 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 9 políticas, 16 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 7
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 9 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 16 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-FARSUL-01_2025-09-21.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-FARSUL-01_2025-09-21.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf (359189 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 359189 caracteres, hash: f9ca8f65...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FGT40F
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (359189 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG60F-NGS-SAMUBG-1, model=FortiGate-40F, version=7.2.11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 12 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 7 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 12 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 12
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 11 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lan3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'HUB-DC1-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'HUB-DC1-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 12 políticas, 11 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 12 políticas, 11 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FGT40F
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FGT40F
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 8
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 12 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 11 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-NGS-SAMUBG-1_7-2_1740_202509112115.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG60F-TELTEX-01_7-4_2795_202509172216.conf (/opt/FortiGateConfigHarbor/data/FG60F-TELTEX-01_7-4_2795_202509172216.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-TELTEX-01_7-4_2795_202509172216.conf (557497 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG60F-TELTEX-01_7-4_2795_202509172216.conf (/opt/FortiGateConfigHarbor/data/FG60F-TELTEX-01_7-4_2795_202509172216.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 557448 caracteres, hash: d45bca7b...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (557448 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG60F-TELTEX-01, model=FortiGate-60F, version=7.4.8
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 12 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 28 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 29 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 25 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 70 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 45 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 24 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 37 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 68 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 58 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 40 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 35 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 30 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 12
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 35 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'b' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wqt.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN - Sul' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-TJGO' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'WIFI_PRIVADO' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'WIFI_GUEST' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'WIFI_GERENCIA' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN -Chapada' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN Petrobras' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'Pr_Guaratinguet' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-PC-RN' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-TJ-PE' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-TIM' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SEFA-PA' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-CLIENT-01' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-CLIENT-02' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'TEST' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'P&D' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'TESTE-WIFI' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'vlan-teste' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wqtn.33.vlan-te' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 35
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 12 políticas, 35 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 12 políticas, 35 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 9
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 12 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 35 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG60F-TELTEX-01_7-4_2795_202509172216.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG60F-TELTEX-01_7-4_2795_202509172216.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf (/opt/FortiGateConfigHarbor/data/FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf (765000 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf (/opt/FortiGateConfigHarbor/data/FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 764984 caracteres, hash: 4a40de69...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (764984 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG80F-HOEPERSMTZ-1, model=FortiGate-80F, version=7.2.8
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 9 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 4 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 7 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 54 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 24 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 9
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 29 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal6' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'b' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'LAN' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AHT-DADOS' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AHT-VOIP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH3-DADOS' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH3-VOIP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH4-DADOS' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH4-VOIP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH5-DADOS' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH5-VOIP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH6-DADOS' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'AH6-VOIP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'HUB-DC1-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'HUB-DC1-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'NOC INTEROP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'LAN-MTZ-DEVICE' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 29
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 9 políticas, 29 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 9 políticas, 29 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 10
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 9 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 29 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG80F-HOEPERSMTZ-1_7-2_1639_202509191941.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FG81E-FONTANA-01_7-2_1740_202509091639.conf (/opt/FortiGateConfigHarbor/data/FG81E-FONTANA-01_7-2_1740_202509091639.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FG81E-FONTANA-01_7-2_1740_202509091639.conf (586626 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FG81E-FONTANA-01_7-2_1740_202509091639.conf (/opt/FortiGateConfigHarbor/data/FG81E-FONTANA-01_7-2_1740_202509091639.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 586620 caracteres, hash: ef7c21fe...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (586620 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FG81E-FONTANA-01, model=FortiGate-81E-POE, version=undefined
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 33 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 42 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 5 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 35 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 17 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 37 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 40 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 8 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 12 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 14 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 16 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 15 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 20 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 22 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 23 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 24 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 25 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 26 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 27 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 29 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 30 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 31 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 32 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 33 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 39 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 34 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 41 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 43 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 44 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 33
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 28 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ha' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port6' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port7' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port8' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port9' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port10' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port11' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port12' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN_AESC' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'vlan10' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'vlan11' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN_AESC_Redund' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN_HUB_01' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'apoio' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'vlan98' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'vlan12' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 28
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 33 políticas, 28 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 33 políticas, 28 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 11
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 33 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 28 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FG81E-FONTANA-01_7-2_1740_202509091639.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FG81E-FONTANA-01_7-2_1740_202509091639.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FGT100F-NGS-POA-A_7-2_1706_202509191420.conf (/opt/FortiGateConfigHarbor/data/FGT100F-NGS-POA-A_7-2_1706_202509191420.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FGT100F-NGS-POA-A_7-2_1706_202509191420.conf (740738 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FGT100F-NGS-POA-A_7-2_1706_202509191420.conf (/opt/FortiGateConfigHarbor/data/FGT100F-NGS-POA-A_7-2_1706_202509191420.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 740735 caracteres, hash: 6ba15034...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (740735 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FGT100F-NGS-POA-A, model=FortiGate-100F, version=undefined
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 2 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 95 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 96 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 2
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 71 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'mgmt' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ha1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ha2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port6' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port7' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port8' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port9' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port10' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port11' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port12' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'x1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'x2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port13' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port14' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port15' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port16' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port17' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port18' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port19' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'port20' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-PROCEMPA-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-PROCEMPA-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UNIMED-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UNIMED-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMURS-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-HAPVIDA-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-HAPVIDA-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-RCEIT-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-RCEIT-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UNIAIR-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UNIAIR-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-CXS-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-CXS-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-RP-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-RP-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-BAGE-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-BAGE-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UNI-AZURE-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-UNI-AZURE-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-RESGATE-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-RESGATE-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'lag-wan' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v4082' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMU-BAGE-C' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v4083' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN_ SAMU POA' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v4081' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1001' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1002' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1003' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1004' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1005' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v1006' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-RESGATE-C' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'BrTelecon' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'acesso-brtel-sp' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-SAMUPOA-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'SPK-DC1-A' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'SPK-DC1-B' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 71
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 2 políticas, 71 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 2 políticas, 71 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 12
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 2 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 71 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FGT100F-NGS-POA-A_7-2_1706_202509191420.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FGT100F-NGS-POA-A_7-2_1706_202509191420.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: FGT60F-SLC-ELS_7-0_0682_202509191352.conf (/opt/FortiGateConfigHarbor/data/FGT60F-SLC-ELS_7-0_0682_202509191352.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: FGT60F-SLC-ELS_7-0_0682_202509191352.conf (415357 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: FGT60F-SLC-ELS_7-0_0682_202509191352.conf (/opt/FortiGateConfigHarbor/data/FGT60F-SLC-ELS_7-0_0682_202509191352.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 415357 caracteres, hash: 0ea8c6c7...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [INGESTÃO] Iniciando parsing da configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PARSER] Iniciando parsing de configuração (415357 chars)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Extraindo informações básicas do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📝 [PARSER] Sistema identificado: hostname=FGT60F-SLC-ELS, model=FortiGate-60F, version=7.0.17
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔧 [PARSER] Parseando seções de configuração...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Buscando blocos de firewall policy...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontrados 1 blocos de firewall policy
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Encontradas 12 políticas individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 12 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 13 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 50 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 2 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 3 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 51 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 6 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 11 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 9 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 87 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 1 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Política 10 parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [PARSER] Firewall policies encontradas: 12
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Buscando blocos de system interface...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontrados 1 blocos de system interface
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] Encontradas 19 interfaces individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'wan2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'dmz' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal1' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal3' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal4' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'internal5' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'a' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'b' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'modem' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'naf.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'l2t.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'ssl.root' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-IBM' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v2' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'VPN-IBM-BKP' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v12' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Interface 'v8' parseada com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [PARSER] System interfaces encontradas: 19
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Buscando blocos de system admin...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 blocos de system admin
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] Encontrados 1 admins individuais no bloco
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Admin 'admin' parseado com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [PARSER] System admins encontrados: 1
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [PARSER] Parsing concluído: 12 políticas, 19 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Parsing concluído: 12 políticas, 19 interfaces, 1 admins
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 💾 [INGESTÃO] Criando/atualizando dispositivo: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Dispositivo criado/atualizado: FMGVMSTM24005902
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📦 [INGESTÃO] Criando versão do dispositivo...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Versão criada: ID 13
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🛡️ [INGESTÃO] Salvando 12 políticas de firewall...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Políticas salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🌐 [INGESTÃO] Salvando 19 interfaces do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Interfaces salvas com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 👤 [INGESTÃO] Salvando 1 administradores do sistema...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO] Administradores salvos com sucesso
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🗑️ [INGESTÃO] Removendo arquivo original: FGT60F-SLC-ELS_7-0_0682_202509191352.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🎉 [INGESTÃO] Processamento concluído com sucesso para: FGT60F-SLC-ELS_7-0_0682_202509191352.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [PROCESSAMENTO] Processando: PIA-FG100F-01_6-4_2000_202508021038.conf (/opt/FortiGateConfigHarbor/data/PIA-FG100F-01_6-4_2000_202508021038.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [PROCESSAMENTO] Processando arquivo: PIA-FG100F-01_6-4_2000_202508021038.conf (667951 bytes)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 📄 [INGESTÃO] Processando arquivo: PIA-FG100F-01_6-4_2000_202508021038.conf (/opt/FortiGateConfigHarbor/data/PIA-FG100F-01_6-4_2000_202508021038.conf)
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🔍 [INGESTÃO] Arquivo lido: 667895 caracteres, hash: 82f25ed3...
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 🏷️ [INGESTÃO] Serial extraído: NÃO ENCONTRADO
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ❌ [INGESTÃO] Serial não encontrado, movendo para quarentena: PIA-FG100F-01_6-4_2000_202508021038.conf
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: ✅ [INGESTÃO MANUAL] Processamento concluído: { processed: 13, quarantined: 2, duplicates: 0 }
+Sep 22 16:57:11 vlxfortios155 configharbor[469735]: 4:57:11 PM [express] POST /api/ingestion/trigger 200 in 431ms
+Sep 22 16:57:22 vlxfortios155 configharbor[469735]: 4:57:22 PM [express] GET /api/user 200 in 6ms
+Sep 22 16:57:22 vlxfortios155 configharbor[469735]: 4:57:22 PM [express] GET /api/devices 200 in 3ms
+Sep 22 16:57:23 vlxfortios155 configharbor[469735]: 4:57:23 PM [express] GET /api/user 304 in 5ms
+Sep 22 16:57:23 vlxfortios155 configharbor[469735]: 4:57:23 PM [express] GET /api/devices 304 in 4ms
+Sep 22 16:57:26 vlxfortios155 configharbor[469735]: 4:57:26 PM [express] GET /api/devices/FMGVMSTM24005902/versions 200 in 10ms
+Sep 22 16:57:26 vlxfortios155 configharbor[469735]: 4:57:26 PM [express] GET /api/devices/FMGVMSTM24005902 200 in 10ms
+Sep 22 16:57:26 vlxfortios155 configharbor[469735]: 4:57:26 PM [express] GET /api/devices/FMGVMSTM24005902/compliance 304 in 18ms
