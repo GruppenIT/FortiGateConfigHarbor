@@ -75,8 +75,8 @@ setup_postgresql() {
     log "Instalando PostgreSQL..."
     apt install -y postgresql postgresql-contrib
     
-    # Gerar senha aleatória segura para o banco de dados
-    DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+    # Gerar senha aleatória segura para o banco de dados (variável global)
+    export DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
     log "Senha do banco de dados gerada com segurança"
     
     # Iniciar serviço
@@ -84,6 +84,40 @@ setup_postgresql() {
     systemctl enable postgresql
     
     log "Configurando banco de dados PostgreSQL..."
+    
+    # Configurar pg_hba.conf para permitir conexões locais com senha SCRAM (seguro)
+    PG_MAJOR=$(sudo -u postgres psql -Atc "SHOW server_version;" | cut -d. -f1)
+    PG_HBA_FILE="/etc/postgresql/$PG_MAJOR/main/pg_hba.conf"
+    
+    # Verificar se arquivo existe
+    if [ ! -f "$PG_HBA_FILE" ]; then
+        error "❌ Arquivo pg_hba.conf não encontrado: $PG_HBA_FILE"
+    fi
+    
+    # Backup do arquivo original
+    cp "$PG_HBA_FILE" "$PG_HBA_FILE.backup.$(date +%s)"
+    log "Backup de pg_hba.conf criado"
+    
+    # Configurar conexões locais para usar scram-sha-256 (mais seguro que MD5)
+    log "Configurando autenticação PostgreSQL SCRAM-SHA-256..."
+    
+    # Remover linhas antigas e adicionar novas configurações
+    # Local connections
+    sed -i '/^local[[:space:]]\+all[[:space:]]\+all[[:space:]]/d' "$PG_HBA_FILE"
+    # IPv4 localhost
+    sed -i '/^host[[:space:]]\+all[[:space:]]\+all[[:space:]]\+127\.0\.0\.1\/32/d' "$PG_HBA_FILE"
+    # IPv6 localhost  
+    sed -i '/^host[[:space:]]\+all[[:space:]]\+all[[:space:]]\+::1\/128/d' "$PG_HBA_FILE"
+    
+    # Adicionar configurações seguras no topo (antes de qualquer regra)
+    sed -i '1i# ConfigHarbor - Conexões locais seguras' "$PG_HBA_FILE"
+    sed -i '2i\local   all             all                                     scram-sha-256' "$PG_HBA_FILE"
+    sed -i '3i\host    all             all             127.0.0.1/32            scram-sha-256' "$PG_HBA_FILE"
+    sed -i '4i\host    all             all             ::1/128                 scram-sha-256' "$PG_HBA_FILE"
+    
+    # Recarregar configuração PostgreSQL
+    systemctl reload postgresql
+    log "PostgreSQL reconfigurado para autenticação SCRAM-SHA-256"
     
     # Criar usuário e banco de dados para ConfigHarbor
     sudo -u postgres psql <<EOF
@@ -98,7 +132,147 @@ GRANT ALL PRIVILEGES ON DATABASE configharbor TO configharbor_user;
 \q
 EOF
 
+    # Testar conectividade com as credenciais criadas
+    log "Testando conectividade com banco de dados..."
+    sleep 2  # Aguardar PostgreSQL processar as alterações
+    
+    if PGPASSWORD=$DB_PASSWORD psql -h 127.0.0.1 -U configharbor_user -d configharbor -c "SELECT 1;" >/dev/null 2>&1; then
+        log "✅ Conectividade com banco de dados confirmada"
+    else
+        error "❌ Falha na conectividade com banco - verificando configuração..."
+        # Exibir informações de debug
+        log "DEBUG: Tentativa de conexão falhou"
+        log "DEBUG: Usuário: configharbor_user"
+        log "DEBUG: Banco: configharbor"
+        log "DEBUG: Host: 127.0.0.1"
+        
+        # Verificar se usuário existe
+        if sudo -u postgres psql -c "\du" | grep configharbor_user; then
+            log "DEBUG: Usuário configharbor_user existe no PostgreSQL"
+        else
+            log "DEBUG: Usuário configharbor_user NÃO existe no PostgreSQL"
+        fi
+        
+        # Mostrar configuração atual pg_hba.conf
+        log "DEBUG: Configuração atual pg_hba.conf:"
+        grep -E "^local|^host" "$PG_HBA_FILE" || true
+        
+        error "❌ Falha crítica na conectividade com banco - verificar configuração manualmente"
+    fi
+
     log "PostgreSQL configurado com sucesso"
+}
+
+# Criar script de recuperação de autenticação
+create_recovery_script() {
+    log "Criando script de recuperação de autenticação..."
+    
+    APP_DIR="/opt/FortiGateConfigHarbor"
+    cat > "$APP_DIR/fix_db_auth.sh" << 'RECOVERY_SCRIPT'
+#!/bin/bash
+
+# Script de recuperação automática para problemas de autenticação PostgreSQL
+# Este script regenera a senha do banco de dados e atualiza configurações
+
+APP_DIR="/opt/FortiGateConfigHarbor"
+LOG_FILE="/tmp/configharbor-recovery.log"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+log "🔧 Iniciando recuperação automática de autenticação PostgreSQL..."
+
+# Verificar se .env existe
+if [ ! -f "$APP_DIR/.env" ]; then
+    log "❌ Arquivo .env não encontrado em $APP_DIR/.env"
+    exit 1
+fi
+
+# Gerar nova senha
+NEW_DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+log "Nova senha do banco gerada"
+
+# Alterar senha no PostgreSQL (executar como root pois script pode ser chamado pelo systemd)
+if /usr/bin/sudo -u postgres psql <<EOF
+ALTER ROLE configharbor_user WITH PASSWORD '$NEW_DB_PASSWORD';
+\q
+EOF
+then
+    log "✅ Senha alterada no PostgreSQL"
+else
+    log "❌ Falha ao alterar senha no PostgreSQL"
+    exit 1
+fi
+
+# Atualizar .env com nova senha
+if sed -i "s/PGPASSWORD=.*/PGPASSWORD=$NEW_DB_PASSWORD/" "$APP_DIR/.env" && \
+   sed -i "s|DATABASE_URL=postgresql://configharbor_user:[^@]*@|DATABASE_URL=postgresql://configharbor_user:$NEW_DB_PASSWORD@|" "$APP_DIR/.env"; then
+    log "✅ Arquivo .env atualizado"
+else
+    log "❌ Falha ao atualizar arquivo .env"
+    exit 1
+fi
+
+# Testar conectividade
+if PGPASSWORD=$NEW_DB_PASSWORD psql -h 127.0.0.1 -U configharbor_user -d configharbor -c "SELECT 1;" >/dev/null 2>&1; then
+    log "✅ Conectividade restaurada com nova senha!"
+    log "🎉 Recuperação automática concluída com sucesso!"
+    exit 0
+else
+    log "❌ Falha mesmo após regenerar senha - problema mais complexo"
+    exit 1
+fi
+RECOVERY_SCRIPT
+
+    # Tornar executável
+    chmod +x "$APP_DIR/fix_db_auth.sh"
+    chown configharbor:configharbor "$APP_DIR/fix_db_auth.sh"
+    
+    log "Script de recuperação criado: $APP_DIR/fix_db_auth.sh"
+}
+
+# Função de recuperação - regenerar senha do banco se necessário (chamada após .env existir)
+fix_database_password() {
+    log "🔧 Regenerando senha do banco para resolver problemas de autenticação..."
+    
+    APP_DIR="/opt/FortiGateConfigHarbor"
+    
+    # Verificar se .env existe
+    if [ ! -f "$APP_DIR/.env" ]; then
+        error "❌ Arquivo .env não encontrado. Esta função deve ser chamada após setup_environment."
+    fi
+    
+    # Gerar nova senha
+    NEW_DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+    log "Nova senha do banco gerada"
+    
+    # Alterar senha no PostgreSQL
+    if sudo -u postgres psql <<RESET_EOF
+ALTER ROLE configharbor_user WITH PASSWORD '$NEW_DB_PASSWORD';
+\q
+RESET_EOF
+    then
+        log "✅ Senha alterada no PostgreSQL"
+    else
+        error "❌ Falha ao alterar senha no PostgreSQL"
+    fi
+    
+    # Atualizar .env com nova senha
+    if sed -i "s/PGPASSWORD=.*/PGPASSWORD=$NEW_DB_PASSWORD/" "$APP_DIR/.env" && \
+       sed -i "s|DATABASE_URL=postgresql://configharbor_user:[^@]*@|DATABASE_URL=postgresql://configharbor_user:$NEW_DB_PASSWORD@|" "$APP_DIR/.env"; then
+        log "✅ Arquivo .env atualizado"
+    else
+        error "❌ Falha ao atualizar arquivo .env"
+    fi
+    
+    # Testar conectividade
+    if PGPASSWORD=$NEW_DB_PASSWORD psql -h 127.0.0.1 -U configharbor_user -d configharbor -c "SELECT 1;" >/dev/null 2>&1; then
+        log "✅ Conectividade restaurada com nova senha!"
+        export DB_PASSWORD=$NEW_DB_PASSWORD
+    else
+        error "❌ Falha mesmo após regenerar senha - problema mais complexo"
+    fi
 }
 
 # Configurar estrutura de diretórios
@@ -204,8 +378,8 @@ setup_environment() {
     # Criar arquivo .env
     cat > "$APP_DIR/.env" << EOF
 # Configuração do Banco de Dados
-DATABASE_URL=postgresql://configharbor_user:$DB_PASSWORD@localhost:5432/configharbor
-PGHOST=localhost
+DATABASE_URL=postgresql://configharbor_user:$DB_PASSWORD@127.0.0.1:5432/configharbor
+PGHOST=127.0.0.1
 PGPORT=5432
 PGUSER=configharbor_user
 PGPASSWORD=$DB_PASSWORD
@@ -262,7 +436,7 @@ setup_database() {
         log "WARN: drizzle-kit push falhou, aplicando schema manualmente..."
         
         # Aplicar schema manualmente se drizzle falhar
-        PGPASSWORD=$DB_PASSWORD psql -h localhost -U configharbor_user -d configharbor <<'SCHEMA_EOF'
+        PGPASSWORD=$DB_PASSWORD psql -h 127.0.0.1 -U configharbor_user -d configharbor <<'SCHEMA_EOF'
 -- Garantir que colunas necessárias existam na tabela users
 DO $$
 BEGIN
@@ -308,7 +482,7 @@ hashPassword('${ADMIN_PASSWORD}').then(hash => console.log(hash));
     
     # Criar usuário admin inicial via SQL direto
     log "Criando usuário administrador padrão..."
-    PGPASSWORD=$DB_PASSWORD psql -h localhost -U configharbor_user -d configharbor <<EOF
+    PGPASSWORD=$DB_PASSWORD psql -h 127.0.0.1 -U configharbor_user -d configharbor <<EOF
 -- Remover usuário admin existente se houver
 DELETE FROM users WHERE username = 'admin@local';
 
@@ -395,7 +569,13 @@ ExecStartPre=/bin/bash -c 'echo "NODE_ENV=$NODE_ENV PORT=$PORT" >> /tmp/configha
 ExecStartPre=/bin/bash -c 'echo "DATABASE_URL status: $(test -n \"$DATABASE_URL\" && echo \"SET\" || echo \"NOT_SET\")" >> /tmp/configharbor-debug.log'
 ExecStartPre=/bin/bash -c 'echo "Testing file access..." >> /tmp/configharbor-debug.log'
 ExecStartPre=/usr/bin/test -f /opt/FortiGateConfigHarbor/dist/index.js
-ExecStartPre=/bin/bash -c 'echo "File test passed, starting application..." >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'echo "File test passed, testing database connectivity..." >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'source /opt/FortiGateConfigHarbor/.env && echo "Testing DB with user: $PGUSER, host: 127.0.0.1, db: $PGDATABASE" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'source /opt/FortiGateConfigHarbor/.env && echo "DATABASE_URL format check..." >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'source /opt/FortiGateConfigHarbor/.env && echo "DATABASE_URL: $(echo $DATABASE_URL | sed "s/:\/\/[^:]*:[^@]*@/:\/\/[USER]:[HIDDEN]@/g")" >> /tmp/configharbor-debug.log'
+ExecStartPre=/bin/bash -c 'source /opt/FortiGateConfigHarbor/.env && PGPASSWORD=$PGPASSWORD psql -h 127.0.0.1 -U $PGUSER -d $PGDATABASE -c "SELECT 1 as preflight_check;" >> /tmp/configharbor-debug.log 2>&1 || (echo "CRITICAL: Individual PG vars connection failed" >> /tmp/configharbor-debug.log && exit 1)'
+ExecStartPre=/bin/bash -c 'source /opt/FortiGateConfigHarbor/.env && psql "$DATABASE_URL" -c "SELECT 1 as database_url_test;" >> /tmp/configharbor-debug.log 2>&1 || (echo "CRITICAL: DATABASE_URL connection failed - attempting recovery..." >> /tmp/configharbor-debug.log && /opt/FortiGateConfigHarbor/fix_db_auth.sh >> /tmp/configharbor-debug.log 2>&1)'
+ExecStartPre=/bin/bash -c 'echo "Database connectivity confirmed, starting application..." >> /tmp/configharbor-debug.log'
 
 ExecStart=/usr/bin/node /opt/FortiGateConfigHarbor/dist/index.js
 Restart=always
@@ -470,6 +650,9 @@ main() {
     log "=== FASE 5: Configuração de ambiente ==="
     setup_environment
     
+    log "=== FASE 5.1: Criando script de recuperação ==="
+    create_recovery_script
+    
     log "=== FASE 6: Inicialização do banco de dados ==="
     setup_database
     
@@ -501,6 +684,15 @@ main() {
     echo -e "${GREEN}║ ${NC}sudo journalctl -u configharbor -f                       ${GREEN}║${NC}"
     echo -e "${GREEN}╚══════════════════════════════════════════════════════════════╝${NC}"
     echo ""
+    
+    # Configurar sudoers para permitir que configharbor execute recovery script
+    log "Configurando permissões de sudo para recuperação automática..."
+    cat > /etc/sudoers.d/configharbor-recovery << SUDOERS_EOF
+# Permitir que usuário configharbor execute recuperação de autenticação PostgreSQL
+configharbor ALL=(postgres) NOPASSWD: /usr/bin/psql
+configharbor ALL=(root) NOPASSWD: /opt/FortiGateConfigHarbor/fix_db_auth.sh
+SUDOERS_EOF
+    chmod 440 /etc/sudoers.d/configharbor-recovery
     
     # Iniciar o serviço
     log "Iniciando serviço ConfigHarbor..."

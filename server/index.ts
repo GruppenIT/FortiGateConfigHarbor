@@ -67,8 +67,43 @@ app.use((req, res, next) => {
     
     // Teste de conectividade com banco de dados
     log("🔍 Testando conectividade com banco de dados...");
+    // Em produção, logar informações de conectividade sem expor credenciais
+    if (process.env.NODE_ENV === 'production') {
+      const dbUrl = process.env.DATABASE_URL || '';
+      const maskedUrl = dbUrl.replace(/:\/\/[^:]*:[^@]*@/, '://[USER]:[HIDDEN]@');
+      log(`📊 CONNECTION: ${maskedUrl}`);
+      
+      // Mostrar variáveis individuais também
+      log(`📊 PGUSER: ${process.env.PGUSER || 'NOT_SET'}`);
+      log(`📊 PGHOST: ${process.env.PGHOST || 'NOT_SET'}`);
+      log(`📊 PGDATABASE: ${process.env.PGDATABASE || 'NOT_SET'}`);
+      log(`📊 PGPASSWORD: ${process.env.PGPASSWORD ? '[SET]' : '[NOT_SET]'}`);
+    }
     await storage.testConnection();
     log("✅ Conectividade com banco de dados OK");
+    
+    // Teste específico do session store em produção
+    if (process.env.NODE_ENV === 'production') {
+      log("🔍 Testando session store especificamente...");
+      try {
+        // Teste direto do session store
+        await new Promise((resolve, reject) => {
+          storage.sessionStore.get('test_key', (err: any, session: any) => {
+            if (err && err.message && err.message.includes('password authentication failed')) {
+              reject(new Error(`SESSION STORE ERROR: ${err.message}`));
+            } else {
+              // Sem erro ou erro esperado (chave não existe)
+              resolve(session);
+            }
+          });
+        });
+        log("✅ Session store funcionando corretamente");
+      } catch (sessionError: any) {
+        log(`❌ ERRO NO SESSION STORE: ${sessionError.message}`);
+        log("🚫 O sistema não pode continuar sem session store funcional");
+        process.exit(1);
+      }
+    }
     
     // Initialize default admin user
     log("👤 Verificando usuário admin padrão...");
