@@ -1,0 +1,75 @@
+✓ built in 3.97s
+
+  dist/index.js  51.3kb
+
+⚡ Done in 4ms
+[INFO] Limpeza do diretório temporário concluída
+[INFO] Aplicação deployada com sucesso
+[INFO] === FASE 5: Configuração de ambiente ===
+[INFO] Configurando variáveis de ambiente...
+[INFO] Variáveis de ambiente configuradas
+[INFO] Credenciais salvas em: /opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL
+[INFO] === FASE 6: Inicialização do banco de dados ===
+[INFO] Inicializando banco de dados...
+Reading config file '/opt/FortiGateConfigHarbor/drizzle.config.ts'
+Using 'pg' driver for database querying
+[✓] Pulling schema from database...
+[✓] Changes applied
+DELETE 0
+ERROR:  column "updated_at" of relation "users" does not exist
+LINE 1: ...e, password_hash, display_name, role, created_at, updated_at...
+                                                             ^
+[INFO] Banco de dados inicializado com usuário admin@local
+[INFO] === FASE 7: Criação de usuário de sistema ===
+[INFO] Criando usuário de sistema configharbor...
+[INFO] Usuário de sistema configharbor criado com segurança
+[INFO] === FASE 8: Configuração do serviço ===
+[INFO] Criando serviço systemd...
+[INFO] Serviço systemd criado e habilitado
+[INFO] === FASE 9: Configuração do firewall ===
+[INFO] Configurando firewall...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+ufw is already the newest version (0.36.2-6).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Backing up 'user.rules' to '/etc/ufw/user.rules.20250922_085935'
+Backing up 'before.rules' to '/etc/ufw/before.rules.20250922_085935'
+Backing up 'after.rules' to '/etc/ufw/after.rules.20250922_085935'
+Backing up 'user6.rules' to '/etc/ufw/user6.rules.20250922_085935'
+Backing up 'before6.rules' to '/etc/ufw/before6.rules.20250922_085935'
+Backing up 'after6.rules' to '/etc/ufw/after6.rules.20250922_085935'
+
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+Rules updated
+Rules updated (v6)
+Rules updated
+Rules updated (v6)
+Firewall is active and enabled on system startup
+[INFO] Firewall configurado - porta 3000 liberada
+[INFO] === INSTALAÇÃO CONCLUÍDA COM SUCESSO! ===
+
+╔══════════════════════════════════════════════════════════════╗
+║                   INSTALAÇÃO CONCLUÍDA                      ║
+╠══════════════════════════════════════════════════════════════╣
+║ Sistema: FortiGate ConfigHarbor                            ║
+║ URL:     http://192.168.100.155:3000                      ║
+║                                                              ║
+║ Credenciais do administrador:                             ║
+║ Usuário: admin@local                                      ║
+║ Arquivo: /opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL     ║
+║                                                              ║
+║ Para iniciar o sistema:                                  ║
+║ sudo systemctl start configharbor                        ║
+║                                                              ║
+║ Para ver logs:                                           ║
+║ sudo journalctl -u configharbor -f                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+[INFO] Iniciando serviço ConfigHarbor...
+Job for configharbor.service failed because the control process exited with error code.
+See "systemctl status configharbor.service" and "journalctl -xeu configharbor.service" for details.
+root@vlxfortios155:~#

@@ -28,6 +28,7 @@ export const users = pgTable("users", {
   role: userRoleEnum("role").notNull().default('readonly'),
   passwordHash: text("password_hash").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
   lastLogin: timestamp("last_login"),
   failedAttempts: integer("failed_attempts").default(0),
   lockedUntil: timestamp("locked_until"),
@@ -287,6 +288,7 @@ export const auditLogRelations = relations(auditLog, ({ one }) => ({
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
   lastLogin: true,
   failedAttempts: true,
   lockedUntil: true,
