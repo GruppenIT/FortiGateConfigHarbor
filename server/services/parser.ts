@@ -224,15 +224,119 @@ function parseSingleInterface(interfaceText: string): any | null {
   return iface;
 }
 
+/**
+ * Extrai blocos de configuração balanceados (config...end) do conteúdo.
+ * Funciona com configurações aninhadas como config gui-dashboard...end.
+ */
+function extractBalancedConfigBlocks(content: string, configName: string): string[] {
+  const blocks: string[] = [];
+  const startPattern = new RegExp(configName, 'gi');
+  let match;
+  
+  while ((match = startPattern.exec(content)) !== null) {
+    const startIndex = match.index;
+    let depth = 0;
+    let endIndex = startIndex;
+    
+    // Procurar pelo 'end' correspondente contando os blocos config/end
+    for (let i = startIndex; i < content.length; i++) {
+      const remaining = content.substring(i);
+      
+      // Verificar se encontramos um novo 'config'
+      if (remaining.match(/^config\s+/)) {
+        depth++;
+        i += remaining.match(/^config\s+/)![0].length - 1; // Ajustar índice
+        continue;
+      }
+      
+      // Verificar se encontramos um 'end'
+      if (remaining.match(/^end(\s|$)/)) {
+        depth--;
+        if (depth === 0) {
+          endIndex = i + 3; // +3 para incluir 'end'
+          break;
+        }
+        i += 2; // +2 para pular 'end'
+        continue;
+      }
+    }
+    
+    if (depth === 0 && endIndex > startIndex) {
+      const block = content.substring(startIndex, endIndex + 1);
+      blocks.push(block);
+      console.log(`🔍 [PARSER] Bloco balanceado extraído (${block.length} chars)`);
+    } else {
+      console.log(`⚠️ [PARSER] Bloco não balanceado encontrado para '${configName}'`);
+    }
+  }
+  
+  return blocks;
+}
+
+/**
+ * Extrai blocos edit...next balanceados de um bloco de configuração.
+ * Lida com configurações aninhadas dentro dos blocos edit.
+ */
+function extractBalancedEditBlocks(configBlock: string): string[] {
+  const editBlocks: string[] = [];
+  const editPattern = /edit\s+"([^"]+)"/gi;
+  let match;
+  
+  while ((match = editPattern.exec(configBlock)) !== null) {
+    const startIndex = match.index;
+    let depth = 0;
+    let endIndex = startIndex;
+    let inConfig = false;
+    
+    // Procurar pelo 'next' correspondente contando os blocos config/end aninhados
+    for (let i = startIndex; i < configBlock.length; i++) {
+      const remaining = configBlock.substring(i);
+      
+      // Verificar se encontramos um novo 'config' aninhado
+      if (remaining.match(/^config\s+/)) {
+        inConfig = true;
+        depth++;
+        i += remaining.match(/^config\s+/)![0].length - 1;
+        continue;
+      }
+      
+      // Verificar se encontramos um 'end' que fecha um config aninhado
+      if (inConfig && remaining.match(/^end(\s|$)/)) {
+        depth--;
+        if (depth === 0) {
+          inConfig = false;
+        }
+        i += 2;
+        continue;
+      }
+      
+      // Verificar se encontramos um 'next' e não estamos dentro de um config aninhado
+      if (!inConfig && remaining.match(/^next(\s|$)/)) {
+        endIndex = i + 4; // +4 para incluir 'next'
+        break;
+      }
+    }
+    
+    if (endIndex > startIndex) {
+      const editBlock = configBlock.substring(startIndex, endIndex);
+      editBlocks.push(editBlock);
+      console.log(`🔍 [PARSER] Edit balanceado extraído: '${match[1]}' (${editBlock.length} chars)`);
+    } else {
+      console.log(`⚠️ [PARSER] Edit não balanceado encontrado para '${match[1]}'`);
+    }
+  }
+  
+  return editBlocks;
+}
+
 function parseSystemAdmins(content: string): any[] {
   console.log(`👤 [PARSER] Buscando blocos de system admin...`);
   const admins: any[] = [];
   
-  // Find system admin configuration blocks - corrigido para formato .conf
-  const adminBlockRegex = /config system admin([\s\S]*?)end/g;
-  const adminBlocks = content.match(adminBlockRegex);
+  // Encontrar blocos de config system admin com parsing balanceado de config/end
+  const adminBlocks = extractBalancedConfigBlocks(content, 'config system admin');
   
-  if (!adminBlocks) {
+  if (!adminBlocks || adminBlocks.length === 0) {
     console.log(`⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado`);
     return admins;
   }
@@ -240,10 +344,10 @@ function parseSystemAdmins(content: string): any[] {
   console.log(`👤 [PARSER] Encontrados ${adminBlocks.length} blocos de system admin`);
 
   for (const block of adminBlocks) {
-    // Extrair admins individuais com edit "nome" ... next
-    const adminMatches = block.match(/edit\s+"([^"]+)"[\s\S]*?next/g);
+    // Extrair admins individuais com edit "nome" ... next usando parsing balanceado
+    const adminMatches = extractBalancedEditBlocks(block);
     
-    if (adminMatches) {
+    if (adminMatches && adminMatches.length > 0) {
       console.log(`👤 [PARSER] Encontrados ${adminMatches.length} admins individuais no bloco`);
       for (const adminMatch of adminMatches) {
         try {
@@ -260,7 +364,6 @@ function parseSystemAdmins(content: string): any[] {
       console.log(`⚠️ [PARSER] Nenhum admin 'edit' encontrado no bloco`);
       console.log(`🔍 [PARSER] Amostra do bloco (${block.length} chars):`);
       console.log(block.substring(0, 800));
-      console.log(`🔍 [PARSER] Regex usada: /edit\\s+\"([^\"]+)\"[\\s\\S]*?next/g`);
     }
   }
 
@@ -274,7 +377,7 @@ function parseSingleAdmin(adminText: string): any | null {
   const admin = {
     username: nameMatch[1],
     profile: extractConfigValue(adminText, 'accprofile'),
-    trustedHosts: extractConfigArray(adminText, 'trusthost') || [],
+    trustedHosts: extractTrustedHosts(adminText),
     twoFactor: extractConfigValue(adminText, 'two-factor') === 'enable',
     publicKeySet: adminText.includes('ssh-public-key'),
     vdomScope: extractConfigValue(adminText, 'vdom') || 'root'
@@ -311,4 +414,65 @@ function extractConfigArray(text: string, key: string): string[] | undefined {
   
   // Senão, é um valor único
   return [value];
+}
+
+/**
+ * Extrai trusted hosts numerados (trusthost1, trusthost2, etc.) de um bloco de admin FortiOS.
+ * Cada trusthost contém IP e máscara de subrede.
+ */
+function extractTrustedHosts(adminText: string): string[] {
+  const trustedHosts: string[] = [];
+  
+  // Procura por trusthost1, trusthost2, trusthost3, etc.
+  const trusthostRegex = /set\s+trusthost(\d+)\s+([^\n\r]+)/gi;
+  let match;
+  
+  console.log(`🔍 [PARSER] Procurando trusted hosts no admin...`);
+  
+  while ((match = trusthostRegex.exec(adminText)) !== null) {
+    const trusthostNumber = match[1];
+    const trusthostValue = match[2].trim();
+    
+    // Trusted host geralmente é "IP MASK" (ex: "192.168.1.0 255.255.255.0")
+    const parts = trusthostValue.split(/\s+/);
+    if (parts.length >= 2) {
+      const ip = parts[0];
+      const mask = parts[1];
+      const cidr = convertMaskToCIDR(ip, mask);
+      trustedHosts.push(cidr);
+      console.log(`✅ [PARSER] Trusted host ${trusthostNumber}: ${ip}/${mask} -> ${cidr}`);
+    } else if (parts.length === 1) {
+      // Caso seja só o IP sem máscara
+      trustedHosts.push(parts[0]);
+      console.log(`✅ [PARSER] Trusted host ${trusthostNumber}: ${parts[0]}`);
+    }
+  }
+  
+  if (trustedHosts.length === 0) {
+    console.log(`⚠️ [PARSER] Nenhum trusted host encontrado no admin`);
+    return [];
+  }
+  
+  console.log(`✅ [PARSER] Total de ${trustedHosts.length} trusted hosts encontrados`);
+  return trustedHosts;
+}
+
+/**
+ * Converte IP + máscara de subrede para notação CIDR.
+ */
+function convertMaskToCIDR(ip: string, mask: string): string {
+  try {
+    // Converte máscara para CIDR
+    const maskParts = mask.split('.').map(Number);
+    let cidrBits = 0;
+    
+    for (const part of maskParts) {
+      cidrBits += (part.toString(2).match(/1/g) || []).length;
+    }
+    
+    return `${ip}/${cidrBits}`;
+  } catch (error) {
+    // Fallback para formato original se conversão falhar
+    return `${ip}/${mask}`;
+  }
 }
