@@ -1,0 +1,79 @@
+# FortiGate-100F Configuration
+# This is a test configuration to validate parsing
+
+config system global
+    set hostname "FG100F-TEST-HARBOR"
+    set admintimeout 480
+end
+
+config system interface
+    edit "port1"
+        set vdom "root"
+        set ip 192.168.1.1 255.255.255.0
+        set allowaccess ping https ssh snmp http telnet fgfm radius-acct
+        set type physical
+        set description "LAN Interface"
+        set alias "LAN"
+        set role lan
+        set snmp-index 1
+    next
+    edit "port2"
+        set vdom "root"
+        set ip 10.0.0.1 255.255.255.0
+        set allowaccess ping https ssh
+        set type physical
+        set description "WAN Interface"
+        set alias "WAN"
+        set role wan
+        set snmp-index 2
+    next
+end
+
+config firewall policy
+    edit 1
+        set name "Allow_LAN_to_WAN"
+        set uuid 12345678-1234-5678-9012-123456789abc
+        set srcintf "port1"
+        set dstintf "port2"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set nat enable
+        set logtraffic all
+    next
+    edit 2
+        set name "Block_External_Access"
+        set uuid 87654321-4321-8765-2109-987654321def
+        set srcintf "port2"
+        set dstintf "port1"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action deny
+        set schedule "always"
+        set service "ALL"
+        set logtraffic all
+    next
+end
+
+config system admin
+    edit "admin"
+        set accprofile "super_admin"
+        set vdom "root"
+        set password ENC AK1wIIzMPFGz3CZRCKkMCEyD5gLGM2oU=
+        set two-factor disable
+    next
+    edit "operator"
+        set accprofile "prof_admin"
+        set vdom "root"
+        set trusthost1 192.168.1.0 255.255.255.0
+        set trusthost2 10.0.0.0 255.255.255.0
+        set password ENC BK2xJJzNQGHz4DZSDLlNDFzE6hMHN3pV=
+        set two-factor enable
+    next
+end
+
+config system global
+    set hostname "FG100F-TEST-HARBOR"
+end

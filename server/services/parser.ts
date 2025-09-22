@@ -12,6 +12,8 @@ interface ParsedConfig {
 }
 
 export function parseFortiOSConfig(content: string): ParsedConfig {
+  console.log(`🔍 [PARSER] Iniciando parsing de configuração (${content.length} chars)`);
+  
   const result: ParsedConfig = {
     firewallPolicies: [],
     systemInterfaces: [],
@@ -20,23 +22,34 @@ export function parseFortiOSConfig(content: string): ParsedConfig {
 
   try {
     // Extract basic system information
+    console.log(`📝 [PARSER] Extraindo informações básicas do sistema...`);
     result.hostname = extractHostname(content);
     result.model = extractModel(content);
     result.fortiosVersion = extractVersion(content);
     result.build = extractBuild(content);
     result.vdomEnabled = extractVdomEnabled(content);
     result.primaryVdom = extractPrimaryVdom(content);
+    
+    console.log(`📝 [PARSER] Sistema identificado: hostname=${result.hostname}, model=${result.model}, version=${result.fortiosVersion}`);
 
     // Parse configuration sections
+    console.log(`🔧 [PARSER] Parseando seções de configuração...`);
     result.firewallPolicies = parseFirewallPolicies(content);
+    console.log(`🛡️ [PARSER] Firewall policies encontradas: ${result.firewallPolicies.length}`);
+    
     result.systemInterfaces = parseSystemInterfaces(content);
+    console.log(`🌐 [PARSER] System interfaces encontradas: ${result.systemInterfaces.length}`);
+    
     result.systemAdmins = parseSystemAdmins(content);
+    console.log(`👤 [PARSER] System admins encontrados: ${result.systemAdmins.length}`);
 
   } catch (error) {
-    console.warn('Parser warning:', error.message);
+    console.error(`❌ [PARSER] Erro durante parsing:`, error.message);
+    console.error(`❌ [PARSER] Stack trace:`, error.stack);
     // Continue with partial parsing
   }
 
+  console.log(`✅ [PARSER] Parsing concluído: ${result.firewallPolicies.length} políticas, ${result.systemInterfaces.length} interfaces, ${result.systemAdmins.length} admins`);
   return result;
 }
 
@@ -74,25 +87,37 @@ function extractPrimaryVdom(content: string): string | undefined {
 }
 
 function parseFirewallPolicies(content: string): any[] {
+  console.log(`🛡️ [PARSER] Buscando blocos de firewall policy...`);
   const policies: any[] = [];
   
   // Find firewall policy configuration blocks
   const policyBlocks = content.match(/config firewall policy([\s\S]*?)(?=config\s+\w+|$)/g);
   
-  if (!policyBlocks) return policies;
+  if (!policyBlocks) {
+    console.log(`⚠️ [PARSER] Nenhum bloco 'config firewall policy' encontrado`);
+    return policies;
+  }
+
+  console.log(`🛡️ [PARSER] Encontrados ${policyBlocks.length} blocos de firewall policy`);
 
   for (const block of policyBlocks) {
     const policyMatches = block.match(/edit\s+(\d+)([\s\S]*?)(?=edit|\s*end)/g);
     
     if (policyMatches) {
+      console.log(`🛡️ [PARSER] Encontradas ${policyMatches.length} políticas individuais no bloco`);
       for (const policyMatch of policyMatches) {
         try {
           const policy = parseSingleFirewallPolicy(policyMatch);
-          if (policy) policies.push(policy);
+          if (policy) {
+            policies.push(policy);
+            console.log(`✅ [PARSER] Política ${policy.seq} parseada com sucesso`);
+          }
         } catch (error) {
-          console.warn('Error parsing firewall policy:', error.message);
+          console.error(`❌ [PARSER] Erro parsing firewall policy:`, error.message);
         }
       }
+    } else {
+      console.log(`⚠️ [PARSER] Nenhuma política 'edit' encontrada no bloco`);
     }
   }
 
@@ -125,25 +150,37 @@ function parseSingleFirewallPolicy(policyText: string): any | null {
 }
 
 function parseSystemInterfaces(content: string): any[] {
+  console.log(`🌐 [PARSER] Buscando blocos de system interface...`);
   const interfaces: any[] = [];
   
   // Find system interface configuration blocks
   const interfaceBlocks = content.match(/config system interface([\s\S]*?)(?=config\s+\w+|$)/g);
   
-  if (!interfaceBlocks) return interfaces;
+  if (!interfaceBlocks) {
+    console.log(`⚠️ [PARSER] Nenhum bloco 'config system interface' encontrado`);
+    return interfaces;
+  }
+
+  console.log(`🌐 [PARSER] Encontrados ${interfaceBlocks.length} blocos de system interface`);
 
   for (const block of interfaceBlocks) {
     const interfaceMatches = block.match(/edit\s+"([^"]+)"([\s\S]*?)(?=edit|\s*end)/g);
     
     if (interfaceMatches) {
+      console.log(`🌐 [PARSER] Encontradas ${interfaceMatches.length} interfaces individuais no bloco`);
       for (const interfaceMatch of interfaceMatches) {
         try {
           const iface = parseSingleInterface(interfaceMatch);
-          if (iface) interfaces.push(iface);
+          if (iface) {
+            interfaces.push(iface);
+            console.log(`✅ [PARSER] Interface '${iface.name}' parseada com sucesso`);
+          }
         } catch (error) {
-          console.warn('Error parsing system interface:', error.message);
+          console.error(`❌ [PARSER] Erro parsing system interface:`, error.message);
         }
       }
+    } else {
+      console.log(`⚠️ [PARSER] Nenhuma interface 'edit' encontrada no bloco`);
     }
   }
 
@@ -169,25 +206,37 @@ function parseSingleInterface(interfaceText: string): any | null {
 }
 
 function parseSystemAdmins(content: string): any[] {
+  console.log(`👤 [PARSER] Buscando blocos de system admin...`);
   const admins: any[] = [];
   
   // Find system admin configuration blocks
   const adminBlocks = content.match(/config system admin([\s\S]*?)(?=config\s+\w+|$)/g);
   
-  if (!adminBlocks) return admins;
+  if (!adminBlocks) {
+    console.log(`⚠️ [PARSER] Nenhum bloco 'config system admin' encontrado`);
+    return admins;
+  }
+
+  console.log(`👤 [PARSER] Encontrados ${adminBlocks.length} blocos de system admin`);
 
   for (const block of adminBlocks) {
     const adminMatches = block.match(/edit\s+"([^"]+)"([\s\S]*?)(?=edit|\s*end)/g);
     
     if (adminMatches) {
+      console.log(`👤 [PARSER] Encontrados ${adminMatches.length} admins individuais no bloco`);
       for (const adminMatch of adminMatches) {
         try {
           const admin = parseSingleAdmin(adminMatch);
-          if (admin) admins.push(admin);
+          if (admin) {
+            admins.push(admin);
+            console.log(`✅ [PARSER] Admin '${admin.username}' parseado com sucesso`);
+          }
         } catch (error) {
-          console.warn('Error parsing system admin:', error.message);
+          console.error(`❌ [PARSER] Erro parsing system admin:`, error.message);
         }
       }
+    } else {
+      console.log(`⚠️ [PARSER] Nenhum admin 'edit' encontrado no bloco`);
     }
   }
 

@@ -1,0 +1,28 @@
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔄 [INGESTÃO MANUAL] Iniciando processamento manual...
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📁 [INGESTÃO MANUAL] Diretório de dados: /opt/FortiGateConfigHarbor/data
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📦 [INGESTÃO MANUAL] Diretório de arquivo: /opt/FortiGateConfigHarbor/archive
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: ⚠️ [INGESTÃO MANUAL] Diretório de quarentena: /opt/FortiGateConfigHarbor/quarantine
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📂 [PROCESSAMENTO] Garantindo que diretórios existam...
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📂 [PROCESSAMENTO] Lendo arquivos do diretório: /opt/FortiGateConfigHarbor/data
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📂 [PROCESSAMENTO] Encontrados 6 itens no diretório: [
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]:   'FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml',
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]:   'FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml',
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]:   'FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml',
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]:   'FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml',
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]:   'FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml',
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]:   'FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml'
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: ]
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔍 [PROCESSAMENTO] Processando: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-AGZA-SPO-01_7-2_1740_202509091824.conf.yaml (316584 bytes)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔍 [PROCESSAMENTO] Processando: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-Competence_7-2_1740_202509021445_comthost.conf.yaml (337886 bytes)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔍 [PROCESSAMENTO] Processando: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml (/opt/FortiGateConfigHarbor/data/FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📄 [PROCESSAMENTO] Processando arquivo: FG40F-Competence_7-2_1740_202509021445_semthost.conf.yaml (337840 bytes)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔍 [PROCESSAMENTO] Processando: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-NGS-SAMURS-1_7-2_1740_202509021400-sslvpn_com_geoip.conf.yaml (455525 bytes)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔍 [PROCESSAMENTO] Processando: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml (/opt/FortiGateConfigHarbor/data/FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📄 [PROCESSAMENTO] Processando arquivo: FG60F-NGS-SAMURS-1_7-2_1740_202509021415-sslvpn_sem_geoip.conf.yaml (455547 bytes)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 🔍 [PROCESSAMENTO] Processando: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml (/opt/FortiGateConfigHarbor/data/FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 📄 [PROCESSAMENTO] Processando arquivo: FGT100F_ZALLPY_POA_7-2_1740_202509091832.conf.yaml (514599 bytes)
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: ✅ [INGESTÃO MANUAL] Processamento concluído: { processed: 6, quarantined: 0, duplicates: 0 }
+Sep 22 15:21:57 vlxfortios155 configharbor[347600]: 3:21:57 PM [express] POST /api/ingestion/trigger 200 in 90ms

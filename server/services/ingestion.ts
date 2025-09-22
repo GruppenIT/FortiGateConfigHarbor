@@ -98,29 +98,39 @@ export class IngestionService {
   }
 
   private async processFile(filePath: string, filename: string): Promise<{ status: 'processed' | 'quarantined' | 'duplicate' }> {
+    console.log(`📄 [INGESTÃO] Processando arquivo: ${filename} (${filePath})`);
+    
     // Read and hash file
     const content = await fs.readFile(filePath, 'utf-8');
     const fileHash = createHash('sha256').update(content).digest('hex');
+    
+    console.log(`🔍 [INGESTÃO] Arquivo lido: ${content.length} caracteres, hash: ${fileHash.substring(0, 8)}...`);
 
     // Check for duplicates
     const existingVersion = await storage.getDeviceVersionByHash(fileHash);
     if (existingVersion) {
+      console.log(`⚠️ [INGESTÃO] Arquivo duplicado detectado, removendo: ${filename}`);
       await fs.unlink(filePath); // Remove duplicate
       return { status: 'duplicate' };
     }
 
     // Extract serial number
     const serial = this.extractSerial(content);
+    console.log(`🏷️ [INGESTÃO] Serial extraído: ${serial || 'NÃO ENCONTRADO'}`);
     if (!serial) {
+      console.log(`❌ [INGESTÃO] Serial não encontrado, movendo para quarentena: ${filename}`);
       await this.quarantineFile(filePath, filename, 'Serial number not found');
       return { status: 'quarantined' };
     }
 
     // Parse configuration
     try {
+      console.log(`🔧 [INGESTÃO] Iniciando parsing da configuração...`);
       const parsed = parseFortiOSConfig(content);
+      console.log(`✅ [INGESTÃO] Parsing concluído: ${parsed.firewallPolicies.length} políticas, ${parsed.systemInterfaces.length} interfaces, ${parsed.systemAdmins.length} admins`);
       
       // Create or update device
+      console.log(`💾 [INGESTÃO] Criando/atualizando dispositivo: ${serial}`);
       const device = await storage.createOrUpdateDevice({
         serial,
         hostname: parsed.hostname,
@@ -129,8 +139,10 @@ export class IngestionService {
         vdomEnabled: parsed.vdomEnabled || false,
         primaryVdom: parsed.primaryVdom
       });
+      console.log(`✅ [INGESTÃO] Dispositivo criado/atualizado: ${device.serial}`);
 
       // Create device version
+      console.log(`📦 [INGESTÃO] Criando versão do dispositivo...`);
       const deviceVersion = await storage.createDeviceVersion({
         deviceSerial: serial,
         fortiosVersion: parsed.fortiosVersion,
@@ -138,38 +150,54 @@ export class IngestionService {
         fileHash,
         archivePath: await this.archiveFile(filePath, filename, serial, parsed.tenant)
       });
+      console.log(`✅ [INGESTÃO] Versão criada: ID ${deviceVersion.id}`);
 
       // Store parsed configuration objects
       if (parsed.firewallPolicies.length > 0) {
+        console.log(`🛡️ [INGESTÃO] Salvando ${parsed.firewallPolicies.length} políticas de firewall...`);
         const policies = parsed.firewallPolicies.map(p => ({
           ...p,
           deviceVersionId: deviceVersion.id
         }));
         await storage.insertFirewallPolicies(policies);
+        console.log(`✅ [INGESTÃO] Políticas salvas com sucesso`);
+      } else {
+        console.log(`ℹ️ [INGESTÃO] Nenhuma política de firewall para salvar`);
       }
 
       if (parsed.systemInterfaces.length > 0) {
+        console.log(`🌐 [INGESTÃO] Salvando ${parsed.systemInterfaces.length} interfaces do sistema...`);
         const interfaces = parsed.systemInterfaces.map(i => ({
           ...i,
           deviceVersionId: deviceVersion.id
         }));
         await storage.insertSystemInterfaces(interfaces);
+        console.log(`✅ [INGESTÃO] Interfaces salvas com sucesso`);
+      } else {
+        console.log(`ℹ️ [INGESTÃO] Nenhuma interface do sistema para salvar`);
       }
 
       if (parsed.systemAdmins.length > 0) {
+        console.log(`👤 [INGESTÃO] Salvando ${parsed.systemAdmins.length} administradores do sistema...`);
         const admins = parsed.systemAdmins.map(a => ({
           ...a,
           deviceVersionId: deviceVersion.id
         }));
         await storage.insertSystemAdmins(admins);
+        console.log(`✅ [INGESTÃO] Administradores salvos com sucesso`);
+      } else {
+        console.log(`ℹ️ [INGESTÃO] Nenhum administrador do sistema para salvar`);
       }
 
       // Remove original file
+      console.log(`🗑️ [INGESTÃO] Removendo arquivo original: ${filename}`);
       await fs.unlink(filePath);
 
+      console.log(`🎉 [INGESTÃO] Processamento concluído com sucesso para: ${filename}`);
       return { status: 'processed' };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown parse error';
+      console.error(`❌ [INGESTÃO] Erro durante parsing de ${filename}:`, error);
       await this.quarantineFile(filePath, filename, `Parse error: ${errorMessage}`);
       return { status: 'quarantined' };
     }
