@@ -378,8 +378,8 @@ Group=configharbor
 WorkingDirectory=/opt/FortiGateConfigHarbor
 Environment=NODE_ENV=production
 EnvironmentFile=/opt/FortiGateConfigHarbor/.env
-ExecStartPre=/usr/bin/test -f /opt/FortiGateConfigHarbor/dist/server/index.js
-ExecStart=/usr/bin/node dist/server/index.js
+ExecStartPre=/usr/bin/test -f /opt/FortiGateConfigHarbor/dist/index.js
+ExecStart=/usr/bin/node /opt/FortiGateConfigHarbor/dist/index.js
 Restart=always
 RestartSec=10
 
