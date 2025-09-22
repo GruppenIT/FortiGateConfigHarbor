@@ -417,30 +417,39 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getFirewallPolicies(deviceSerial: string): Promise<FirewallPolicy[]> {
-    return await db
+    console.log(`[DEBUG] Buscando firewall policies para dispositivo: ${deviceSerial}`);
+    const result = await db
       .select()
       .from(firewallPolicies)
       .innerJoin(deviceVersions, eq(firewallPolicies.deviceVersionId, deviceVersions.id))
       .where(eq(deviceVersions.deviceSerial, deviceSerial))
       .then(rows => rows.map(row => row.firewall_policies));
+    console.log(`[DEBUG] Encontradas ${result.length} políticas para dispositivo ${deviceSerial}`);
+    return result;
   }
 
   async getSystemInterfaces(deviceSerial: string): Promise<SystemInterface[]> {
-    return await db
+    console.log(`[DEBUG] Buscando system interfaces para dispositivo: ${deviceSerial}`);
+    const result = await db
       .select()
       .from(systemInterfaces)
       .innerJoin(deviceVersions, eq(systemInterfaces.deviceVersionId, deviceVersions.id))
       .where(eq(deviceVersions.deviceSerial, deviceSerial))
       .then(rows => rows.map(row => row.system_interfaces));
+    console.log(`[DEBUG] Encontradas ${result.length} interfaces para dispositivo ${deviceSerial}`);
+    return result;
   }
 
   async getSystemAdmins(deviceSerial: string): Promise<SystemAdmin[]> {
-    return await db
+    console.log(`[DEBUG] Buscando system admins para dispositivo: ${deviceSerial}`);
+    const result = await db
       .select()
       .from(systemAdmins)
       .innerJoin(deviceVersions, eq(systemAdmins.deviceVersionId, deviceVersions.id))
       .where(eq(deviceVersions.deviceSerial, deviceSerial))
       .then(rows => rows.map(row => row.system_admins));
+    console.log(`[DEBUG] Encontrados ${result.length} admins para dispositivo ${deviceSerial}`);
+    return result;
   }
 }
 

@@ -129,34 +129,38 @@ app.use((req, res, next) => {
     if (!existingAdmin) {
       log("Creating default admin user...");
       
-      // Ler senha do arquivo de credenciais obrigatório (produção)
-      const fs = require('fs');
+      const fs = await import('fs');
       const credentialPath = "/opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL";
+      let adminPassword: string;
       
-      if (!fs.existsSync(credentialPath)) {
+      // Em desenvolvimento, usar senha padrão se o arquivo não existir
+      if (process.env.NODE_ENV === 'development' && !fs.existsSync(credentialPath)) {
+        adminPassword = "admin123";
+        log("🧑‍💻 MODO DESENVOLVIMENTO: Usando senha padrão admin123");
+      } else if (!fs.existsSync(credentialPath)) {
         const errorMsg = `ERRO CRÍTICO: Arquivo de credenciais não encontrado em ${credentialPath}. Execute o script install.sh primeiro.`;
         log(errorMsg);
         console.error(errorMsg);
         process.exit(1);
-      }
-      
-      let adminPassword;
-      try {
-        const credentialContent = fs.readFileSync(credentialPath, 'utf8');
-        const passwordMatch = credentialContent.match(/SENHA INICIAL: (.+)/);
-        if (!passwordMatch) {
-          const errorMsg = "ERRO CRÍTICO: Formato inválido no arquivo de credenciais. Senha não encontrada.";
+      } else {
+        // Ler senha do arquivo de credenciais (produção)
+        try {
+          const credentialContent = fs.readFileSync(credentialPath, 'utf8');
+          const passwordMatch = credentialContent.match(/SENHA INICIAL: (.+)/);
+          if (!passwordMatch) {
+            const errorMsg = "ERRO CRÍTICO: Formato inválido no arquivo de credenciais. Senha não encontrada.";
+            log(errorMsg);
+            console.error(errorMsg);
+            process.exit(1);
+          }
+          adminPassword = passwordMatch[1].trim();
+          log("Admin password loaded from credential file");
+        } catch (credError) {
+          const errorMsg = `ERRO CRÍTICO: Não foi possível ler o arquivo de credenciais: ${credError}`;
           log(errorMsg);
           console.error(errorMsg);
           process.exit(1);
         }
-        adminPassword = passwordMatch[1].trim();
-        log("Admin password loaded from credential file");
-      } catch (credError) {
-        const errorMsg = `ERRO CRÍTICO: Não foi possível ler o arquivo de credenciais: ${credError}`;
-        log(errorMsg);
-        console.error(errorMsg);
-        process.exit(1);
       }
       
       await storage.createUser({
