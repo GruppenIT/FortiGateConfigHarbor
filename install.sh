@@ -110,6 +110,7 @@ setup_directories() {
     mkdir -p "$APP_DIR"
     mkdir -p "$APP_DIR/data"
     mkdir -p "$APP_DIR/logs"
+    mkdir -p "$APP_DIR/archive"
     mkdir -p "$APP_DIR/quarantine"
     
     # Permissões serão definidas posteriormente pela função create_system_user()
@@ -219,6 +220,7 @@ PORT=3000
 
 # Configuração de Dados
 DATA_DIR=/opt/FortiGateConfigHarbor/data
+ARCHIVE_DIR=/opt/FortiGateConfigHarbor/archive
 QUARANTINE_DIR=/opt/FortiGateConfigHarbor/quarantine
 LOG_DIR=/opt/FortiGateConfigHarbor/logs
 EOF
@@ -356,6 +358,7 @@ create_system_user() {
     # Garantir que diretórios de dados têm permissões corretas
     chmod 750 "$APP_DIR/data"
     chmod 750 "$APP_DIR/logs"
+    chmod 750 "$APP_DIR/archive"
     chmod 750 "$APP_DIR/quarantine"
     
     log "Usuário de sistema configharbor criado com segurança"
@@ -407,6 +410,7 @@ PrivateNetwork=false
 # Diretórios acessíveis pelo serviço
 ReadWritePaths=/opt/FortiGateConfigHarbor/data
 ReadWritePaths=/opt/FortiGateConfigHarbor/logs
+ReadWritePaths=/opt/FortiGateConfigHarbor/archive
 ReadWritePaths=/opt/FortiGateConfigHarbor/quarantine
 ReadWritePaths=/tmp
 
