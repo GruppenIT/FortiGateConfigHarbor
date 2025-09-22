@@ -44,7 +44,7 @@ export function setupAuth(app: Express) {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       const user = await storage.getUserByUsername(username);
-      if (!user || !(await comparePasswords(password, user.password))) {
+      if (!user || !(await comparePasswords(password, user.passwordHash))) {
         return done(null, false);
       } else {
         return done(null, user);
@@ -66,7 +66,7 @@ export function setupAuth(app: Express) {
 
     const user = await storage.createUser({
       ...req.body,
-      password: await hashPassword(req.body.password),
+      passwordHash: await hashPassword(req.body.password),
     });
 
     req.login(user, (err) => {

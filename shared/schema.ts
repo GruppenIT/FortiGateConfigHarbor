@@ -26,7 +26,7 @@ export const users = pgTable("users", {
   username: text("username").notNull().unique(),
   displayName: text("display_name").notNull(),
   role: userRoleEnum("role").notNull().default('readonly'),
-  password: text("password").notNull(),
+  passwordHash: text("password_hash").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   lastLogin: timestamp("last_login"),
   failedAttempts: integer("failed_attempts").default(0),

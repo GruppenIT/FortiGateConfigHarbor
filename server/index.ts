@@ -99,7 +99,7 @@ app.use((req, res, next) => {
       await storage.createUser({
         username: "admin@local",
         displayName: "Administrador do Sistema",
-        password: await hashPassword(adminPassword),
+        passwordHash: await hashPassword(adminPassword),
         role: "admin",
       });
       log("Default admin user created successfully with username: admin@local");
