@@ -1,0 +1,828 @@
+[INFO] Banco de dados inicializado com usuário admin@local
+[INFO] === FASE 7: Criação de usuário de sistema ===
+[INFO] Criando usuário de sistema configharbor...
+[INFO] Usuário de sistema configharbor criado com segurança
+[INFO] === FASE 8: Configuração do serviço ===
+[INFO] Criando serviço systemd...
+Created symlink /etc/systemd/system/multi-user.target.wants/configharbor.service → /etc/systemd/system/configharbor.service.
+[INFO] Serviço systemd criado e habilitado
+[INFO] === FASE 9: Configuração do firewall ===
+[INFO] Configurando firewall...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+ufw is already the newest version (0.36.2-6).
+ufw set to manually installed.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Backing up 'user.rules' to '/etc/ufw/user.rules.20250921_154203'
+Backing up 'before.rules' to '/etc/ufw/before.rules.20250921_154203'
+Backing up 'after.rules' to '/etc/ufw/after.rules.20250921_154203'
+Backing up 'user6.rules' to '/etc/ufw/user6.rules.20250921_154203'
+Backing up 'before6.rules' to '/etc/ufw/before6.rules.20250921_154203'
+Backing up 'after6.rules' to '/etc/ufw/after6.rules.20250921_154203'
+
+Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)
+Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)
+Rules updated
+Rules updated (v6)
+Rules updated
+Rules updated (v6)
+Firewall is active and enabled on system startup
+[INFO] Firewall configurado - porta 3000 liberada
+[INFO] === INSTALAÇÃO CONCLUÍDA COM SUCESSO! ===
+
+╔══════════════════════════════════════════════════════════════╗
+║                   INSTALAÇÃO CONCLUÍDA                      ║
+╠══════════════════════════════════════════════════════════════╣
+║ Sistema: FortiGate ConfigHarbor                            ║
+║ URL:     http://192.168.100.155:3000                      ║
+║                                                              ║
+║ Credenciais do administrador:                             ║
+║ Usuário: admin@local                                      ║
+║ Arquivo: /opt/FortiGateConfigHarbor/ADMIN_CREDENTIAL     ║
+║                                                              ║
+║ Para iniciar o sistema:                                  ║
+║ sudo systemctl start configharbor                        ║
+║                                                              ║
+║ Para ver logs:                                           ║
+║ sudo journalctl -u configharbor -f                       ║
+╚══════════════════════════════════════════════════════════════╝
+
+[INFO] Iniciando serviço ConfigHarbor...
+Job for configharbor.service failed because the control process exited with error code.
+See "systemctl status configharbor.service" and "journalctl -xeu configharbor.service" for details.
+root@vlxfortios155:~# ps -ef | grep 3000
+root     3403873 3341226  0 15:42 pts/3    00:00:00 grep --color=auto 3000
+root@vlxfortios155:~# sudo systemctl start configharbor
+Job for configharbor.service failed because the control process exited with error code.
+See "systemctl status configharbor.service" and "journalctl -xeu configharbor.service" for details.
+root@vlxfortios155:~# sudo journalctl -u configharbor -f
+Sep 21 15:42:45 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 4.
+Sep 21 15:42:45 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:42:45 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:42:45 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:42:45 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:42:55 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 5.
+Sep 21 15:42:55 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:42:55 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:42:55 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:42:55 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:43:05 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 6.
+Sep 21 15:43:05 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:43:05 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:43:05 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:43:05 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:43:16 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 7.
+Sep 21 15:43:16 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:43:16 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:43:16 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:43:16 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:43:26 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 8.
+Sep 21 15:43:26 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:43:26 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:43:26 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:43:26 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:43:36 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 9.
+Sep 21 15:43:36 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:43:36 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:43:36 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:43:36 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:43:46 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 10.
+Sep 21 15:43:46 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:43:46 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:43:46 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:43:46 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:43:57 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 11.
+Sep 21 15:43:57 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:43:57 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:43:57 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:43:57 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:44:07 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 12.
+Sep 21 15:44:07 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:44:07 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:44:07 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:44:07 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:44:17 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 13.
+Sep 21 15:44:17 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:44:17 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:44:17 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:44:17 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:44:27 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 14.
+Sep 21 15:44:27 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:44:27 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:44:27 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:44:27 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:44:38 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 15.
+Sep 21 15:44:38 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:44:38 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:44:38 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:44:38 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:44:48 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 16.
+Sep 21 15:44:48 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:44:48 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:44:48 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:44:48 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:44:58 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 17.
+Sep 21 15:44:58 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:44:58 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:44:58 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:44:58 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:45:08 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 18.
+Sep 21 15:45:08 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:45:08 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:45:08 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:45:08 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:45:19 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 19.
+Sep 21 15:45:19 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:45:19 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:45:19 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:45:19 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:45:29 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 20.
+Sep 21 15:45:29 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:45:29 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:45:29 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:45:29 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:45:39 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 21.
+Sep 21 15:45:39 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:45:39 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:45:39 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:45:39 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:45:49 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 22.
+Sep 21 15:45:49 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:45:49 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:45:49 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:45:49 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:46:00 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 23.
+Sep 21 15:46:00 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:46:00 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:46:00 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:46:00 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:46:10 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 24.
+Sep 21 15:46:10 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:46:10 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:46:10 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:46:10 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:46:20 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 25.
+Sep 21 15:46:20 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:46:20 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:46:20 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:46:20 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:46:30 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 26.
+Sep 21 15:46:30 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:46:30 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:46:30 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:46:30 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:46:41 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 27.
+Sep 21 15:46:41 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:46:41 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:46:41 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:46:41 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:46:51 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 28.
+Sep 21 15:46:51 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:46:51 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:46:51 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:46:51 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:47:01 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 29.
+Sep 21 15:47:01 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:47:01 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:47:01 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:47:01 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:47:11 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 30.
+Sep 21 15:47:11 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:47:11 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:47:11 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:47:11 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:47:21 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 31.
+Sep 21 15:47:21 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:47:21 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:47:21 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:47:21 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:47:32 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 32.
+Sep 21 15:47:32 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:47:32 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:47:32 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:47:32 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:47:42 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 33.
+Sep 21 15:47:42 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:47:42 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:47:42 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:47:42 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:47:52 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 34.
+Sep 21 15:47:52 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:47:52 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:47:52 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:47:52 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:48:02 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 35.
+Sep 21 15:48:02 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:48:02 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:48:02 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:48:02 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:48:13 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 36.
+Sep 21 15:48:13 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:48:13 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:48:13 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:48:13 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:48:23 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 37.
+Sep 21 15:48:23 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:48:23 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:48:23 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:48:23 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:48:33 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 38.
+Sep 21 15:48:33 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:48:33 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:48:33 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:48:33 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:48:43 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 39.
+Sep 21 15:48:43 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:48:43 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:48:43 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:48:43 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:48:54 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 40.
+Sep 21 15:48:54 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:48:54 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:48:54 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:48:54 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:49:04 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 41.
+Sep 21 15:49:04 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:49:04 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:49:04 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:49:04 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:49:14 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 42.
+Sep 21 15:49:14 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:49:14 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:49:14 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:49:14 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:49:24 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 43.
+Sep 21 15:49:24 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:49:24 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:49:24 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:49:24 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:49:35 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 44.
+Sep 21 15:49:35 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:49:35 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:49:35 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:49:35 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:49:45 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 45.
+Sep 21 15:49:45 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:49:45 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:49:45 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:49:45 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:49:55 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 46.
+Sep 21 15:49:55 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:49:55 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:49:55 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:49:55 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:50:05 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 47.
+Sep 21 15:50:05 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:50:05 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:50:05 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:50:05 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:50:16 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 48.
+Sep 21 15:50:16 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:50:16 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:50:16 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:50:16 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:50:26 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 49.
+Sep 21 15:50:26 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:50:26 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:50:26 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:50:26 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:50:36 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 50.
+Sep 21 15:50:36 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:50:36 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:50:36 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:50:36 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:50:46 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 51.
+Sep 21 15:50:46 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:50:46 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:50:46 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:50:46 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:50:57 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 52.
+Sep 21 15:50:57 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:50:57 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:50:57 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:50:57 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:51:07 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 53.
+Sep 21 15:51:07 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:51:07 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:51:07 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:51:07 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:51:17 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 54.
+Sep 21 15:51:17 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:51:17 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:51:17 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:51:17 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:51:27 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 55.
+Sep 21 15:51:27 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:51:27 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:51:27 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:51:27 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:51:38 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 56.
+Sep 21 15:51:38 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:51:38 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:51:38 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:51:38 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:51:48 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 57.
+Sep 21 15:51:48 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:51:48 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:51:48 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:51:48 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:51:58 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 58.
+Sep 21 15:51:58 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:51:58 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:51:58 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:51:58 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:52:08 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 59.
+Sep 21 15:52:08 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:52:08 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:52:08 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:52:08 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:52:19 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 60.
+Sep 21 15:52:19 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:52:19 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:52:19 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:52:19 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:52:29 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 61.
+Sep 21 15:52:29 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:52:29 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:52:29 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:52:29 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:52:39 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 62.
+Sep 21 15:52:39 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:52:39 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:52:39 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:52:39 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:52:49 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 63.
+Sep 21 15:52:49 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:52:49 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:52:49 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:52:49 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:53:00 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 64.
+Sep 21 15:53:00 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:53:00 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:53:00 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:53:00 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:53:10 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 65.
+Sep 21 15:53:10 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:53:10 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:53:10 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:53:10 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:53:20 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 66.
+Sep 21 15:53:20 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:53:20 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:53:20 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:53:20 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:53:30 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 67.
+Sep 21 15:53:30 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:53:30 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:53:30 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:53:30 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:53:41 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 68.
+Sep 21 15:53:41 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:53:41 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:53:41 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:53:41 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:53:51 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 69.
+Sep 21 15:53:51 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:53:51 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:53:51 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:53:51 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:54:01 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 70.
+Sep 21 15:54:01 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:54:01 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:54:01 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:54:01 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:54:11 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 71.
+Sep 21 15:54:11 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:54:11 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:54:11 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:54:11 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:54:22 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 72.
+Sep 21 15:54:22 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:54:22 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:54:22 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:54:22 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:54:32 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 73.
+Sep 21 15:54:32 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:54:32 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:54:32 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:54:32 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:54:42 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 74.
+Sep 21 15:54:42 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:54:42 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:54:42 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:54:42 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:54:52 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 75.
+Sep 21 15:54:52 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:54:52 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:54:52 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:54:52 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:55:03 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 76.
+Sep 21 15:55:03 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:55:03 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:55:03 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:55:03 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:55:13 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 77.
+Sep 21 15:55:13 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:55:13 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:55:13 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:55:13 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:55:23 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 78.
+Sep 21 15:55:23 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:55:23 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:55:23 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:55:23 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:55:33 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 79.
+Sep 21 15:55:33 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:55:33 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:55:33 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:55:33 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:55:44 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 80.
+Sep 21 15:55:44 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:55:44 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:55:44 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:55:44 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:55:54 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 81.
+Sep 21 15:55:54 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:55:54 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:55:54 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:55:54 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:56:04 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 82.
+Sep 21 15:56:04 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:56:04 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:56:04 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:56:04 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:56:14 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 83.
+Sep 21 15:56:14 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:56:14 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:56:14 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:56:14 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:56:25 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 84.
+Sep 21 15:56:25 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:56:25 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:56:25 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:56:25 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:56:35 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 85.
+Sep 21 15:56:35 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:56:35 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:56:35 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:56:35 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:56:45 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 86.
+Sep 21 15:56:45 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:56:45 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:56:45 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:56:45 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:56:55 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 87.
+Sep 21 15:56:55 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:56:55 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:56:55 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:56:55 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:57:06 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 88.
+Sep 21 15:57:06 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:57:06 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:57:06 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:57:06 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:57:16 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 89.
+Sep 21 15:57:16 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:57:16 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:57:16 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:57:16 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:57:26 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 90.
+Sep 21 15:57:26 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:57:26 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:57:26 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:57:26 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:57:36 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 91.
+Sep 21 15:57:36 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:57:36 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:57:36 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:57:36 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:57:47 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 92.
+Sep 21 15:57:47 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:57:47 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:57:47 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:57:47 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:57:57 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 93.
+Sep 21 15:57:57 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:57:57 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:57:57 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:57:57 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:58:07 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 94.
+Sep 21 15:58:07 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:58:07 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:58:07 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:58:07 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:58:17 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 95.
+Sep 21 15:58:17 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:58:17 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:58:17 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:58:17 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:58:28 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 96.
+Sep 21 15:58:28 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:58:28 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:58:28 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:58:28 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:58:38 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 97.
+Sep 21 15:58:38 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:58:38 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:58:38 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:58:38 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:58:48 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 98.
+Sep 21 15:58:48 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:58:48 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:58:48 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:58:48 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:58:58 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 99.
+Sep 21 15:58:58 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:58:58 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:58:58 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:58:58 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:59:09 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 100.
+Sep 21 15:59:09 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:59:09 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:59:09 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:59:09 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:59:19 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 101.
+Sep 21 15:59:19 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:59:19 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:59:19 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:59:19 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:59:29 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 102.
+Sep 21 15:59:29 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:59:29 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:59:29 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:59:29 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:59:39 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 103.
+Sep 21 15:59:39 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:59:39 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:59:39 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:59:39 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 15:59:50 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 104.
+Sep 21 15:59:50 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 15:59:50 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 15:59:50 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 15:59:50 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:00:00 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 105.
+Sep 21 16:00:00 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:00:00 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:00:00 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:00:00 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:00:10 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 106.
+Sep 21 16:00:10 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:00:10 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:00:10 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:00:10 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:00:20 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 107.
+Sep 21 16:00:20 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:00:20 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:00:20 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:00:20 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:00:30 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 108.
+Sep 21 16:00:30 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:00:30 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:00:30 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:00:30 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:00:41 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 109.
+Sep 21 16:00:41 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:00:41 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:00:41 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:00:41 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:00:51 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 110.
+Sep 21 16:00:51 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:00:51 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:00:51 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:00:51 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:01:01 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 111.
+Sep 21 16:01:01 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:01:01 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:01:01 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:01:01 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:01:11 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 112.
+Sep 21 16:01:11 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:01:11 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:01:11 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:01:11 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:01:22 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 113.
+Sep 21 16:01:22 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:01:22 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:01:22 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:01:22 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:01:32 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 114.
+Sep 21 16:01:32 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:01:32 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:01:32 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:01:32 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:01:42 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 115.
+Sep 21 16:01:42 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:01:42 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:01:42 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:01:42 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:01:52 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 116.
+Sep 21 16:01:52 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:01:52 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:01:52 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:01:52 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:02:03 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 117.
+Sep 21 16:02:03 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:02:03 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:02:03 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:02:03 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:02:13 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 118.
+Sep 21 16:02:13 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:02:13 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:02:13 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:02:13 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:02:23 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 119.
+Sep 21 16:02:23 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:02:23 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:02:23 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:02:23 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:02:33 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 120.
+Sep 21 16:02:33 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:02:33 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:02:33 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:02:33 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:02:44 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 121.
+Sep 21 16:02:44 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:02:44 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:02:44 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:02:44 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:02:54 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 122.
+Sep 21 16:02:54 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:02:54 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:02:54 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:02:54 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:03:04 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 123.
+Sep 21 16:03:04 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:03:04 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:03:04 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:03:04 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:03:14 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 124.
+Sep 21 16:03:14 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:03:14 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:03:14 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:03:14 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:03:25 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 125.
+Sep 21 16:03:25 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:03:25 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:03:25 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:03:25 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:03:35 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 126.
+Sep 21 16:03:35 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:03:35 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:03:35 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:03:35 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:03:45 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 127.
+Sep 21 16:03:45 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:03:45 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:03:45 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:03:45 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:03:55 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 128.
+Sep 21 16:03:55 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:03:55 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:03:55 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:03:55 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:04:06 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 129.
+Sep 21 16:04:06 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:04:06 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:04:06 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:04:06 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:04:16 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 130.
+Sep 21 16:04:16 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:04:16 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:04:16 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:04:16 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:04:26 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 131.
+Sep 21 16:04:26 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:04:26 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:04:26 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:04:26 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:04:36 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 132.
+Sep 21 16:04:36 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:04:36 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:04:36 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:04:36 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:04:47 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 133.
+Sep 21 16:04:47 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:04:47 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:04:47 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:04:47 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:04:57 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 134.
+Sep 21 16:04:57 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:04:57 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:04:57 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:04:57 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:05:07 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 135.
+Sep 21 16:05:07 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:05:07 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:05:07 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:05:07 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:05:17 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 136.
+Sep 21 16:05:17 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:05:17 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:05:17 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:05:17 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:05:28 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 137.
+Sep 21 16:05:28 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:05:28 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:05:28 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:05:28 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:05:38 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 138.
+Sep 21 16:05:38 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:05:38 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:05:38 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:05:38 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:05:48 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 139.
+Sep 21 16:05:48 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:05:48 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:05:48 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:05:48 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:05:58 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 140.
+Sep 21 16:05:58 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:05:58 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:05:58 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:05:58 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:06:09 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 141.
+Sep 21 16:06:09 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:06:09 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:06:09 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:06:09 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:06:19 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 142.
+Sep 21 16:06:19 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:06:19 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:06:19 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:06:19 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:06:29 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 143.
+Sep 21 16:06:29 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:06:29 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:06:29 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:06:29 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:06:39 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 144.
+Sep 21 16:06:39 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:06:39 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:06:39 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:06:39 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:06:50 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 145.
+Sep 21 16:06:50 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:06:50 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:06:50 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:06:50 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:07:00 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 146.
+Sep 21 16:07:00 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:07:00 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:07:00 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:07:00 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:07:10 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 147.
+Sep 21 16:07:10 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:07:10 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:07:10 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:07:10 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:07:20 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 148.
+Sep 21 16:07:20 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:07:20 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:07:20 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:07:20 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:07:31 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 149.
+Sep 21 16:07:31 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:07:31 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:07:31 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:07:31 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:07:41 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 150.
+Sep 21 16:07:41 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:07:41 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:07:41 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:07:41 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:07:51 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 151.
+Sep 21 16:07:51 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:07:51 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:07:51 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:07:51 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:08:01 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 152.
+Sep 21 16:08:01 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:08:01 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:08:01 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:08:01 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:08:11 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 153.
+Sep 21 16:08:11 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:08:11 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:08:11 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:08:11 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:08:22 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 154.
+Sep 21 16:08:22 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:08:22 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:08:22 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:08:22 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:08:32 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 155.
+Sep 21 16:08:32 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:08:32 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:08:32 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:08:32 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:08:42 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 156.
+Sep 21 16:08:42 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...
+Sep 21 16:08:42 vlxfortios155 systemd[1]: configharbor.service: Control process exited, code=exited, status=1/FAILURE
+Sep 21 16:08:42 vlxfortios155 systemd[1]: configharbor.service: Failed with result 'exit-code'.
+Sep 21 16:08:42 vlxfortios155 systemd[1]: Failed to start configharbor.service - FortiGate ConfigHarbor.
+Sep 21 16:08:52 vlxfortios155 systemd[1]: configharbor.service: Scheduled restart job, restart counter is at 157.
+Sep 21 16:08:52 vlxfortios155 systemd[1]: Starting configharbor.service - FortiGate ConfigHarbor...

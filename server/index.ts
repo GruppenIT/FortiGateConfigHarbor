@@ -107,7 +107,7 @@ app.use((req, res, next) => {
       log("Default admin user already exists");
     }
   } catch (error) {
-    log("Error initializing default admin user:", error);
+    log("Error initializing default admin user:", String(error));
   }
 
   // Initialize default compliance rules
@@ -116,7 +116,7 @@ app.use((req, res, next) => {
     await complianceService.initializeDefaultRules();
     log("Compliance rules initialized successfully");
   } catch (error) {
-    log("Error initializing compliance rules:", error);
+    log("Error initializing compliance rules:", String(error));
   }
 
   const server = await registerRoutes(app);
