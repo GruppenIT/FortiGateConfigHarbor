@@ -3,6 +3,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { complianceService } from "./services/compliance";
 import { ingestionService } from "./services/ingestion";
+import { inventorySyncService } from "./services/inventory-sync";
 import { storage } from "./storage";
 import { scrypt, randomBytes } from "crypto";
 import { promisify } from "util";
@@ -287,5 +288,54 @@ app.use((req, res, next) => {
       log(`⚠️ Erro ao inicializar ingestão automática: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
       console.error("Error initializing automatic ingestion:", error);
     }
+    
+    // Initialize inventory synchronization service (non-blocking)
+    log("🔄 Iniciando serviço de sincronização de inventário...");
+    
+    // Start inventory sync in background (non-blocking)
+    (async () => {
+      try {
+        // Test connection first with timeout
+        log("🔍 Testando conectividade com SQL Server externo...");
+        const connectionTest = await Promise.race([
+          inventorySyncService.testConnection(),
+          new Promise<boolean>((_, reject) => 
+            setTimeout(() => reject(new Error("Connection timeout")), 15000)
+          )
+        ]);
+        
+        if (!connectionTest) {
+          log("⚠️ Falha na conectividade com SQL Server externo - sincronização não será iniciada");
+          return;
+        }
+        
+        log("✅ Conectividade com SQL Server externo OK");
+        
+        // Run initial inventory sync
+        log("📂 Executando sincronização inicial de inventário...");
+        const initialSync = await inventorySyncService.syncInventory();
+        log(`✅ Sincronização inicial: ${initialSync.synced} sincronizados, ${initialSync.errors} erros`);
+        
+        // Set up automatic inventory sync every 10 minutes
+        const INVENTORY_SYNC_INTERVAL = 10 * 60 * 1000; // 10 minutes in milliseconds
+        setInterval(async () => {
+          try {
+            log("🔄 Executando sincronização automática de inventário...");
+            const result = await inventorySyncService.syncInventory();
+            log(`✅ Sincronização automática: ${result.synced} sincronizados, ${result.errors} erros`);
+          } catch (error) {
+            log(`❌ Erro na sincronização automática de inventário: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+            console.error("Automatic inventory sync error:", error);
+          }
+        }, INVENTORY_SYNC_INTERVAL);
+        
+        log(`✅ Serviço de sincronização de inventário configurado (verificação a cada 10 minutos)`);
+      } catch (error) {
+        log(`⚠️ Erro ao inicializar sincronização de inventário: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+        console.error("Error initializing inventory synchronization:", error);
+      }
+    })();
+    
+    log("✅ Serviço de sincronização de inventário iniciado em background");
   });
 })();

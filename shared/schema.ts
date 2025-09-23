@@ -48,6 +48,13 @@ export const devices = pgTable("devices", {
   tenantId: varchar("tenant_id").references(() => tenants.id),
   hostname: text("hostname"),
   model: text("model"),
+  // Campos do inventário externo
+  modelDesc: text("model_desc"), // modelodesc da consulta SQL Server
+  localizacaoDesc: text("localizacao_desc"), // LocalizacaoDesc da consulta SQL Server
+  statusId: integer("status_id"), // statusid da consulta SQL Server
+  statusDesc: text("status_desc"), // StatusDesc da consulta SQL Server
+  inventoryLastSync: timestamp("inventory_last_sync"), // Controle de sincronização
+  // Campos originais
   tags: text("tags").array(),
   firstSeen: timestamp("first_seen").defaultNow(),
   lastSeen: timestamp("last_seen").defaultNow(),
@@ -56,6 +63,8 @@ export const devices = pgTable("devices", {
 }, (table) => ({
   tenantIdx: index("devices_tenant_idx").on(table.tenantId),
   modelIdx: index("devices_model_idx").on(table.model),
+  statusIdx: index("devices_status_idx").on(table.statusId),
+  locationIdx: index("devices_location_idx").on(table.localizacaoDesc),
 }));
 
 // Device versions table
@@ -302,6 +311,7 @@ export const insertTenantSchema = createInsertSchema(tenants).omit({
 export const insertDeviceSchema = createInsertSchema(devices).omit({
   firstSeen: true,
   lastSeen: true,
+  inventoryLastSync: true,
 });
 
 export const insertDeviceVersionSchema = createInsertSchema(deviceVersions).omit({

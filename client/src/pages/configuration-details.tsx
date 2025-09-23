@@ -24,6 +24,13 @@ interface Device {
   serial: string;
   hostname: string;
   model: string;
+  // Campos do inventário externo
+  modelDesc?: string;
+  localizacaoDesc?: string;
+  statusId?: number;
+  statusDesc?: string;
+  inventoryLastSync?: string;
+  // Campos originais
   vdomEnabled?: boolean;
   primaryVdom?: string;
   tenantId?: string;
@@ -84,30 +91,30 @@ export default function ConfigurationDetails() {
 
   // Get device versions
   const { data: versions = [], isLoading: versionsLoading } = useQuery<DeviceVersion[]>({
-    queryKey: [`/api/devices/${serial}/versions`],
+    queryKey: ['/api/devices', serial, 'versions'],
     enabled: !!serial,
   });
 
   // Get compliance results
   const { data: complianceResults = [], isLoading: complianceLoading } = useQuery<ComplianceResult[]>({
-    queryKey: [`/api/devices/${serial}/compliance`],
-    enabled: !!serial,
+    queryKey: ['/api/devices', serial, 'compliance'],
+    enabled: !!serial && versions && versions.length > 0,
   });
 
-  // Get configurations for selected device
+  // Get configurations for selected device - only if versions exist
   const { data: firewallPolicies = [], isLoading: policiesLoading } = useQuery<FirewallPolicy[]>({
     queryKey: ['/api/devices', serial, 'firewall-policies'],
-    enabled: !!serial,
+    enabled: !!serial && versions && versions.length > 0,
   });
 
   const { data: systemInterfaces = [], isLoading: interfacesLoading } = useQuery<SystemInterface[]>({
     queryKey: ['/api/devices', serial, 'system-interfaces'],
-    enabled: !!serial,
+    enabled: !!serial && versions && versions.length > 0,
   });
 
   const { data: systemAdmins = [], isLoading: adminsLoading } = useQuery<SystemAdmin[]>({
     queryKey: ['/api/devices', serial, 'system-admins'],
-    enabled: !!serial,
+    enabled: !!serial && versions && versions.length > 0,
   });
 
   if (deviceLoading) {
@@ -173,7 +180,7 @@ export default function ConfigurationDetails() {
               </div>
             </div>
             <Badge variant="secondary" data-testid="badge-device-status">
-              Ativo
+              {device.statusDesc || "Ativo"}
             </Badge>
           </div>
 
@@ -197,8 +204,22 @@ export default function ConfigurationDetails() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Modelo</p>
-                  <p className="font-medium" data-testid="text-device-info-model">{device.model || "Desconhecido"}</p>
+                  <p className="font-medium" data-testid="text-device-info-model">
+                    {device.modelDesc || device.model || "Desconhecido"}
+                  </p>
                 </div>
+                {device.localizacaoDesc && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Localização</p>
+                    <p className="font-medium" data-testid="text-device-info-location">{device.localizacaoDesc}</p>
+                  </div>
+                )}
+                {device.statusDesc && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Status do Inventário</p>
+                    <p className="font-medium" data-testid="text-device-info-inventory-status">{device.statusDesc}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm text-muted-foreground">VDOM</p>
                   <p className="font-medium" data-testid="text-device-info-vdom">
@@ -262,6 +283,14 @@ export default function ConfigurationDetails() {
                     )}
                   </div>
                 </div>
+                {device.inventoryLastSync && (
+                  <div>
+                    <p className="text-sm text-muted-foreground">Última Sincronização do Inventário</p>
+                    <p className="font-medium" data-testid="text-device-inventory-sync">
+                      {new Date(device.inventoryLastSync).toLocaleString('pt-BR')}
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -384,9 +413,46 @@ export default function ConfigurationDetails() {
             </Card>
           )}
 
-          {/* Configuration Tabs */}
-          <Tabs defaultValue="policies" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:w-1/2">
+          {/* Message for devices without configuration */}
+          {!versionsLoading && (!versions || versions.length === 0) && (
+            <Card className="mb-8">
+              <CardContent className="text-center py-12">
+                <Monitor className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-foreground mb-2" data-testid="text-no-config-title">
+                  Nenhuma configuração foi recebida
+                </h3>
+                <p className="text-muted-foreground mb-4" data-testid="text-no-config-description">
+                  Este equipamento foi identificado no inventário, mas ainda não possui configurações FortiOS parseadas.
+                  <br />
+                  As configurações aparecerrão aqui assim que forem enviadas para o sistema.
+                </p>
+                <div className="bg-muted/30 p-4 rounded-lg mt-4">
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Dados do Inventário:</strong>
+                    <br />
+                    Modelo: {device?.modelDesc || device?.model || "Não informado"}
+                    {device?.localizacaoDesc && (
+                      <>
+                        <br />
+                        Localização: {device.localizacaoDesc}
+                      </>
+                    )}
+                    {device?.statusDesc && (
+                      <>
+                        <br />
+                        Status: {device.statusDesc}
+                      </>
+                    )}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Configuration Tabs - Only show if there are configurations */}
+          {!versionsLoading && versions && versions.length > 0 && (
+            <Tabs defaultValue="policies" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-3 lg:w-1/2">
               <TabsTrigger value="policies" data-testid="tab-policies">
                 <Shield className="h-4 w-4 mr-2" />
                 Políticas ({firewallPolicies.length})
@@ -561,6 +627,7 @@ export default function ConfigurationDetails() {
               </Card>
             </TabsContent>
           </Tabs>
+          )}
 
         </div>
       </div>

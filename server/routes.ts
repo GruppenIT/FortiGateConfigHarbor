@@ -4,6 +4,7 @@ import { setupAuth } from "./auth";
 import { storage } from "./storage";
 import { ingestionService } from "./services/ingestion";
 import { complianceService } from "./services/compliance";
+import { inventorySyncService } from "./services/inventory-sync";
 
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
@@ -274,6 +275,39 @@ export function registerRoutes(app: Express): Server {
     } catch (error) {
       console.error("Error running compliance evaluation:", error);
       res.status(500).json({ message: "Failed to run compliance evaluation" });
+    }
+  });
+
+  // Inventory synchronization endpoints
+  app.get("/api/inventory/test-connection", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      const isConnected = await inventorySyncService.testConnection();
+      res.json({ connected: isConnected });
+    } catch (error) {
+      console.error("Error testing inventory connection:", error);
+      res.status(500).json({ message: "Failed to test connection" });
+    }
+  });
+
+  app.post("/api/inventory/sync", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      const result = await inventorySyncService.syncInventory();
+      await storage.logAudit({
+        userId: req.user.id,
+        action: "sync_inventory",
+        target: "inventory_service",
+        detailsJson: result
+      });
+      res.json(result);
+    } catch (error) {
+      console.error("Error syncing inventory:", error);
+      res.status(500).json({ message: "Failed to sync inventory" });
     }
   });
 
