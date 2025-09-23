@@ -335,27 +335,18 @@ export class DatabaseStorage implements IStorage {
       .from(devices)
       .where(searchCondition);
 
-    // Determine sort column
-    let sortColumn;
-    switch (sortBy) {
-      case 'hostname':
-        sortColumn = devices.hostname;
-        break;
-      case 'serial':
-        sortColumn = devices.serial;
-        break;
-      case 'model':
-        sortColumn = devices.modelDesc;
-        break;
-      case 'localizacaoDesc':
-        sortColumn = devices.localizacaoDesc;
-        break;
-      case 'lastSeen':
-        sortColumn = devices.lastSeen;
-        break;
-      default:
-        sortColumn = devices.hostname;
-    }
+    // Whitelist allowed sort columns for security
+    const allowedSortColumns = {
+      'hostname': devices.hostname,
+      'serial': devices.serial,
+      'model': devices.modelDesc,
+      'localizacaoDesc': devices.localizacaoDesc,
+      'lastSeen': devices.lastSeen,
+      'lastUpdate': devices.lastSeen, // Map lastUpdate to lastSeen in database
+    };
+
+    // Determine sort column with security validation
+    const sortColumn = allowedSortColumns[sortBy as keyof typeof allowedSortColumns] || devices.hostname;
 
     // Build final query with search, sort and pagination
     let query = db.select().from(devices);
@@ -374,7 +365,7 @@ export class DatabaseStorage implements IStorage {
     let devicesToProcess = [];
     let totalCountForCompliance = totalCount;
     
-    if (complianceFilter === 'non_compliant') {
+    if (complianceFilter && ['non_compliant', 'compliant', 'unknown'].includes(complianceFilter)) {
       // Get all devices that match search criteria (not paginated yet)
       let allDevicesQuery = db.select().from(devices);
       if (searchCondition) {
@@ -393,17 +384,27 @@ export class DatabaseStorage implements IStorage {
           
         if (latestVersion) {
           // Check compliance results for this device version
-          const violations = await db
+          const complianceResultsForDevice = await db
             .select()
             .from(complianceResults)
-            .where(and(
-              eq(complianceResults.deviceVersionId, latestVersion.id),
-              eq(complianceResults.status, 'fail')
-            ));
+            .where(eq(complianceResults.deviceVersionId, latestVersion.id));
             
-          if (violations.length > 0) {
+          if (complianceResultsForDevice.length > 0) {
+            const violations = complianceResultsForDevice.filter(r => r.status === 'fail');
+            const isCompliant = violations.length === 0;
+            
+            if (complianceFilter === 'compliant' && isCompliant) {
+              devicesToProcess.push(device);
+            } else if (complianceFilter === 'non_compliant' && !isCompliant) {
+              devicesToProcess.push(device);
+            }
+          } else if (complianceFilter === 'unknown') {
+            // Device has no compliance results
             devicesToProcess.push(device);
           }
+        } else if (complianceFilter === 'unknown') {
+          // Device has no version/compliance data
+          devicesToProcess.push(device);
         }
       }
       

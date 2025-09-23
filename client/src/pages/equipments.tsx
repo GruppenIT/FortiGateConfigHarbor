@@ -40,6 +40,7 @@ interface DeviceResponse {
 
 export default function Equipments() {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("hostname");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -47,23 +48,39 @@ export default function Equipments() {
   const pageSize = 50;
   const [location] = useLocation();
 
+  // Debounce search term to avoid excessive API calls
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
   // Read URL parameters to set filters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const filter = urlParams.get('filter');
+    // Always update the filter state based on URL parameter
     if (filter === 'non_compliant') {
       setComplianceFilter('non_compliant');
+    } else if (filter === 'compliant') {
+      setComplianceFilter('compliant');
+    } else if (filter === 'unknown') {
+      setComplianceFilter('unknown');
+    } else {
+      setComplianceFilter(''); // Clear filter when no valid parameter
     }
   }, [location]);
 
   // Get devices list with pagination, sorting and search
   const { data: deviceResponse, isLoading: devicesLoading } = useQuery<DeviceResponse>({
-    queryKey: ['/api/devices/summary', currentPage, pageSize, searchTerm, sortBy, sortOrder, complianceFilter],
+    queryKey: ['/api/devices/summary', currentPage, pageSize, debouncedSearchTerm, sortBy, sortOrder, complianceFilter],
     queryFn: async () => {
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: pageSize.toString(),
-        search: searchTerm,
+        search: debouncedSearchTerm,
         sortBy,
         sortOrder
       });
@@ -218,11 +235,11 @@ export default function Equipments() {
                       <SortableHeader column="model">Modelo</SortableHeader>
                       <SortableHeader column="localizacaoDesc">Localização</SortableHeader>
                       <TableHead>Versão</TableHead>
-                      <TableHead>Conformidade</TableHead>
+                      <TableHead data-testid="header-compliance">Conformidade</TableHead>
                       <TableHead>Políticas</TableHead>
                       <TableHead>Interfaces</TableHead>
                       <TableHead>Administradores</TableHead>
-                      <SortableHeader column="lastSeen">Últ. Atualização</SortableHeader>
+                      <SortableHeader column="lastUpdate">Últ. Atualização</SortableHeader>
                       <TableHead>Ações</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -244,15 +261,15 @@ export default function Equipments() {
                         <TableCell className="text-sm">
                           {device.version || 'N/A'}
                         </TableCell>
-                        <TableCell>
+                        <TableCell data-testid={`compliance-status-${device.serial}`}>
                           {device.complianceStatus === 'compliant' && (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1" data-testid={`status-compliant-${device.serial}`}>
                               <ShieldCheck className="h-4 w-4 text-green-600 dark:text-green-400" />
                               <span className="text-sm text-green-600 dark:text-green-400">Conforme</span>
                             </div>
                           )}
                           {device.complianceStatus === 'non_compliant' && (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1" data-testid={`status-non-compliant-${device.serial}`}>
                               <ShieldAlert className="h-4 w-4 text-red-600 dark:text-red-400" />
                               <span className="text-sm text-red-600 dark:text-red-400">
                                 {device.violationsCount || 0} violação{(device.violationsCount || 0) !== 1 ? 'ões' : ''}
@@ -260,7 +277,7 @@ export default function Equipments() {
                             </div>
                           )}
                           {device.complianceStatus === 'unknown' && (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1" data-testid={`status-unknown-${device.serial}`}>
                               <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
                               <span className="text-sm text-yellow-600 dark:text-yellow-400">Pendente</span>
                             </div>
