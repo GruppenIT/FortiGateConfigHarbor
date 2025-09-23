@@ -50,20 +50,32 @@ export class InventorySyncService {
    */
   private async connect(): Promise<sql.ConnectionPool> {
     if (this.pool && this.pool.connected) {
+      console.log('[INVENTÁRIO] 🔄 Reutilizando conexão existente com SQL Server');
       return this.pool;
     }
 
+    console.log('[INVENTÁRIO] 🔍 Buscando configuração do Sistema Ellevo...');
+    
     // Buscar configuração salva no banco
     const config = await storage.getEllevoConfig();
     if (!config) {
+      console.log('[INVENTÁRIO] ❌ Configuração não encontrada');
       throw new Error('Configuração do Sistema Ellevo não encontrada. Configure em Configurações > Sistema Ellevo');
     }
 
+    console.log(`[INVENTÁRIO] ✅ Configuração encontrada: ${config.server}:${config.port || 1433}/${config.database}`);
+    console.log(`[INVENTÁRIO] 👤 Usuário: ${config.username}`);
+
     const sqlConfig = createSqlServerConfig(config);
-    console.log('[INVENTÁRIO] 🔌 Conectando ao SQL Server externo...');
+    console.log(`[INVENTÁRIO] 🔌 Tentando conectar ao SQL Server: ${config.server}:${config.port || 1433}`);
+    console.log(`[INVENTÁRIO] 📋 Configurações: encrypt=${sqlConfig.options?.encrypt}, trustServerCertificate=${sqlConfig.options?.trustServerCertificate}`);
+    
+    const connectionStart = Date.now();
     this.pool = new sql.ConnectionPool(sqlConfig);
     await this.pool.connect();
-    console.log('[INVENTÁRIO] ✅ Conectado ao SQL Server externo');
+    const connectionTime = Date.now() - connectionStart;
+    
+    console.log(`[INVENTÁRIO] ✅ Conectado ao SQL Server externo em ${connectionTime}ms`);
     return this.pool;
   }
 
@@ -98,8 +110,23 @@ export class InventorySyncService {
     `;
 
     console.log('[INVENTÁRIO] 📋 Executando consulta no sistema externo...');
+    console.log('[INVENTÁRIO] 🔍 Filtros: FabricanteID=1 (FortiGate), CategoriaID=7');
+    console.log('[INVENTÁRIO] 📄 Query SQL:', query.trim().replace(/\s+/g, ' '));
+    
+    const queryStart = Date.now();
     const result = await pool.request().query<InventoryDevice>(query);
-    console.log(`[INVENTÁRIO] 📦 Encontrados ${result.recordset.length} equipamentos no inventário`);
+    const queryTime = Date.now() - queryStart;
+    
+    console.log(`[INVENTÁRIO] 📦 Encontrados ${result.recordset.length} equipamentos no inventário (${queryTime}ms)`);
+    
+    if (result.recordset.length > 0) {
+      console.log('[INVENTÁRIO] 📊 Primeira amostra:');
+      const sample = result.recordset[0];
+      console.log(`[INVENTÁRIO]   - Serial: ${sample.numserie}`);
+      console.log(`[INVENTÁRIO]   - Modelo: ${sample.modelodesc}`);
+      console.log(`[INVENTÁRIO]   - Localização: ${sample.LocalizacaoDesc}`);
+      console.log(`[INVENTÁRIO]   - Status: ${sample.StatusDesc} (ID: ${sample.statusid})`);
+    }
     
     return result.recordset;
   }
@@ -157,36 +184,58 @@ export class InventorySyncService {
    */
   async syncInventory(): Promise<{ synced: number; errors: number }> {
     const startTime = Date.now();
-    console.log('[INVENTÁRIO] 🔄 Iniciando sincronização com sistema externo...');
+    const timestamp = new Date().toISOString();
+    
+    console.log(`[INVENTÁRIO] 🔄 === INICIANDO SINCRONIZAÇÃO ${timestamp} ===`);
+    console.log('[INVENTÁRIO] 🎯 Objetivo: Sincronizar equipamentos FortiGate do PlataformaEllevo');
 
     let synced = 0;
     let errors = 0;
 
     try {
       // Buscar equipamentos do inventário externo
+      console.log('[INVENTÁRIO] 📡 Etapa 1/3: Buscar equipamentos do sistema externo');
       const inventoryDevices = await this.fetchInventoryDevices();
 
+      if (inventoryDevices.length === 0) {
+        console.log('[INVENTÁRIO] ⚠️ Nenhum equipamento encontrado no sistema externo');
+        console.log('[INVENTÁRIO] 💡 Verifique se os filtros FabricanteID=1 e CategoriaID=7 estão corretos');
+        return { synced: 0, errors: 0 };
+      }
+
       // Sincronizar cada equipamento
+      console.log(`[INVENTÁRIO] 🔄 Etapa 2/3: Sincronizar ${inventoryDevices.length} equipamentos`);
+      let processedCount = 0;
+      
       for (const device of inventoryDevices) {
         try {
+          processedCount++;
+          console.log(`[INVENTÁRIO] [${processedCount}/${inventoryDevices.length}] Processando: ${device.numserie}`);
           await this.syncDevice(device);
           synced++;
         } catch (error) {
-          console.error(`[INVENTÁRIO] ❌ Erro ao sincronizar ${device.numserie}:`, error);
+          console.error(`[INVENTÁRIO] ❌ [${processedCount}/${inventoryDevices.length}] Erro ao sincronizar ${device.numserie}:`, error);
           errors++;
         }
       }
 
       // Marcar equipamentos que não estão mais no inventário como inativos
       // (opcional - manter por agora para não perder histórico)
+      console.log('[INVENTÁRIO] 📋 Etapa 3/3: Verificação de equipamentos removidos (atualmente desabilitada)');
 
       const duration = Date.now() - startTime;
-      console.log(`[INVENTÁRIO] ✅ Sincronização concluída em ${duration}ms`);
-      console.log(`[INVENTÁRIO] 📊 Sincronizados: ${synced}, Erros: ${errors}`);
+      const endTimestamp = new Date().toISOString();
+      
+      console.log(`[INVENTÁRIO] ✅ === SINCRONIZAÇÃO CONCLUÍDA ${endTimestamp} ===`);
+      console.log(`[INVENTÁRIO] ⏱️ Duração total: ${duration}ms`);
+      console.log(`[INVENTÁRIO] 📊 Resultado: ${synced} sincronizados, ${errors} erros`);
+      console.log(`[INVENTÁRIO] 📈 Taxa de sucesso: ${inventoryDevices.length > 0 ? Math.round((synced / inventoryDevices.length) * 100) : 0}%`);
 
       return { synced, errors };
     } catch (error) {
-      console.error('[INVENTÁRIO] ❌ Erro na sincronização:', error);
+      const duration = Date.now() - startTime;
+      console.error(`[INVENTÁRIO] ❌ === SINCRONIZAÇÃO FALHOU (${duration}ms) ===`);
+      console.error('[INVENTÁRIO] 💥 Erro crítico na sincronização:', error);
       throw error;
     } finally {
       await this.disconnect();
