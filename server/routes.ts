@@ -350,6 +350,21 @@ export function registerRoutes(app: Express): Server {
         detailsJson: { server: config.server, database: config.database }
       });
       
+      // Restart inventory sync service with new configuration
+      try {
+        const restartInventorySync = (global as any).restartInventorySync;
+        if (typeof restartInventorySync === 'function') {
+          console.log(`[API] 🔄 Reiniciando serviço de sincronização após salvar configuração`);
+          // Don't await to avoid blocking the response
+          restartInventorySync().catch((err: any) => {
+            console.error('Erro ao reiniciar sincronização:', err);
+          });
+        }
+      } catch (restartError) {
+        console.error("Error restarting inventory sync:", restartError);
+        // Don't fail the config save if restart fails
+      }
+      
       res.json(config);
     } catch (error) {
       console.error("Error saving Ellevo config:", error);

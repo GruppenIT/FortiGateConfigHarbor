@@ -292,20 +292,25 @@ app.use((req, res, next) => {
     // Initialize inventory synchronization service (non-blocking)
     log("🔄 Iniciando serviço de sincronização de inventário...");
     
-    // Start inventory sync in background (non-blocking)
-    (async () => {
+    // Global variable to track if sync is already scheduled
+    let inventorySyncInterval: NodeJS.Timeout | null = null;
+    
+    // Function to start/restart inventory sync service
+    const startInventorySync = async (): Promise<void> => {
       try {
-        // Test connection first with timeout
+        // Clear existing interval if any
+        if (inventorySyncInterval) {
+          clearInterval(inventorySyncInterval);
+          inventorySyncInterval = null;
+          log("🔄 Reiniciando serviço de sincronização de inventário...");
+        }
+        
+        // Test connection first
         log("🔍 Testando conectividade com SQL Server externo...");
-        const connectionTest = await Promise.race([
-          inventorySyncService.testConnection(),
-          new Promise<boolean>((_, reject) => 
-            setTimeout(() => reject(new Error("Connection timeout")), 15000)
-          )
-        ]);
+        const connectionTest = await inventorySyncService.testConnection();
         
         if (!connectionTest) {
-          log("⚠️ Falha na conectividade com SQL Server externo - sincronização não será iniciada");
+          log("⚠️ Falha na conectividade com SQL Server externo - tentará novamente em 10 minutos");
           return;
         }
         
@@ -318,7 +323,7 @@ app.use((req, res, next) => {
         
         // Set up automatic inventory sync every 10 minutes
         const INVENTORY_SYNC_INTERVAL = 10 * 60 * 1000; // 10 minutes in milliseconds
-        setInterval(async () => {
+        inventorySyncInterval = setInterval(async () => {
           try {
             log("🔄 Executando sincronização automática de inventário...");
             const result = await inventorySyncService.syncInventory();
@@ -334,7 +339,31 @@ app.use((req, res, next) => {
         log(`⚠️ Erro ao inicializar sincronização de inventário: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
         console.error("Error initializing inventory synchronization:", error);
       }
+    };
+    
+    // Try to start sync service initially (non-blocking)
+    (async () => {
+      try {
+        await startInventorySync();
+      } catch (error) {
+        log(`⚠️ Falha na inicialização inicial da sincronização: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+      }
     })();
+    
+    // Set up periodic check for configuration availability every 5 minutes
+    setInterval(async () => {
+      try {
+        if (!inventorySyncInterval) {
+          log("🔍 Verificando disponibilidade de configuração Ellevo...");
+          await startInventorySync();
+        }
+      } catch (error) {
+        log(`⚠️ Erro na verificação periódica de configuração: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+      }
+    }, 5 * 60 * 1000); // Check every 5 minutes
+    
+    // Export the restart function globally for use in routes
+    (global as any).restartInventorySync = startInventorySync;
     
     log("✅ Serviço de sincronização de inventário iniciado em background");
   });
