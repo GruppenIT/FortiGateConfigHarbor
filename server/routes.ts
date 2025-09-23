@@ -379,6 +379,46 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  app.post("/api/ellevo-sync/force", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      console.log(`[API] 🔄 Sincronização manual iniciada por ${req.user.username}`);
+      const syncResult = await inventorySyncService.syncInventory();
+      
+      await storage.logAudit({
+        userId: req.user.id,
+        action: "force_inventory_sync",
+        target: "inventory_system",
+        detailsJson: { synced: syncResult.synced, errors: syncResult.errors }
+      });
+      
+      console.log(`[API] ✅ Sincronização manual concluída: ${syncResult.synced} sincronizados, ${syncResult.errors} erros`);
+      res.json({
+        success: true,
+        message: `Sincronização concluída com sucesso. ${syncResult.synced} equipamentos sincronizados${syncResult.errors > 0 ? `, ${syncResult.errors} com erro` : ''}`,
+        synced: syncResult.synced,
+        errors: syncResult.errors
+      });
+    } catch (error) {
+      console.error("Error forcing inventory sync:", error);
+      const errorMsg = error instanceof Error ? error.message : 'Erro desconhecido';
+      
+      await storage.logAudit({
+        userId: req.user.id,
+        action: "force_inventory_sync_failed",
+        target: "inventory_system",
+        detailsJson: { error: errorMsg }
+      });
+      
+      res.status(500).json({ 
+        success: false,
+        message: `Erro na sincronização: ${errorMsg}` 
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

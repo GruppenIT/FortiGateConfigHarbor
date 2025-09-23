@@ -1,0 +1,37 @@
+root@vlxfortios155:~# sudo journalctl -u configharbor -f
+Sep 23 15:43:15 vlxfortios155 configharbor[1264229]: 3:43:15 PM [express] POST /api/ellevo-config 200 in 20ms
+Sep 23 15:43:15 vlxfortios155 configharbor[1264229]: 3:43:15 PM [express] GET /api/ellevo-config 200 in 3ms
+Sep 23 15:43:16 vlxfortios155 configharbor[1264229]: [INVENTÁRIO] 🔍 Testando conectividade com configuração fornecida...
+Sep 23 15:43:16 vlxfortios155 configharbor[1264229]: 3:43:16 PM [express] POST /api/ellevo-sync/test 200 in 31ms
+Sep 23 15:43:24 vlxfortios155 configharbor[1264229]: 3:43:24 PM [express] GET /api/user 200 in 3ms
+Sep 23 15:43:24 vlxfortios155 configharbor[1264229]: 3:43:24 PM [express] GET /api/devices/summary 304 in 6ms
+Sep 23 15:43:24 vlxfortios155 configharbor[1264229]: 3:43:24 PM [express] GET /api/user 304 in 3ms
+Sep 23 15:43:24 vlxfortios155 configharbor[1264229]: 3:43:24 PM [express] GET /api/devices/summary 304 in 5ms
+Sep 23 15:43:27 vlxfortios155 configharbor[1264229]: 3:43:27 PM [express] GET /api/audit 200 in 6ms
+Sep 23 15:43:28 vlxfortios155 configharbor[1264229]: 3:43:28 PM [express] GET /api/ellevo-config 304 in 4ms
+Sep 23 15:43:47 vlxfortios155 configharbor[1264229]: [INVENTÁRIO] 🔍 Testando conectividade com configuração fornecida...
+Sep 23 15:43:47 vlxfortios155 configharbor[1264229]: 3:43:47 PM [express] POST /api/ellevo-sync/test 200 in 20ms
+Sep 23 15:43:53 vlxfortios155 configharbor[1264229]: 3:43:53 PM [express] GET /api/user 304 in 6ms
+Sep 23 15:43:53 vlxfortios155 configharbor[1264229]: 3:43:53 PM [express] GET /api/devices/summary 304 in 4ms
+Sep 23 15:43:54 vlxfortios155 configharbor[1264229]: 3:43:54 PM [express] GET /api/user 304 in 6ms
+Sep 23 15:43:54 vlxfortios155 configharbor[1264229]: 3:43:54 PM [express] GET /api/devices/summary 304 in 6ms
+Sep 23 15:43:55 vlxfortios155 configharbor[1264229]: 3:43:55 PM [express] GET /api/user 304 in 4ms
+Sep 23 15:43:55 vlxfortios155 configharbor[1264229]: 3:43:55 PM [express] GET /api/devices/summary 304 in 4ms
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 🔄 [INGESTÃO MANUAL] Iniciando processamento manual...
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 📁 [INGESTÃO MANUAL] Diretório de dados: /opt/FortiGateConfigHarbor/data
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 📦 [INGESTÃO MANUAL] Diretório de arquivo: /opt/FortiGateConfigHarbor/archive
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: ⚠️ [INGESTÃO MANUAL] Diretório de quarentena: /opt/FortiGateConfigHarbor/quarantine
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 📂 [PROCESSAMENTO] Garantindo que diretórios existam...
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 📂 [PROCESSAMENTO] Lendo arquivos do diretório: /opt/FortiGateConfigHarbor/data
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 📂 [PROCESSAMENTO] Encontrados 0 itens no diretório: []
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: ✅ [INGESTÃO MANUAL] Processamento concluído: { processed: 0, quarantined: 0, duplicates: 0 }
+Sep 23 15:44:01 vlxfortios155 configharbor[1264229]: 3:44:01 PM [express] POST /api/ingestion/trigger 200 in 5ms
+Sep 23 15:44:08 vlxfortios155 configharbor[1264229]: 3:44:08 PM [express] GET /api/compliance/rules 304 in 6ms
+Sep 23 15:44:08 vlxfortios155 configharbor[1264229]: 3:44:08 PM [express] GET /api/compliance/stats 304 in 6ms
+Sep 23 15:44:11 vlxfortios155 configharbor[1264229]: 3:44:11 PM [express] GET /api/user 304 in 4ms
+Sep 23 15:44:11 vlxfortios155 configharbor[1264229]: 3:44:11 PM [express] GET /api/devices/summary 304 in 4ms
+Sep 23 15:44:11 vlxfortios155 configharbor[1264229]: 3:44:11 PM [express] GET /api/user 304 in 4ms
+Sep 23 15:44:11 vlxfortios155 configharbor[1264229]: 3:44:11 PM [express] GET /api/devices/summary 304 in 5ms
+Sep 23 15:44:12 vlxfortios155 configharbor[1264229]: 3:44:12 PM [express] GET /api/ellevo-config 304 in 5ms
+Sep 23 15:44:17 vlxfortios155 configharbor[1264229]: [INVENTÁRIO] 🔍 Testando conectividade com configuração fornecida...
+Sep 23 15:44:17 vlxfortios155 configharbor[1264229]: 3:44:17 PM [express] POST /api/ellevo-sync/test 200 in 19ms
