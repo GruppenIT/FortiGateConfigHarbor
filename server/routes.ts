@@ -34,6 +34,19 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Devices summary with counts
+  app.get("/api/devices/summary", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const devicesSummary = await storage.getDevicesSummary();
+      res.json(devicesSummary);
+    } catch (error) {
+      console.error("Error fetching devices summary:", error);
+      res.status(500).json({ message: "Failed to fetch devices summary" });
+    }
+  });
+
   app.get("/api/devices/:serial", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     

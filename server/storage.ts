@@ -53,6 +53,13 @@ export interface IStorage {
   getDevice(serial: string): Promise<Device | undefined>;
   createOrUpdateDevice(device: InsertDevice): Promise<Device>;
   getDevices(limit?: number): Promise<Device[]>;
+  getDevicesSummary(): Promise<Array<Device & { 
+    version: string; 
+    lastUpdate: string; 
+    policiesCount: number; 
+    interfacesCount: number; 
+    adminsCount: number; 
+  }>>;
   getDeviceWithLatestVersion(serial: string): Promise<Device & { latestVersion?: DeviceVersion } | undefined>;
   
   // Device versions
@@ -206,6 +213,67 @@ export class DatabaseStorage implements IStorage {
       .from(devices)
       .orderBy(desc(devices.lastSeen))
       .limit(limit);
+  }
+
+  async getDevicesSummary(): Promise<Array<Device & { 
+    version: string; 
+    lastUpdate: string; 
+    policiesCount: number; 
+    interfacesCount: number; 
+    adminsCount: number; 
+  }>> {
+    // First get all devices
+    const allDevices = await this.getDevices();
+    
+    const devicesSummary = [];
+    
+    for (const device of allDevices) {
+      // Get latest version for this device
+      const [latestVersion] = await db
+        .select()
+        .from(deviceVersions)
+        .where(eq(deviceVersions.deviceSerial, device.serial))
+        .orderBy(desc(deviceVersions.capturedAt))
+        .limit(1);
+      
+      let policiesCount = 0;
+      let interfacesCount = 0;
+      let adminsCount = 0;
+      
+      if (latestVersion) {
+        // Count policies for this version
+        const [policyCount] = await db
+          .select({ count: count() })
+          .from(firewallPolicies)
+          .where(eq(firewallPolicies.deviceVersionId, latestVersion.id));
+        policiesCount = policyCount.count;
+        
+        // Count interfaces for this version
+        const [interfaceCount] = await db
+          .select({ count: count() })
+          .from(systemInterfaces)
+          .where(eq(systemInterfaces.deviceVersionId, latestVersion.id));
+        interfacesCount = interfaceCount.count;
+        
+        // Count admins for this version
+        const [adminCount] = await db
+          .select({ count: count() })
+          .from(systemAdmins)
+          .where(eq(systemAdmins.deviceVersionId, latestVersion.id));
+        adminsCount = adminCount.count;
+      }
+      
+      devicesSummary.push({
+        ...device,
+        version: latestVersion?.fortiosVersion || 'N/A',
+        lastUpdate: latestVersion?.capturedAt?.toISOString() || device.lastSeen?.toISOString() || new Date().toISOString(),
+        policiesCount,
+        interfacesCount,
+        adminsCount
+      });
+    }
+    
+    return devicesSummary;
   }
 
   async getDeviceWithLatestVersion(serial: string): Promise<Device & { latestVersion?: DeviceVersion } | undefined> {

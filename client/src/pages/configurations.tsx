@@ -1,67 +1,41 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Settings, Shield, Users, Network, Loader2, Monitor } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Monitor, Eye, Search, Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface Device {
   serial: string;
   hostname: string;
   model: string;
-}
-
-interface FirewallPolicy {
-  seq: number;
-  action: string;
-  srcAddr: string[];
-  dstAddr: string[];
-  service: string[];
-  srcIntf: string[];
-  dstIntf: string[];
-}
-
-interface SystemInterface {
-  name: string;
-  ipCidr: string;
-  mode: string;
-  zone: string;
-  status: string;
-}
-
-interface SystemAdmin {
-  username: string;
-  profile: string;
-  trustedHosts: string[];
-  twoFactor: boolean;
+  version: string;
+  lastUpdate: string;
+  policiesCount: number;
+  interfacesCount: number;
+  adminsCount: number;
 }
 
 export default function Configurations() {
-  const [selectedDevice, setSelectedDevice] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // Get devices list
+  // Get devices list with details
   const { data: devices = [], isLoading: devicesLoading } = useQuery<Device[]>({
-    queryKey: ['/api/devices'],
+    queryKey: ['/api/devices/summary'],
   });
 
-  // Get configurations for selected device
-  const { data: firewallPolicies = [], isLoading: policiesLoading } = useQuery<FirewallPolicy[]>({
-    queryKey: ['/api/devices', selectedDevice, 'firewall-policies'],
-    enabled: !!selectedDevice,
-  });
-
-  const { data: systemInterfaces = [], isLoading: interfacesLoading } = useQuery<SystemInterface[]>({
-    queryKey: ['/api/devices', selectedDevice, 'system-interfaces'],
-    enabled: !!selectedDevice,
-  });
-
-  const { data: systemAdmins = [], isLoading: adminsLoading } = useQuery<SystemAdmin[]>({
-    queryKey: ['/api/devices', selectedDevice, 'system-admins'],
-    enabled: !!selectedDevice,
+  // Filter devices based on search term
+  const filteredDevices = devices.filter(device => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      (device.hostname && device.hostname.toLowerCase().includes(searchLower)) ||
+      device.serial.toLowerCase().includes(searchLower) ||
+      (device.model && device.model.toLowerCase().includes(searchLower))
+    );
   });
 
   return (
@@ -74,223 +48,128 @@ export default function Configurations() {
               Visualize e analise objetos de configuração do FortiGate em sua infraestrutura.
             </p>
             
-            {/* Device Selector */}
+            {/* Search Filter */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Monitor className="h-5 w-5" />
-                  Selecionar Dispositivo FortiGate
+                  <Search className="h-5 w-5" />
+                  Filtrar Dispositivos
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {devicesLoading ? (
-                  <Skeleton className="h-10 w-full" />
-                ) : (
-                  <Select value={selectedDevice} onValueChange={setSelectedDevice} data-testid="select-device">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Escolha um dispositivo para ver suas configurações" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {devices.map(device => (
-                        <SelectItem key={device.serial} value={device.serial}>
-                          {device.hostname || device.serial} ({device.model || 'Modelo desconhecido'})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input
+                    placeholder="Buscar por nome, número de série ou modelo..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                    data-testid="input-search-devices"
+                  />
+                </div>
+                {searchTerm && (
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Mostrando {filteredDevices.length} de {devices.length} dispositivos
+                  </p>
                 )}
               </CardContent>
             </Card>
           </div>
 
-          {!selectedDevice ? (
-            <Card>
-              <CardContent className="text-center py-12">
-                <Monitor className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-foreground mb-2">Selecione um dispositivo</h3>
-                <p className="text-muted-foreground">
-                  Escolha um dispositivo FortiGate acima para visualizar suas configurações.
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <Tabs defaultValue="policies" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3 lg:w-1/2">
-                <TabsTrigger value="policies" data-testid="tab-policies">
-                  <Shield className="h-4 w-4 mr-2" />
-                  Políticas ({firewallPolicies.length})
-                </TabsTrigger>
-                <TabsTrigger value="interfaces" data-testid="tab-interfaces">
-                  <Network className="h-4 w-4 mr-2" />
-                  Interfaces ({systemInterfaces.length})
-                </TabsTrigger>
-                <TabsTrigger value="admins" data-testid="tab-admins">
-                  <Users className="h-4 w-4 mr-2" />
-                  Administradores ({systemAdmins.length})
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="policies">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Políticas de Firewall</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {policiesLoading ? (
-                      <div className="flex items-center justify-center py-8">
-                        <Loader2 className="h-8 w-8 animate-spin" />
-                        <span className="ml-2">Carregando políticas...</span>
-                      </div>
-                    ) : firewallPolicies.length === 0 ? (
-                      <div className="text-center py-12">
-                        <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-foreground mb-2">Nenhuma política encontrada</h3>
-                        <p className="text-muted-foreground">
-                          Este dispositivo não possui políticas de firewall configuradas.
-                        </p>
-                      </div>
-                    ) : (
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Seq</TableHead>
-                            <TableHead>Ação</TableHead>
-                            <TableHead>Origem</TableHead>
-                            <TableHead>Destino</TableHead>
-                            <TableHead>Serviços</TableHead>
-                            <TableHead>Interface Origem</TableHead>
-                            <TableHead>Interface Destino</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {firewallPolicies.map((policy, index) => (
-                            <TableRow key={index} data-testid={`row-policy-${policy.seq}`}>
-                              <TableCell className="font-mono">{policy.seq}</TableCell>
-                              <TableCell>
-                                <Badge variant={policy.action === 'accept' ? 'default' : 'destructive'}>
-                                  {policy.action}
-                                </Badge>
-                              </TableCell>
-                              <TableCell>{policy.srcAddr?.join(', ') || 'N/A'}</TableCell>
-                              <TableCell>{policy.dstAddr?.join(', ') || 'N/A'}</TableCell>
-                              <TableCell>{policy.service?.join(', ') || 'N/A'}</TableCell>
-                              <TableCell>{policy.srcIntf?.join(', ') || 'N/A'}</TableCell>
-                              <TableCell>{policy.dstIntf?.join(', ') || 'N/A'}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="interfaces">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Interfaces do Sistema</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {interfacesLoading ? (
-                      <div className="flex items-center justify-center py-8">
-                        <Loader2 className="h-8 w-8 animate-spin" />
-                        <span className="ml-2">Carregando interfaces...</span>
-                      </div>
-                    ) : systemInterfaces.length === 0 ? (
-                      <div className="text-center py-12">
-                        <Network className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-foreground mb-2">Nenhuma interface encontrada</h3>
-                        <p className="text-muted-foreground">
-                          Este dispositivo não possui interfaces configuradas.
-                        </p>
-                      </div>
-                    ) : (
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Nome</TableHead>
-                            <TableHead>IP/CIDR</TableHead>
-                            <TableHead>Modo</TableHead>
-                            <TableHead>Zona</TableHead>
-                            <TableHead>Status</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {systemInterfaces.map((iface, index) => (
-                            <TableRow key={index} data-testid={`row-interface-${iface.name}`}>
-                              <TableCell className="font-mono">{iface.name}</TableCell>
-                              <TableCell>{iface.ipCidr || 'N/A'}</TableCell>
-                              <TableCell>{iface.mode || 'N/A'}</TableCell>
-                              <TableCell>{iface.zone || 'N/A'}</TableCell>
-                              <TableCell>
-                                <Badge variant={iface.status === 'up' ? 'default' : 'secondary'}>
-                                  {iface.status || 'unknown'}
-                                </Badge>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="admins">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Administradores do Sistema</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {adminsLoading ? (
-                      <div className="flex items-center justify-center py-8">
-                        <Loader2 className="h-8 w-8 animate-spin" />
-                        <span className="ml-2">Carregando administradores...</span>
-                      </div>
-                    ) : systemAdmins.length === 0 ? (
-                      <div className="text-center py-12">
-                        <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-foreground mb-2">Nenhum administrador encontrado</h3>
-                        <p className="text-muted-foreground">
-                          Este dispositivo não possui administradores configurados.
-                        </p>
-                      </div>
-                    ) : (
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead>Nome de Usuário</TableHead>
-                            <TableHead>Perfil</TableHead>
-                            <TableHead>Hosts Confiáveis</TableHead>
-                            <TableHead>2FA</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {systemAdmins.map((admin, index) => (
-                            <TableRow key={index} data-testid={`row-admin-${admin.username}`}>
-                              <TableCell className="font-mono">{admin.username}</TableCell>
-                              <TableCell>{admin.profile || 'N/A'}</TableCell>
-                              <TableCell>
-                                {admin.trustedHosts?.length > 0 
-                                  ? admin.trustedHosts.join(', ')
-                                  : 'Qualquer IP'
-                                }
-                              </TableCell>
-                              <TableCell>
-                                <Badge variant={admin.twoFactor ? 'default' : 'secondary'}>
-                                  {admin.twoFactor ? 'Ativado' : 'Desativado'}
-                                </Badge>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          )}
+          {/* Devices Table */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Monitor className="h-5 w-5" />
+                Dispositivos FortiGate ({filteredDevices.length})
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {devicesLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-8 w-8 animate-spin" />
+                  <span className="ml-2">Carregando dispositivos...</span>
+                </div>
+              ) : filteredDevices.length === 0 ? (
+                <div className="text-center py-12">
+                  <Monitor className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-foreground mb-2">
+                    {searchTerm ? 'Nenhum dispositivo encontrado' : 'Nenhum dispositivo disponível'}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    {searchTerm 
+                      ? 'Tente ajustar os filtros de busca.'
+                      : 'Aguarde o processamento de arquivos de configuração.'
+                    }
+                  </p>
+                </div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Hostname</TableHead>
+                      <TableHead>Número de Série</TableHead>
+                      <TableHead>Modelo</TableHead>
+                      <TableHead>Versão</TableHead>
+                      <TableHead>Políticas</TableHead>
+                      <TableHead>Interfaces</TableHead>
+                      <TableHead>Administradores</TableHead>
+                      <TableHead>Última Atualização</TableHead>
+                      <TableHead>Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredDevices.map((device) => (
+                      <TableRow key={device.serial} data-testid={`row-device-${device.serial}`}>
+                        <TableCell className="font-medium">
+                          {device.hostname || 'N/A'}
+                        </TableCell>
+                        <TableCell className="font-mono text-sm">
+                          {device.serial}
+                        </TableCell>
+                        <TableCell>
+                          {device.model || 'N/A'}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {device.version || 'N/A'}
+                        </TableCell>
+                        <TableCell>
+                          <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30">
+                            {device.policiesCount || 0}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-700/10 dark:bg-green-400/10 dark:text-green-400 dark:ring-green-400/30">
+                            {device.interfacesCount || 0}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <span className="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:ring-purple-400/30">
+                            {device.adminsCount || 0}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {device.lastUpdate ? new Date(device.lastUpdate).toLocaleDateString('pt-BR') : 'N/A'}
+                        </TableCell>
+                        <TableCell>
+                          <Link href={`/configurations/${device.serial}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              data-testid={`button-view-${device.serial}`}
+                            >
+                              <Eye className="h-4 w-4" />
+                              <span className="sr-only">Ver detalhes de {device.hostname || device.serial}</span>
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
 
         </div>
       </div>
