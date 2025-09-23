@@ -7,8 +7,9 @@ import { AuthProvider } from "@/hooks/use-auth";
 import NotFound from "@/pages/not-found";
 import AuthPage from "@/pages/auth-page";
 import Dashboard from "@/pages/dashboard";
+import Equipments from "@/pages/equipments";
+import EquipmentDetails from "@/pages/equipment-details";
 import Configurations from "@/pages/configurations";
-import ConfigurationDetails from "@/pages/configuration-details";
 import Compliance from "@/pages/compliance";
 import Ingestion from "@/pages/ingestion";
 import Quarantine from "@/pages/quarantine";
@@ -20,7 +21,8 @@ function Router() {
   return (
     <Switch>
       <ProtectedRoute path="/" component={Dashboard} />
-      <ProtectedRoute path="/configurations/:serial" component={ConfigurationDetails} />
+      <ProtectedRoute path="/equipments/:serial" component={EquipmentDetails} />
+      <ProtectedRoute path="/equipments" component={Equipments} />
       <ProtectedRoute path="/configurations" component={Configurations} />
       <ProtectedRoute path="/compliance" component={Compliance} />
       <ProtectedRoute path="/ingestion" component={Ingestion} />

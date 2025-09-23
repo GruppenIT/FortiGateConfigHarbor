@@ -2,14 +2,24 @@ import sql from 'mssql';
 import { db } from '../db.js';
 import { devices } from '../../shared/schema.js';
 import { eq } from 'drizzle-orm';
+import { storage } from '../storage.js';
 
-// Configuração do SQL Server externo - usando variáveis de ambiente por segurança
-const SQL_SERVER_CONFIG: sql.config = {
-  server: process.env.INVENTORY_SQL_SERVER || '192.168.100.18',
-  port: parseInt(process.env.INVENTORY_SQL_PORT || '1433'),
-  database: process.env.INVENTORY_SQL_DATABASE || 'PlataformaEllevo',
-  user: process.env.INVENTORY_SQL_USER || 'fortigateconfigharbor',
-  password: process.env.INVENTORY_SQL_PASSWORD || '', // Deve ser definido nas variáveis de ambiente
+// Interface para configuração do SQL Server
+interface SqlConfig {
+  server: string;
+  port: string;
+  database: string;
+  username: string;
+  password: string;
+}
+
+// Função para criar configuração do SQL Server a partir dos parâmetros
+const createSqlServerConfig = (config: SqlConfig): sql.config => ({
+  server: config.server,
+  port: parseInt(config.port),
+  database: config.database,
+  user: config.username,
+  password: config.password,
   options: {
     encrypt: false, // Para redes internas
     trustServerCertificate: true,
@@ -21,7 +31,7 @@ const SQL_SERVER_CONFIG: sql.config = {
     min: 0,
     idleTimeoutMillis: 30000,
   },
-};
+});
 
 // Interface para os dados retornados pela consulta SQL Server
 interface InventoryDevice {
@@ -36,15 +46,22 @@ export class InventorySyncService {
   private pool: sql.ConnectionPool | null = null;
 
   /**
-   * Conecta ao SQL Server externo
+   * Conecta ao SQL Server externo usando configurações do banco
    */
   private async connect(): Promise<sql.ConnectionPool> {
     if (this.pool && this.pool.connected) {
       return this.pool;
     }
 
+    // Buscar configuração salva no banco
+    const config = await storage.getEllevoConfig();
+    if (!config) {
+      throw new Error('Configuração do Sistema Ellevo não encontrada. Configure em Configurações > Sistema Ellevo');
+    }
+
+    const sqlConfig = createSqlServerConfig(config);
     console.log('[INVENTÁRIO] 🔌 Conectando ao SQL Server externo...');
-    this.pool = new sql.ConnectionPool(SQL_SERVER_CONFIG);
+    this.pool = new sql.ConnectionPool(sqlConfig);
     await this.pool.connect();
     console.log('[INVENTÁRIO] ✅ Conectado ao SQL Server externo');
     return this.pool;
@@ -194,6 +211,33 @@ export class InventorySyncService {
       return false;
     } finally {
       await this.disconnect();
+    }
+  }
+
+  /**
+   * Testa a conectividade com configuração específica (para testes via interface)
+   */
+  async testConnectionWithConfig(config: SqlConfig): Promise<{success: boolean, message?: string}> {
+    let pool: sql.ConnectionPool | null = null;
+    try {
+      console.log('[INVENTÁRIO] 🔍 Testando conectividade com configuração fornecida...');
+      const sqlConfig = createSqlServerConfig(config);
+      pool = new sql.ConnectionPool(sqlConfig);
+      await pool.connect();
+      await pool.request().query('SELECT 1 as test');
+      return { success: true, message: 'Conexão estabelecida com sucesso!' };
+    } catch (error) {
+      console.error('[INVENTÁRIO] ❌ Erro na conexão de teste:', error);
+      const errorMsg = error instanceof Error ? error.message : 'Erro desconhecido';
+      return { success: false, message: `Falha na conexão: ${errorMsg}` };
+    } finally {
+      if (pool) {
+        try {
+          await pool.close();
+        } catch (closeError) {
+          console.error('[INVENTÁRIO] ⚠️ Erro ao fechar conexão de teste:', closeError);
+        }
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import { storage } from "./storage";
 import { ingestionService } from "./services/ingestion";
 import { complianceService } from "./services/compliance";
 import { inventorySyncService } from "./services/inventory-sync";
+import { insertEllevoConfigSchema } from "@shared/schema";
 
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
@@ -308,6 +309,73 @@ export function registerRoutes(app: Express): Server {
     } catch (error) {
       console.error("Error syncing inventory:", error);
       res.status(500).json({ message: "Failed to sync inventory" });
+    }
+  });
+
+  // Ellevo Configuration endpoints
+  app.get("/api/ellevo-config", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      const config = await storage.getEllevoConfig();
+      if (!config) {
+        return res.json({
+          server: "",
+          port: "1433",
+          database: "",
+          username: "",
+          password: ""
+        });
+      }
+      res.json(config);
+    } catch (error) {
+      console.error("Error fetching Ellevo config:", error);
+      res.status(500).json({ message: "Failed to fetch configuration" });
+    }
+  });
+
+  app.post("/api/ellevo-config", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      const validatedConfig = insertEllevoConfigSchema.parse(req.body);
+      const config = await storage.createOrUpdateEllevoConfig(validatedConfig);
+      
+      await storage.logAudit({
+        userId: req.user.id,
+        action: "update_ellevo_config",
+        target: "ellevo_configuration",
+        detailsJson: { server: config.server, database: config.database }
+      });
+      
+      res.json(config);
+    } catch (error) {
+      console.error("Error saving Ellevo config:", error);
+      res.status(500).json({ message: "Failed to save configuration" });
+    }
+  });
+
+  app.post("/api/ellevo-sync/test", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (req.user?.role !== 'admin') return res.sendStatus(403);
+    
+    try {
+      const config = req.body;
+      const testResult = await inventorySyncService.testConnectionWithConfig(config);
+      
+      await storage.logAudit({
+        userId: req.user.id,
+        action: "test_ellevo_connection",
+        target: "ellevo_configuration",
+        detailsJson: { success: testResult.success, server: config.server }
+      });
+      
+      res.json(testResult);
+    } catch (error) {
+      console.error("Error testing Ellevo connection:", error);
+      res.status(500).json({ message: "Failed to test connection" });
     }
   });
 

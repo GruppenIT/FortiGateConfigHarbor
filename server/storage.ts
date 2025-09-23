@@ -10,6 +10,7 @@ import {
   complianceResults,
   auditLog,
   ingestErrors,
+  ellevoConfigs,
   type User, 
   type InsertUser,
   type Device,
@@ -24,7 +25,9 @@ import {
   type SystemAdmin,
   type IngestError,
   type AuditLog,
-  type InsertAuditLog
+  type InsertAuditLog,
+  type EllevoConfig,
+  type InsertEllevoConfig
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, count, sql } from "drizzle-orm";
@@ -105,6 +108,10 @@ export interface IStorage {
   getFirewallPolicies(deviceSerial: string): Promise<FirewallPolicy[]>;
   getSystemInterfaces(deviceSerial: string): Promise<SystemInterface[]>;
   getSystemAdmins(deviceSerial: string): Promise<SystemAdmin[]>;
+  
+  // Ellevo Configuration management
+  getEllevoConfig(): Promise<EllevoConfig | undefined>;
+  createOrUpdateEllevoConfig(config: InsertEllevoConfig): Promise<EllevoConfig>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -518,6 +525,40 @@ export class DatabaseStorage implements IStorage {
       .then(rows => rows.map(row => row.system_admins));
     console.log(`[DEBUG] Encontrados ${result.length} admins para dispositivo ${deviceSerial}`);
     return result;
+  }
+
+  async getEllevoConfig(): Promise<EllevoConfig | undefined> {
+    const [config] = await db
+      .select()
+      .from(ellevoConfigs)
+      .orderBy(desc(ellevoConfigs.createdAt))
+      .limit(1);
+    return config || undefined;
+  }
+
+  async createOrUpdateEllevoConfig(insertConfig: InsertEllevoConfig): Promise<EllevoConfig> {
+    // Verificar se já existe uma configuração
+    const existingConfig = await this.getEllevoConfig();
+    
+    if (existingConfig) {
+      // Atualizar configuração existente
+      const [updatedConfig] = await db
+        .update(ellevoConfigs)
+        .set({
+          ...insertConfig,
+          updatedAt: new Date(),
+        })
+        .where(eq(ellevoConfigs.id, existingConfig.id))
+        .returning();
+      return updatedConfig;
+    } else {
+      // Criar nova configuração
+      const [newConfig] = await db
+        .insert(ellevoConfigs)
+        .values(insertConfig)
+        .returning();
+      return newConfig;
+    }
   }
 }
 

@@ -1,173 +1,244 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Monitor, Eye, Search, Loader2 } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { Settings, Database, TestTube, Save, Loader2 } from "lucide-react";
+import { queryClient } from "@/lib/queryClient";
 
-interface Device {
-  serial: string;
-  hostname: string;
-  model: string;
-  version: string;
-  lastUpdate: string;
-  policiesCount: number;
-  interfacesCount: number;
-  adminsCount: number;
+interface EllevoConfig {
+  server: string;
+  port: string;
+  database: string;
+  username: string;
+  password: string;
 }
 
 export default function Configurations() {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  // Get devices list with details
-  const { data: devices = [], isLoading: devicesLoading } = useQuery<Device[]>({
-    queryKey: ['/api/devices/summary'],
+  const { toast } = useToast();
+  const [config, setConfig] = useState<EllevoConfig>({
+    server: "",
+    port: "1433",
+    database: "",
+    username: "",
+    password: ""
   });
 
-  // Filter devices based on search term
-  const filteredDevices = devices.filter(device => {
-    const searchLower = searchTerm.toLowerCase();
+  // Carregar configuração atual
+  const { data: currentConfig, isLoading } = useQuery<EllevoConfig>({
+    queryKey: ['/api/ellevo-config'],
+  });
+
+  // Salvar configuração
+  const saveConfigMutation = useMutation({
+    mutationFn: async (config: EllevoConfig) => {
+      const response = await fetch("/api/ellevo-config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config),
+      });
+      if (!response.ok) throw new Error("Erro ao salvar configuração");
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Configuração salva",
+        description: "Parâmetros do Sistema Ellevo foram salvos com sucesso.",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/ellevo-config'] });
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Não foi possível salvar a configuração.",
+      });
+    }
+  });
+
+  // Testar sincronização
+  const testSyncMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/ellevo-sync/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config),
+      });
+      if (!response.ok) throw new Error("Erro ao testar conexão");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Teste concluído",
+        description: `Conexão ${data.success ? 'bem-sucedida' : 'falhou'}. ${data.message || ''}`,
+        variant: data.success ? "default" : "destructive"
+      });
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Não foi possível testar a conexão.",
+      });
+    }
+  });
+
+  // Inicializar formulário com dados carregados
+  useEffect(() => {
+    if (currentConfig && config.server === "") {
+      setConfig(currentConfig);
+    }
+  }, [currentConfig, config.server]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveConfigMutation.mutate(config);
+  };
+
+  const handleTestSync = () => {
+    testSyncMutation.mutate();
+  };
+
+  if (isLoading) {
     return (
-      (device.hostname && device.hostname.toLowerCase().includes(searchLower)) ||
-      device.serial.toLowerCase().includes(searchLower) ||
-      (device.model && device.model.toLowerCase().includes(searchLower))
+      <MainLayout title="Configurações">
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center h-64">
+              <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
+          </div>
+        </div>
+      </MainLayout>
     );
-  });
+  }
 
   return (
-    <MainLayout title="Gerenciamento de Configurações">
+    <MainLayout title="Configurações">
       <div className="py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
+          {/* Header */}
           <div className="mb-6">
-            <p className="text-muted-foreground mb-4">
-              Visualize e analise objetos de configuração do FortiGate em sua infraestrutura.
+            <h1 className="text-2xl font-bold text-foreground flex items-center">
+              <Settings className="h-6 w-6 mr-3" />
+              Configurações do Sistema
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              Configure os parâmetros de integração com o Sistema Ellevo.
             </p>
-            
-            {/* Search Filter */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Search className="h-5 w-5" />
-                  Filtrar Dispositivos
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Buscar por nome, número de série ou modelo..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                    data-testid="input-search-devices"
-                  />
-                </div>
-                {searchTerm && (
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Mostrando {filteredDevices.length} de {devices.length} dispositivos
-                  </p>
-                )}
-              </CardContent>
-            </Card>
           </div>
 
-          {/* Devices Table */}
+          {/* Configuração Sistema Ellevo */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Monitor className="h-5 w-5" />
-                Dispositivos FortiGate ({filteredDevices.length})
+              <CardTitle className="flex items-center space-x-2">
+                <Database className="h-5 w-5" />
+                <span>Integração Sistema Ellevo</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {devicesLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-8 w-8 animate-spin" />
-                  <span className="ml-2">Carregando dispositivos...</span>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                
+                {/* Servidor e Porta */}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                  <div className="sm:col-span-2">
+                    <Label htmlFor="server">Servidor IP/Host</Label>
+                    <Input
+                      id="server"
+                      type="text"
+                      placeholder="192.168.100.18"
+                      value={config.server}
+                      onChange={(e) => setConfig({...config, server: e.target.value})}
+                      data-testid="input-ellevo-server"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="port">Porta</Label>
+                    <Input
+                      id="port"
+                      type="number"
+                      placeholder="1433"
+                      value={config.port}
+                      onChange={(e) => setConfig({...config, port: e.target.value})}
+                      data-testid="input-ellevo-port"
+                    />
+                  </div>
                 </div>
-              ) : filteredDevices.length === 0 ? (
-                <div className="text-center py-12">
-                  <Monitor className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-foreground mb-2">
-                    {searchTerm ? 'Nenhum dispositivo encontrado' : 'Nenhum dispositivo disponível'}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {searchTerm 
-                      ? 'Tente ajustar os filtros de busca.'
-                      : 'Aguarde o processamento de arquivos de configuração.'
-                    }
-                  </p>
+
+                {/* Banco de Dados */}
+                <div>
+                  <Label htmlFor="database">Banco de Dados</Label>
+                  <Input
+                    id="database"
+                    type="text"
+                    placeholder="PlataformaEllevo"
+                    value={config.database}
+                    onChange={(e) => setConfig({...config, database: e.target.value})}
+                    data-testid="input-ellevo-database"
+                  />
                 </div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Hostname</TableHead>
-                      <TableHead>Número de Série</TableHead>
-                      <TableHead>Modelo</TableHead>
-                      <TableHead>Versão</TableHead>
-                      <TableHead>Políticas</TableHead>
-                      <TableHead>Interfaces</TableHead>
-                      <TableHead>Administradores</TableHead>
-                      <TableHead>Última Atualização</TableHead>
-                      <TableHead>Ações</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredDevices.map((device) => (
-                      <TableRow key={device.serial} data-testid={`row-device-${device.serial}`}>
-                        <TableCell className="font-medium">
-                          {device.hostname || 'N/A'}
-                        </TableCell>
-                        <TableCell className="font-mono text-sm">
-                          {device.serial}
-                        </TableCell>
-                        <TableCell>
-                          {device.model || 'N/A'}
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {device.version || 'N/A'}
-                        </TableCell>
-                        <TableCell>
-                          <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30">
-                            {device.policiesCount || 0}
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-700/10 dark:bg-green-400/10 dark:text-green-400 dark:ring-green-400/30">
-                            {device.interfacesCount || 0}
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          <span className="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:ring-purple-400/30">
-                            {device.adminsCount || 0}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {device.lastUpdate ? new Date(device.lastUpdate).toLocaleDateString('pt-BR') : 'N/A'}
-                        </TableCell>
-                        <TableCell>
-                          <Link href={`/configurations/${device.serial}`}>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              data-testid={`button-view-${device.serial}`}
-                            >
-                              <Eye className="h-4 w-4" />
-                              <span className="sr-only">Ver detalhes de {device.hostname || device.serial}</span>
-                            </Button>
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
+
+                {/* Usuário e Senha */}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div>
+                    <Label htmlFor="username">Usuário</Label>
+                    <Input
+                      id="username"
+                      type="text"
+                      placeholder="usuário de conexão"
+                      value={config.username}
+                      onChange={(e) => setConfig({...config, username: e.target.value})}
+                      data-testid="input-ellevo-username"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="password">Senha</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="senha de conexão"
+                      value={config.password}
+                      onChange={(e) => setConfig({...config, password: e.target.value})}
+                      data-testid="input-ellevo-password"
+                    />
+                  </div>
+                </div>
+
+                {/* Botões */}
+                <div className="flex gap-4 pt-4">
+                  <Button 
+                    type="submit" 
+                    disabled={saveConfigMutation.isPending}
+                    data-testid="button-save-config"
+                  >
+                    {saveConfigMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4 mr-2" />
+                    )}
+                    Salvar Configuração
+                  </Button>
+                  
+                  <Button 
+                    type="button"
+                    variant="outline"
+                    onClick={handleTestSync}
+                    disabled={testSyncMutation.isPending || !config.server || !config.username}
+                    data-testid="button-test-sync"
+                  >
+                    {testSyncMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <TestTube className="h-4 w-4 mr-2" />
+                    )}
+                    Testar Sync
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
 

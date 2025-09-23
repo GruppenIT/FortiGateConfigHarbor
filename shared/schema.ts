@@ -42,6 +42,19 @@ export const tenants = pgTable("tenants", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Sistema Ellevo Configurations table
+export const ellevoConfigs = pgTable("ellevo_configs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  server: text("server").notNull(),
+  port: text("port").notNull().default("1433"),
+  database: text("database").notNull(),
+  username: text("username").notNull(),
+  password: text("password").notNull(),
+  enabled: boolean("enabled").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Devices table
 export const devices = pgTable("devices", {
   serial: text("serial").primaryKey(),
@@ -329,6 +342,12 @@ export const insertAuditLogSchema = createInsertSchema(auditLog).omit({
   when: true,
 });
 
+export const insertEllevoConfigSchema = createInsertSchema(ellevoConfigs).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -347,3 +366,5 @@ export type SystemAdmin = typeof systemAdmins.$inferSelect;
 export type IngestError = typeof ingestErrors.$inferSelect;
 export type AuditLog = typeof auditLog.$inferSelect;
 export type InsertAuditLog = z.infer<typeof insertAuditLogSchema>;
+export type InsertEllevoConfig = z.infer<typeof insertEllevoConfigSchema>;
+export type EllevoConfig = typeof ellevoConfigs.$inferSelect;

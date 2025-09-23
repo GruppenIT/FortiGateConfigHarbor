@@ -10,16 +10,18 @@ import {
   Users, 
   ClipboardList,
   Shield,
-  LogOut
+  LogOut,
+  Monitor
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Painel Geral", href: "/", icon: ChartPie },
-  { name: "Configurações", href: "/configurations", icon: Settings },
+  { name: "Equipamentos", href: "/equipments", icon: Monitor },
   { name: "Conformidade", href: "/compliance", icon: CheckCircle },
   { name: "Ingestão de Arquivos", href: "/ingestion", icon: Download },
   { name: "Quarentena", href: "/quarantine", icon: AlertTriangle },
+  { name: "Configurações", href: "/configurations", icon: Settings, adminOnly: true },
   { name: "Gestão de Usuários", href: "/users", icon: Users, adminOnly: true },
   { name: "Log de Auditoria", href: "/audit", icon: ClipboardList, minRole: "auditor" },
 ];

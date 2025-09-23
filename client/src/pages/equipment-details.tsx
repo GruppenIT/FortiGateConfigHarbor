@@ -80,7 +80,7 @@ interface ComplianceResult {
   evidence?: any;
 }
 
-export default function ConfigurationDetails() {
+export default function EquipmentDetails() {
   const { serial } = useParams<{ serial: string }>();
 
   // Get device info
@@ -142,10 +142,10 @@ export default function ConfigurationDetails() {
                 <p className="text-muted-foreground mb-4">
                   O dispositivo solicitado não existe ou não pôde ser carregado.
                 </p>
-                <Link href="/configurations">
+                <Link href="/equipments">
                   <Button variant="outline" data-testid="button-back-to-configurations">
                     <ArrowLeft className="h-4 w-4 mr-2" />
-                    Voltar para Configurações
+                    Voltar para Equipamentos
                   </Button>
                 </Link>
               </CardContent>
