@@ -11,6 +11,15 @@ export function ProtectedRoute({
 }) {
   const { user, isLoading } = useAuth();
 
+  // Skip authentication in development mode
+  if (import.meta.env.DEV) {
+    return (
+      <Route path={path}>
+        <Component />
+      </Route>
+    );
+  }
+
   if (isLoading) {
     return (
       <Route path={path}>

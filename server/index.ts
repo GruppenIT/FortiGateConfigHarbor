@@ -249,6 +249,13 @@ app.use((req, res, next) => {
   }, async () => {
     log(`🎆 ConfigHarbor FUNCIONANDO! Servidor rodando na porta ${port}`);
     log(`🔗 Acesse: http://localhost:${port}`);
+    
+    // Set SKIP_AUTH for development
+    if (process.env.NODE_ENV === 'development') {
+      process.env.SKIP_AUTH = 'true';
+      log(`🔓 MODO DESENVOLVIMENTO: Autenticação temporariamente desabilitada`);
+    }
+    
     console.log(`
 🎉🎉🎉 ConfigHarbor INICIALIZADO COM SUCESSO! 🎉🎉🎉`);
     console.log(`🌍 Servidor funcionando na porta ${port}`);

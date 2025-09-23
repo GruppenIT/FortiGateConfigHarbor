@@ -7,12 +7,26 @@ import { complianceService } from "./services/compliance";
 import { inventorySyncService } from "./services/inventory-sync";
 import { insertEllevoConfigSchema } from "@shared/schema";
 
+// Helper function to check authentication (with dev bypass)
+function requireAuth(req: any, res: any): boolean {
+  // Skip auth in development if SKIP_AUTH is set
+  if (process.env.NODE_ENV === 'development' && process.env.SKIP_AUTH === 'true') {
+    return true;
+  }
+  
+  if (!req.isAuthenticated()) {
+    res.sendStatus(401);
+    return false;
+  }
+  return true;
+}
+
 export function registerRoutes(app: Express): Server {
   setupAuth(app);
 
   // Dashboard metrics
   app.get("/api/dashboard/metrics", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const metrics = await storage.getDashboardMetrics();
@@ -25,7 +39,7 @@ export function registerRoutes(app: Express): Server {
 
   // Devices
   app.get("/api/devices", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const devices = await storage.getDevices();
@@ -38,7 +52,7 @@ export function registerRoutes(app: Express): Server {
 
   // Devices summary with counts, pagination, sorting and search
   app.get("/api/devices/summary", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const {
@@ -71,7 +85,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.get("/api/devices/:serial", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const device = await storage.getDeviceWithLatestVersion(req.params.serial);
@@ -86,7 +100,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.get("/api/devices/:serial/versions", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const versions = await storage.getDeviceVersions(req.params.serial);
@@ -98,7 +112,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.get("/api/device-versions/:id", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const version = await storage.getDeviceVersionById(req.params.id);
@@ -114,7 +128,7 @@ export function registerRoutes(app: Express): Server {
 
   // Configuration endpoints
   app.get("/api/devices/:serial/firewall-policies", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const policies = await storage.getFirewallPolicies(req.params.serial);
@@ -126,7 +140,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.get("/api/devices/:serial/system-interfaces", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const interfaces = await storage.getSystemInterfaces(req.params.serial);
@@ -138,7 +152,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.get("/api/devices/:serial/system-admins", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const admins = await storage.getSystemAdmins(req.params.serial);
@@ -151,7 +165,7 @@ export function registerRoutes(app: Express): Server {
 
   // Compliance
   app.get("/api/compliance/rules", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const rules = await storage.getComplianceRules();
@@ -163,7 +177,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.post("/api/compliance/rules", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -182,7 +196,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.get("/api/devices/:serial/compliance", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const results = await storage.getComplianceResultsForDevice(req.params.serial);
@@ -195,7 +209,7 @@ export function registerRoutes(app: Express): Server {
 
   // Ingestion
   app.post("/api/ingestion/trigger", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -215,7 +229,7 @@ export function registerRoutes(app: Express): Server {
 
   // Quarantine
   app.get("/api/quarantine", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const errors = await storage.getIngestErrors();
@@ -228,7 +242,7 @@ export function registerRoutes(app: Express): Server {
 
   // Audit logs
   app.get("/api/audit", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role === 'readonly') return res.sendStatus(403);
     
     try {
@@ -242,7 +256,7 @@ export function registerRoutes(app: Express): Server {
 
   // User management
   app.get("/api/users", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     // TODO: Implement user listing
@@ -251,7 +265,7 @@ export function registerRoutes(app: Express): Server {
 
   // Compliance checking
   app.post("/api/compliance/check", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -271,7 +285,7 @@ export function registerRoutes(app: Express): Server {
 
   // Get all compliance results
   app.get("/api/compliance/results", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const results = await storage.getAllComplianceResults();
@@ -284,7 +298,7 @@ export function registerRoutes(app: Express): Server {
 
   // Get compliance statistics
   app.get("/api/compliance/stats", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     
     try {
       const stats = await storage.getComplianceStats();
@@ -297,7 +311,7 @@ export function registerRoutes(app: Express): Server {
 
   // Alternative evaluation endpoint for API consistency
   app.post("/api/compliance/evaluate", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -317,7 +331,7 @@ export function registerRoutes(app: Express): Server {
 
   // Inventory synchronization endpoints
   app.get("/api/inventory/test-connection", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -330,7 +344,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.post("/api/inventory/sync", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -350,7 +364,7 @@ export function registerRoutes(app: Express): Server {
 
   // Ellevo Configuration endpoints
   app.get("/api/ellevo-config", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -372,7 +386,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.post("/api/ellevo-config", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -409,7 +423,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.post("/api/ellevo-sync/test", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
@@ -431,7 +445,7 @@ export function registerRoutes(app: Express): Server {
   });
 
   app.post("/api/ellevo-sync/force", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!requireAuth(req, res)) return;
     if (req.user?.role !== 'admin') return res.sendStatus(403);
     
     try {
