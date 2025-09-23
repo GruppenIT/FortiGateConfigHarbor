@@ -22,6 +22,7 @@ export class ComplianceService {
     for (const rule of rules) {
       try {
         const parsedRule = yaml.parse(rule.dsl) as ComplianceRule;
+        parsedRule.name = rule.name; // Propagar o nome da regra para checkRule
         const results = await this.checkRule(parsedRule);
         
         for (const result of results) {
@@ -61,8 +62,36 @@ export class ComplianceService {
       evidence: any;
     }> = [];
 
+    // Check firewall em locação com configuração recente
+    if (rule.name === "Firewall em Locação com Configuração Recente") {
+      const devicesInLocation = await storage.getDevicesWithStatusDescription("Locação");
+      
+      for (const device of devicesInLocation) {
+        const latestVersion = await storage.getLatestDeviceVersion(device.serial);
+        if (latestVersion && latestVersion.capturedAt) {
+          const hoursAgo48 = new Date(Date.now() - 48 * 60 * 60 * 1000);
+          const lastConfigUpdate = new Date(latestVersion.capturedAt);
+          
+          const status = lastConfigUpdate > hoursAgo48 ? 'pass' : 'fail';
+          
+          results.push({
+            deviceVersionId: latestVersion.id,
+            status,
+            evidence: {
+              serial: device.serial,
+              hostname: device.hostname,
+              statusDesc: device.statusDesc,
+              lastConfigUpdate: latestVersion.capturedAt,
+              model: device.model,
+              rule: rule.name,
+              hoursOld: Math.round((Date.now() - lastConfigUpdate.getTime()) / (60 * 60 * 1000))
+            }
+          });
+        }
+      }
+    }
     // Example: Check admin trusted hosts rule
-    if (rule.target === 'system_admins' && rule.assert.includes('trusted_hosts')) {
+    else if (rule.target === 'system_admins' && rule.assert.includes('trusted_hosts')) {
       // This would normally execute a proper query based on the DSL
       // For now, we'll implement a basic check
       results.push({
@@ -120,6 +149,20 @@ export class ComplianceService {
           }
         }),
         description: "Management interfaces should use HTTPS only, not HTTP",
+        enabled: true
+      },
+      {
+        name: "Firewall em Locação com Configuração Recente",
+        severity: "High",
+        dsl: yaml.stringify({
+          target: "devices",
+          where: "statusDesc = 'Locação'",
+          assert: "last_configuration_update > 48_hours_ago",
+          evidence: {
+            select: ["serial", "hostname", "statusDesc", "last_configuration_update", "model"]
+          }
+        }),
+        description: "Firewalls em locação devem receber configuração nas últimas 48 horas",
         enabled: true
       }
     ];

@@ -97,6 +97,21 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  app.get("/api/device-versions/:id", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    try {
+      const version = await storage.getDeviceVersionById(req.params.id);
+      if (!version) {
+        return res.status(404).json({ message: "Device version not found" });
+      }
+      res.json(version);
+    } catch (error) {
+      console.error("Error fetching device version:", error);
+      res.status(500).json({ message: "Failed to fetch device version" });
+    }
+  });
+
   // Configuration endpoints
   app.get("/api/devices/:serial/firewall-policies", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);

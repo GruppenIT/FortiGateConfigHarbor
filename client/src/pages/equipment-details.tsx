@@ -75,6 +75,7 @@ interface DeviceVersion {
 
 interface ComplianceResult {
   ruleId: string;
+  ruleName?: string;
   status: string;
   measuredAt: string;
   evidence?: any;
@@ -360,7 +361,7 @@ export default function EquipmentDetails() {
                     <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex-1">
                         <p className="font-medium" data-testid={`text-compliance-rule-${index}`}>
-                          Regra {result.ruleId}
+                          {result.ruleName || `Regra ${result.ruleId}`}
                         </p>
                         <p className="text-sm text-muted-foreground">
                           Avaliado: {new Date(result.measuredAt).toLocaleString('pt-BR')}

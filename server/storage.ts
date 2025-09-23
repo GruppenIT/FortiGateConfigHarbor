@@ -68,6 +68,7 @@ export interface IStorage {
   // Device versions
   createDeviceVersion(version: InsertDeviceVersion): Promise<DeviceVersion>;
   getDeviceVersions(deviceSerial: string, limit?: number): Promise<DeviceVersion[]>;
+  getDeviceVersionById(id: string): Promise<DeviceVersion | undefined>;
   getDeviceVersionByHash(hash: string): Promise<DeviceVersion | undefined>;
   
   // Configuration objects
@@ -108,6 +109,10 @@ export interface IStorage {
   getFirewallPolicies(deviceSerial: string): Promise<FirewallPolicy[]>;
   getSystemInterfaces(deviceSerial: string): Promise<SystemInterface[]>;
   getSystemAdmins(deviceSerial: string): Promise<SystemAdmin[]>;
+  
+  // Compliance specific methods
+  getDevicesWithStatusDescription(statusDesc: string): Promise<Device[]>;
+  getLatestDeviceVersion(deviceSerial: string): Promise<DeviceVersion | undefined>;
   
   // Ellevo Configuration management
   getEllevoConfig(): Promise<EllevoConfig | undefined>;
@@ -462,6 +467,14 @@ export class DatabaseStorage implements IStorage {
     return version || undefined;
   }
 
+  async getDeviceVersionById(id: string): Promise<DeviceVersion | undefined> {
+    const [version] = await db
+      .select()
+      .from(deviceVersions)
+      .where(eq(deviceVersions.id, parseInt(id)));
+    return version || undefined;
+  }
+
   async insertFirewallPolicies(policies: any[]): Promise<void> {
     if (policies.length > 0) {
       await db.insert(firewallPolicies).values(policies);
@@ -508,12 +521,14 @@ export class DatabaseStorage implements IStorage {
         id: complianceResults.id,
         deviceVersionId: complianceResults.deviceVersionId,
         ruleId: complianceResults.ruleId,
+        ruleName: complianceRules.name,
         status: complianceResults.status,
         evidenceJson: complianceResults.evidenceJson,
         measuredAt: complianceResults.measuredAt
       })
       .from(complianceResults)
       .innerJoin(deviceVersions, eq(complianceResults.deviceVersionId, deviceVersions.id))
+      .innerJoin(complianceRules, eq(complianceResults.ruleId, complianceRules.id))
       .where(eq(deviceVersions.deviceSerial, deviceSerial))
       .orderBy(desc(complianceResults.measuredAt));
     
@@ -665,6 +680,24 @@ export class DatabaseStorage implements IStorage {
       .then(rows => rows.map(row => row.system_admins));
     console.log(`[DEBUG] Encontrados ${result.length} admins para dispositivo ${deviceSerial}`);
     return result;
+  }
+
+  async getDevicesWithStatusDescription(statusDesc: string): Promise<Device[]> {
+    const result = await db
+      .select()
+      .from(devices)
+      .where(eq(devices.statusDesc, statusDesc));
+    return result;
+  }
+
+  async getLatestDeviceVersion(deviceSerial: string): Promise<DeviceVersion | undefined> {
+    const [version] = await db
+      .select()
+      .from(deviceVersions)
+      .where(eq(deviceVersions.deviceSerial, deviceSerial))
+      .orderBy(desc(deviceVersions.capturedAt))
+      .limit(1);
+    return version || undefined;
   }
 
   async getEllevoConfig(): Promise<EllevoConfig | undefined> {
