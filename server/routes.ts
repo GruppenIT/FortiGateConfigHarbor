@@ -36,13 +36,34 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  // Devices summary with counts
+  // Devices summary with counts, pagination, sorting and search
   app.get("/api/devices/summary", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
     try {
-      const devicesSummary = await storage.getDevicesSummary();
-      res.json(devicesSummary);
+      const {
+        page = '1',
+        limit = '50',
+        search = '',
+        sortBy = 'hostname',
+        sortOrder = 'asc'
+      } = req.query;
+
+      const pageNum = Math.max(1, parseInt(page as string));
+      const limitNum = Math.max(1, Math.min(100, parseInt(limit as string))); // Max 100 per page
+      const searchTerm = (search as string).trim();
+      const sortColumn = sortBy as string;
+      const sortDirection = (sortOrder as string).toLowerCase() === 'desc' ? 'desc' : 'asc';
+
+      const result = await storage.getDevicesSummaryPaginated({
+        page: pageNum,
+        limit: limitNum,
+        search: searchTerm,
+        sortBy: sortColumn,
+        sortOrder: sortDirection
+      });
+
+      res.json(result);
     } catch (error) {
       console.error("Error fetching devices summary:", error);
       res.status(500).json({ message: "Failed to fetch devices summary" });

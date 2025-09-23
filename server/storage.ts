@@ -30,7 +30,7 @@ import {
   type InsertEllevoConfig
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and, count, sql } from "drizzle-orm";
+import { eq, desc, asc, and, or, count, sql, ilike } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
@@ -281,6 +281,146 @@ export class DatabaseStorage implements IStorage {
     }
     
     return devicesSummary;
+  }
+
+  async getDevicesSummaryPaginated(options: {
+    page: number;
+    limit: number;
+    search: string;
+    sortBy: string;
+    sortOrder: 'asc' | 'desc';
+  }): Promise<{
+    devices: Array<Device & { 
+      version: string; 
+      lastUpdate: string; 
+      policiesCount: number; 
+      interfacesCount: number; 
+      adminsCount: number; 
+    }>;
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+    };
+  }> {
+    const { page, limit, search, sortBy, sortOrder } = options;
+    const offset = (page - 1) * limit;
+
+    // Build search condition
+    const searchCondition = search ? 
+      or(
+        ilike(devices.hostname, `%${search}%`),
+        ilike(devices.serial, `%${search}%`),
+        ilike(devices.model, `%${search}%`),
+        ilike(devices.modelDesc, `%${search}%`),
+        ilike(devices.localizacaoDesc, `%${search}%`),
+        ilike(devices.statusDesc, `%${search}%`)
+      ) : undefined;
+
+    // Get total count for pagination
+    const [{ count: totalCount }] = await db
+      .select({ count: count() })
+      .from(devices)
+      .where(searchCondition);
+
+    // Determine sort column
+    let sortColumn;
+    switch (sortBy) {
+      case 'hostname':
+        sortColumn = devices.hostname;
+        break;
+      case 'serial':
+        sortColumn = devices.serial;
+        break;
+      case 'model':
+        sortColumn = devices.modelDesc;
+        break;
+      case 'localizacaoDesc':
+        sortColumn = devices.localizacaoDesc;
+        break;
+      case 'lastSeen':
+        sortColumn = devices.lastSeen;
+        break;
+      default:
+        sortColumn = devices.hostname;
+    }
+
+    // Build final query with search, sort and pagination
+    let query = db.select().from(devices);
+    
+    if (searchCondition) {
+      query = query.where(searchCondition);
+    }
+
+    if (sortOrder === 'desc') {
+      query = query.orderBy(desc(sortColumn));
+    } else {
+      query = query.orderBy(asc(sortColumn));
+    }
+
+    const paginatedDevices = await query.limit(limit).offset(offset);
+    
+    // Now get detailed info for each device in current page
+    const devicesSummary = [];
+    
+    for (const device of paginatedDevices) {
+      // Get latest version for this device
+      const [latestVersion] = await db
+        .select()
+        .from(deviceVersions)
+        .where(eq(deviceVersions.deviceSerial, device.serial))
+        .orderBy(desc(deviceVersions.capturedAt))
+        .limit(1);
+      
+      let policiesCount = 0;
+      let interfacesCount = 0;
+      let adminsCount = 0;
+      
+      if (latestVersion) {
+        // Count policies for this version
+        const [policyCount] = await db
+          .select({ count: count() })
+          .from(firewallPolicies)
+          .where(eq(firewallPolicies.deviceVersionId, latestVersion.id));
+        policiesCount = policyCount.count;
+        
+        // Count interfaces for this version
+        const [interfaceCount] = await db
+          .select({ count: count() })
+          .from(systemInterfaces)
+          .where(eq(systemInterfaces.deviceVersionId, latestVersion.id));
+        interfacesCount = interfaceCount.count;
+        
+        // Count admins for this version
+        const [adminCount] = await db
+          .select({ count: count() })
+          .from(systemAdmins)
+          .where(eq(systemAdmins.deviceVersionId, latestVersion.id));
+        adminsCount = adminCount.count;
+      }
+      
+      devicesSummary.push({
+        ...device,
+        version: latestVersion?.fortiosVersion || 'N/A',
+        lastUpdate: latestVersion?.capturedAt?.toISOString() || device.lastSeen?.toISOString() || new Date().toISOString(),
+        policiesCount,
+        interfacesCount,
+        adminsCount
+      });
+    }
+
+    const totalPages = Math.ceil(totalCount / limit);
+    
+    return {
+      devices: devicesSummary,
+      pagination: {
+        page,
+        limit,
+        total: totalCount,
+        totalPages
+      }
+    };
   }
 
   async getDeviceWithLatestVersion(serial: string): Promise<Device & { latestVersion?: DeviceVersion } | undefined> {
