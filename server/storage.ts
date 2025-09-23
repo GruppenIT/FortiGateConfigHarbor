@@ -54,6 +54,7 @@ export interface IStorage {
   
   // Device management
   getDevice(serial: string): Promise<Device | undefined>;
+  getDeviceBySerial(serial: string): Promise<Device | undefined>;
   createOrUpdateDevice(device: InsertDevice): Promise<Device>;
   getDevices(limit?: number): Promise<Device[]>;
   getDevicesSummary(): Promise<Array<Device & { 
@@ -70,6 +71,7 @@ export interface IStorage {
   getDeviceVersions(deviceSerial: string, limit?: number): Promise<DeviceVersion[]>;
   getDeviceVersionById(id: string): Promise<DeviceVersion | undefined>;
   getDeviceVersionByHash(hash: string): Promise<DeviceVersion | undefined>;
+  getDeviceVersionsWithConfigData(): Promise<DeviceVersion[]>;
   
   // Configuration objects
   insertFirewallPolicies(policies: any[]): Promise<void>;
@@ -80,6 +82,7 @@ export interface IStorage {
   getComplianceRules(): Promise<ComplianceRule[]>;
   createComplianceRule(rule: InsertComplianceRule): Promise<ComplianceRule>;
   insertComplianceResults(results: any[]): Promise<void>;
+  clearComplianceResults(): Promise<void>;
   getComplianceResultsForDevice(deviceSerial: string): Promise<ComplianceResult[]>;
   getAllComplianceResults(): Promise<ComplianceResult[]>;
   getComplianceStats(): Promise<{
@@ -473,6 +476,42 @@ export class DatabaseStorage implements IStorage {
       .from(deviceVersions)
       .where(eq(deviceVersions.id, parseInt(id)));
     return version || undefined;
+  }
+
+  async getDeviceVersionsWithConfigData(): Promise<DeviceVersion[]> {
+    // Get all device versions that have at least one of:
+    // - system admins data
+    // - system interfaces data  
+    // - firewall policies data
+    const versionsWithAdmins = db
+      .selectDistinct({ id: deviceVersions.id, deviceSerial: deviceVersions.deviceSerial, capturedAt: deviceVersions.capturedAt, fileHash: deviceVersions.fileHash, archivePath: deviceVersions.archivePath, fortiosVersion: deviceVersions.fortiosVersion, build: deviceVersions.build })
+      .from(deviceVersions)
+      .innerJoin(systemAdmins, eq(systemAdmins.deviceVersionId, deviceVersions.id));
+    
+    const versionsWithInterfaces = db
+      .selectDistinct({ id: deviceVersions.id, deviceSerial: deviceVersions.deviceSerial, capturedAt: deviceVersions.capturedAt, fileHash: deviceVersions.fileHash, archivePath: deviceVersions.archivePath, fortiosVersion: deviceVersions.fortiosVersion, build: deviceVersions.build })
+      .from(deviceVersions)
+      .innerJoin(systemInterfaces, eq(systemInterfaces.deviceVersionId, deviceVersions.id));
+      
+    const versionsWithPolicies = db
+      .selectDistinct({ id: deviceVersions.id, deviceSerial: deviceVersions.deviceSerial, capturedAt: deviceVersions.capturedAt, fileHash: deviceVersions.fileHash, archivePath: deviceVersions.archivePath, fortiosVersion: deviceVersions.fortiosVersion, build: deviceVersions.build })
+      .from(deviceVersions)
+      .innerJoin(firewallPolicies, eq(firewallPolicies.deviceVersionId, deviceVersions.id));
+    
+    // Union all and get unique device versions
+    const allVersions = await db
+      .select()
+      .from(versionsWithAdmins.union(versionsWithInterfaces).union(versionsWithPolicies).as('unique_versions'));
+    
+    return allVersions;
+  }
+
+  async getDeviceBySerial(serial: string): Promise<Device | undefined> {
+    return this.getDevice(serial);
+  }
+
+  async clearComplianceResults(): Promise<void> {
+    await db.delete(complianceResults);
   }
 
   async insertFirewallPolicies(policies: any[]): Promise<void> {
