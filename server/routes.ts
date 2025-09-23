@@ -420,6 +420,21 @@ export function registerRoutes(app: Express): Server {
       console.error("Error forcing inventory sync:", error);
       const errorMsg = error instanceof Error ? error.message : 'Erro desconhecido';
       
+      // Check if sync is already in progress
+      if (error instanceof Error && error.message.includes('já está em andamento')) {
+        await storage.logAudit({
+          userId: req.user.id,
+          action: "force_inventory_sync_conflict",
+          target: "inventory_system",
+          detailsJson: { error: "Sync already in progress" }
+        });
+        
+        return res.status(409).json({ 
+          success: false,
+          message: "Sincronização já está em andamento. Aguarde a conclusão." 
+        });
+      }
+      
       await storage.logAudit({
         userId: req.user.id,
         action: "force_inventory_sync_failed",

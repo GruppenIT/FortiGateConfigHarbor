@@ -44,6 +44,7 @@ interface InventoryDevice {
 
 export class InventorySyncService {
   private pool: sql.ConnectionPool | null = null;
+  private isSyncing: boolean = false;
 
   /**
    * Conecta ao SQL Server externo usando configurações do banco
@@ -63,11 +64,17 @@ export class InventorySyncService {
       throw new Error('Configuração do Sistema Ellevo não encontrada. Configure em Configurações > Sistema Ellevo');
     }
 
-    console.log(`[INVENTÁRIO] ✅ Configuração encontrada: ${config.server}:${config.port || 1433}/${config.database}`);
-    console.log(`[INVENTÁRIO] 👤 Usuário: ${config.username}`);
+    // Log details only in development mode for security
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[INVENTÁRIO] ✅ Configuração encontrada: ${config.server}:${config.port || 1433}/${config.database}`);
+      console.log(`[INVENTÁRIO] 👤 Usuário: ${config.username}`);
+      console.log(`[INVENTÁRIO] 🔌 Tentando conectar ao SQL Server: ${config.server}:${config.port || 1433}`);
+    } else {
+      console.log(`[INVENTÁRIO] ✅ Configuração encontrada`);
+      console.log(`[INVENTÁRIO] 🔌 Tentando conectar ao SQL Server externo`);
+    }
 
     const sqlConfig = createSqlServerConfig(config);
-    console.log(`[INVENTÁRIO] 🔌 Tentando conectar ao SQL Server: ${config.server}:${config.port || 1433}`);
     console.log(`[INVENTÁRIO] 📋 Configurações: encrypt=${sqlConfig.options?.encrypt}, trustServerCertificate=${sqlConfig.options?.trustServerCertificate}`);
     
     const connectionStart = Date.now();
@@ -111,7 +118,11 @@ export class InventorySyncService {
 
     console.log('[INVENTÁRIO] 📋 Executando consulta no sistema externo...');
     console.log('[INVENTÁRIO] 🔍 Filtros: FabricanteID=1 (FortiGate), CategoriaID=7');
-    console.log('[INVENTÁRIO] 📄 Query SQL:', query.trim().replace(/\s+/g, ' '));
+    
+    // Log SQL query only in development mode
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[INVENTÁRIO] 📄 Query SQL:', query.trim().replace(/\s+/g, ' '));
+    }
     
     const queryStart = Date.now();
     const result = await pool.request().query<InventoryDevice>(query);
@@ -119,7 +130,8 @@ export class InventorySyncService {
     
     console.log(`[INVENTÁRIO] 📦 Encontrados ${result.recordset.length} equipamentos no inventário (${queryTime}ms)`);
     
-    if (result.recordset.length > 0) {
+    // Log sample data only in development mode
+    if (result.recordset.length > 0 && process.env.NODE_ENV === 'development') {
       console.log('[INVENTÁRIO] 📊 Primeira amostra:');
       const sample = result.recordset[0];
       console.log(`[INVENTÁRIO]   - Serial: ${sample.numserie}`);
@@ -183,6 +195,13 @@ export class InventorySyncService {
    * Executa a sincronização completa
    */
   async syncInventory(): Promise<{ synced: number; errors: number }> {
+    // Verificar se já está sincronizando
+    if (this.isSyncing) {
+      console.log('[INVENTÁRIO] ⚠️ Sincronização já em andamento, ignorando nova solicitação');
+      throw new Error('Sincronização já está em andamento');
+    }
+
+    this.isSyncing = true;
     const startTime = Date.now();
     const timestamp = new Date().toISOString();
     
@@ -238,6 +257,7 @@ export class InventorySyncService {
       console.error('[INVENTÁRIO] 💥 Erro crítico na sincronização:', error);
       throw error;
     } finally {
+      this.isSyncing = false;
       await this.disconnect();
     }
   }
