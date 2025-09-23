@@ -60,7 +60,8 @@ export function registerRoutes(app: Express): Server {
         limit = '50',
         search = '',
         sortBy = 'hostname',
-        sortOrder = 'asc'
+        sortOrder = 'asc',
+        complianceFilter = ''
       } = req.query;
 
       const pageNum = Math.max(1, parseInt(page as string));
@@ -68,13 +69,15 @@ export function registerRoutes(app: Express): Server {
       const searchTerm = (search as string).trim();
       const sortColumn = sortBy as string;
       const sortDirection = (sortOrder as string).toLowerCase() === 'desc' ? 'desc' : 'asc';
+      const complianceFilterType = (complianceFilter as string).trim();
 
       const result = await storage.getDevicesSummaryPaginated({
         page: pageNum,
         limit: limitNum,
         search: searchTerm,
         sortBy: sortColumn,
-        sortOrder: sortDirection
+        sortOrder: sortDirection,
+        complianceFilter: complianceFilterType
       });
 
       res.json(result);

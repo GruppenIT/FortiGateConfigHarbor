@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 export default function Compliance() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const { data: rules, isLoading } = useQuery({
     queryKey: ["/api/compliance/rules"],
@@ -193,7 +195,11 @@ export default function Compliance() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card 
+              className="cursor-pointer hover:bg-accent/50 transition-colors" 
+              onClick={() => setLocation('/equipments?filter=non_compliant')}
+              data-testid="card-violations-clickable"
+            >
               <CardContent className="p-6">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
@@ -204,6 +210,7 @@ export default function Compliance() {
                     <p className="text-2xl font-semibold text-foreground" data-testid="text-violations">
                       {statsLoading ? <Skeleton className="h-8 w-8" /> : stats?.violations || 0}
                     </p>
+                    <p className="text-xs text-muted-foreground mt-1">Clique para ver equipamentos não conformes</p>
                   </div>
                 </div>
               </CardContent>

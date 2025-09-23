@@ -297,6 +297,7 @@ export class DatabaseStorage implements IStorage {
     search: string;
     sortBy: string;
     sortOrder: 'asc' | 'desc';
+    complianceFilter?: string;
   }): Promise<{
     devices: Array<Device & { 
       version: string; 
@@ -304,6 +305,8 @@ export class DatabaseStorage implements IStorage {
       policiesCount: number; 
       interfacesCount: number; 
       adminsCount: number; 
+      complianceStatus?: 'compliant' | 'non_compliant' | 'unknown';
+      violationsCount?: number;
     }>;
     pagination: {
       page: number;
@@ -312,7 +315,7 @@ export class DatabaseStorage implements IStorage {
       totalPages: number;
     };
   }> {
-    const { page, limit, search, sortBy, sortOrder } = options;
+    const { page, limit, search, sortBy, sortOrder, complianceFilter } = options;
     const offset = (page - 1) * limit;
 
     // Build search condition
@@ -367,12 +370,73 @@ export class DatabaseStorage implements IStorage {
       query = query.orderBy(asc(sortColumn));
     }
 
-    const paginatedDevices = await query.limit(limit).offset(offset);
+    // If compliance filter is applied, we need to get all devices first, then filter by compliance
+    let devicesToProcess = [];
+    let totalCountForCompliance = totalCount;
+    
+    if (complianceFilter === 'non_compliant') {
+      // Get all devices that match search criteria (not paginated yet)
+      let allDevicesQuery = db.select().from(devices);
+      if (searchCondition) {
+        allDevicesQuery = allDevicesQuery.where(searchCondition);
+      }
+      const allDevices = await allDevicesQuery;
+      
+      // Filter devices based on compliance status
+      for (const device of allDevices) {
+        const [latestVersion] = await db
+          .select()
+          .from(deviceVersions)
+          .where(eq(deviceVersions.deviceSerial, device.serial))
+          .orderBy(desc(deviceVersions.capturedAt))
+          .limit(1);
+          
+        if (latestVersion) {
+          // Check compliance results for this device version
+          const violations = await db
+            .select()
+            .from(complianceResults)
+            .where(and(
+              eq(complianceResults.deviceVersionId, latestVersion.id),
+              eq(complianceResults.status, 'fail')
+            ));
+            
+          if (violations.length > 0) {
+            devicesToProcess.push(device);
+          }
+        }
+      }
+      
+      // Update total count for compliance-filtered results
+      totalCountForCompliance = devicesToProcess.length;
+      
+      // Apply sorting to filtered devices
+      if (sortOrder === 'desc') {
+        devicesToProcess.sort((a, b) => {
+          const aVal = (a as any)[sortBy] || '';
+          const bVal = (b as any)[sortBy] || '';
+          return bVal.localeCompare(aVal);
+        });
+      } else {
+        devicesToProcess.sort((a, b) => {
+          const aVal = (a as any)[sortBy] || '';
+          const bVal = (b as any)[sortBy] || '';
+          return aVal.localeCompare(bVal);
+        });
+      }
+      
+      // Apply pagination to compliance-filtered results
+      devicesToProcess = devicesToProcess.slice(offset, offset + limit);
+    } else {
+      // Use normal pagination for non-filtered results
+      const paginatedDevices = await query.limit(limit).offset(offset);
+      devicesToProcess = paginatedDevices;
+    }
     
     // Now get detailed info for each device in current page
     const devicesSummary = [];
     
-    for (const device of paginatedDevices) {
+    for (const device of devicesToProcess) {
       // Get latest version for this device
       const [latestVersion] = await db
         .select()
@@ -384,6 +448,8 @@ export class DatabaseStorage implements IStorage {
       let policiesCount = 0;
       let interfacesCount = 0;
       let adminsCount = 0;
+      let complianceStatus: 'compliant' | 'non_compliant' | 'unknown' = 'unknown';
+      let violationsCount = 0;
       
       if (latestVersion) {
         // Count policies for this version
@@ -406,6 +472,18 @@ export class DatabaseStorage implements IStorage {
           .from(systemAdmins)
           .where(eq(systemAdmins.deviceVersionId, latestVersion.id));
         adminsCount = adminCount.count;
+        
+        // Get compliance status
+        const complianceResultsForDevice = await db
+          .select()
+          .from(complianceResults)
+          .where(eq(complianceResults.deviceVersionId, latestVersion.id));
+          
+        if (complianceResultsForDevice.length > 0) {
+          const violations = complianceResultsForDevice.filter(r => r.status === 'fail');
+          violationsCount = violations.length;
+          complianceStatus = violations.length > 0 ? 'non_compliant' : 'compliant';
+        }
       }
       
       devicesSummary.push({
@@ -414,18 +492,20 @@ export class DatabaseStorage implements IStorage {
         lastUpdate: latestVersion?.capturedAt?.toISOString() || device.lastSeen?.toISOString() || new Date().toISOString(),
         policiesCount,
         interfacesCount,
-        adminsCount
+        adminsCount,
+        complianceStatus,
+        violationsCount
       });
     }
 
-    const totalPages = Math.ceil(totalCount / limit);
+    const totalPages = Math.ceil(totalCountForCompliance / limit);
     
     return {
       devices: devicesSummary,
       pagination: {
         page,
         limit,
-        total: totalCount,
+        total: totalCountForCompliance,
         totalPages
       }
     };

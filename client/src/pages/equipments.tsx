@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,9 @@ interface Device {
   policiesCount: number;
   interfacesCount: number;
   adminsCount: number;
+  // Campos de conformidade
+  complianceStatus?: 'compliant' | 'non_compliant' | 'unknown';
+  violationsCount?: number;
 }
 
 interface DeviceResponse {
@@ -40,11 +43,22 @@ export default function Equipments() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortBy, setSortBy] = useState<string>("hostname");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [complianceFilter, setComplianceFilter] = useState<string>("");
   const pageSize = 50;
+  const [location] = useLocation();
+
+  // Read URL parameters to set filters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const filter = urlParams.get('filter');
+    if (filter === 'non_compliant') {
+      setComplianceFilter('non_compliant');
+    }
+  }, [location]);
 
   // Get devices list with pagination, sorting and search
   const { data: deviceResponse, isLoading: devicesLoading } = useQuery<DeviceResponse>({
-    queryKey: ['/api/devices/summary', currentPage, pageSize, searchTerm, sortBy, sortOrder],
+    queryKey: ['/api/devices/summary', currentPage, pageSize, searchTerm, sortBy, sortOrder, complianceFilter],
     queryFn: async () => {
       const params = new URLSearchParams({
         page: currentPage.toString(),
@@ -53,6 +67,11 @@ export default function Equipments() {
         sortBy,
         sortOrder
       });
+      
+      if (complianceFilter) {
+        params.set('complianceFilter', complianceFilter);
+      }
+      
       const response = await fetch(`/api/devices/summary?${params}`);
       if (!response.ok) throw new Error('Failed to fetch devices');
       return response.json();
