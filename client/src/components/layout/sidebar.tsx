@@ -3,7 +3,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import { 
   ChartPie, 
-  Server, 
   Settings, 
   CheckCircle, 
   Download, 
@@ -17,7 +16,6 @@ import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Painel Geral", href: "/", icon: ChartPie },
-  { name: "Dispositivos", href: "/devices", icon: Server },
   { name: "Configurações", href: "/configurations", icon: Settings },
   { name: "Conformidade", href: "/compliance", icon: CheckCircle },
   { name: "Ingestão de Arquivos", href: "/ingestion", icon: Download },
