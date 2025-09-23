@@ -85,7 +85,7 @@ export default function ConfigurationDetails() {
 
   // Get device info
   const { data: device, isLoading: deviceLoading } = useQuery<Device>({
-    queryKey: [`/api/devices/${serial}`],
+    queryKey: ['/api/devices', serial],
     enabled: !!serial,
   });
 

@@ -136,8 +136,8 @@ app.use((req, res, next) => {
       
       // Em desenvolvimento, usar senha padrão se o arquivo não existir
       if (process.env.NODE_ENV === 'development' && !fs.existsSync(credentialPath)) {
-        adminPassword = "admin123";
-        log("🧑‍💻 MODO DESENVOLVIMENTO: Usando senha padrão admin123");
+        adminPassword = "admin";
+        log("🧑‍💻 MODO DESENVOLVIMENTO: Usando senha padrão admin");
       } else if (!fs.existsSync(credentialPath)) {
         const errorMsg = `ERRO CRÍTICO: Arquivo de credenciais não encontrado em ${credentialPath}. Execute o script install.sh primeiro.`;
         log(errorMsg);
