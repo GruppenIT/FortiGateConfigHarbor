@@ -87,7 +87,7 @@ export class ComplianceService {
           const device = await storage.getDeviceBySerial(deviceVersion.deviceSerial);
           if (device && device.statusDesc === "Locação") {
             const hoursAgo48 = new Date(Date.now() - 48 * 60 * 60 * 1000);
-            const lastConfigUpdate = new Date(deviceVersion.capturedAt);
+            const lastConfigUpdate = deviceVersion.capturedAt ? new Date(deviceVersion.capturedAt) : new Date(0);
             
             const status = lastConfigUpdate > hoursAgo48 ? 'pass' : 'fail';
             
@@ -269,33 +269,6 @@ export class ComplianceService {
           }
         }),
         description: "All admin users (except maintenance) must have trusted host restrictions configured",
-        enabled: true
-      },
-      {
-        name: "Strong password policy",
-        severity: "High", 
-        dsl: yaml.stringify({
-          target: "system_admins",
-          assert: "two_factor = true OR public_key_set = true",
-          evidence: {
-            select: ["username", "two_factor", "public_key_set", "profile"]
-          }
-        }),
-        description: "Admin users must use two-factor authentication or SSH keys",
-        enabled: true
-      },
-      {
-        name: "Interface security",
-        severity: "Medium",
-        dsl: yaml.stringify({
-          target: "system_interfaces", 
-          where: "name != 'lo'",
-          assert: "allow_access.length = 0 OR (allow_access.includes('https') AND NOT allow_access.includes('http'))",
-          evidence: {
-            select: ["name", "allow_access", "zone", "ip_cidr"]
-          }
-        }),
-        description: "Management interfaces should use HTTPS only, not HTTP",
         enabled: true
       },
       {

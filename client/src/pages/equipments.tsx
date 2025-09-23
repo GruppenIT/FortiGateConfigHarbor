@@ -239,7 +239,6 @@ export default function Equipments() {
                       <TableHead>Políticas</TableHead>
                       <TableHead>Interfaces</TableHead>
                       <TableHead>Administradores</TableHead>
-                      <SortableHeader column="lastUpdate">Últ. Atualização</SortableHeader>
                       <TableHead>Ações</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -272,7 +271,7 @@ export default function Equipments() {
                             <div className="flex items-center gap-1" data-testid={`status-non-compliant-${device.serial}`}>
                               <ShieldAlert className="h-4 w-4 text-red-600 dark:text-red-400" />
                               <span className="text-sm text-red-600 dark:text-red-400">
-                                {device.violationsCount || 0} violação{(device.violationsCount || 0) !== 1 ? 'ões' : ''}
+                                {device.violationsCount || 0} {(device.violationsCount || 0) !== 1 ? 'violações' : 'violação'}
                               </span>
                             </div>
                           )}
@@ -297,9 +296,6 @@ export default function Equipments() {
                           <span className="inline-flex items-center rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-400/10 dark:text-purple-400 dark:ring-purple-400/30">
                             {device.adminsCount || 0}
                           </span>
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {device.lastUpdate ? new Date(device.lastUpdate).toLocaleDateString('pt-BR') : 'N/A'}
                         </TableCell>
                         <TableCell>
                           <Link href={`/equipments/${device.serial}`}>
