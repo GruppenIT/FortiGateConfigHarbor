@@ -13,6 +13,11 @@ interface Device {
   serial: string;
   hostname: string;
   model: string;
+  // Campos do inventário externo
+  modelDesc?: string;
+  localizacaoDesc?: string;
+  statusDesc?: string;
+  // Campos da versão
   version: string;
   lastUpdate: string;
   policiesCount: number;
@@ -34,7 +39,10 @@ export default function Equipments() {
     return (
       (device.hostname && device.hostname.toLowerCase().includes(searchLower)) ||
       device.serial.toLowerCase().includes(searchLower) ||
-      (device.model && device.model.toLowerCase().includes(searchLower))
+      (device.model && device.model.toLowerCase().includes(searchLower)) ||
+      (device.modelDesc && device.modelDesc.toLowerCase().includes(searchLower)) ||
+      (device.localizacaoDesc && device.localizacaoDesc.toLowerCase().includes(searchLower)) ||
+      (device.statusDesc && device.statusDesc.toLowerCase().includes(searchLower))
     );
   });
 
@@ -60,7 +68,7 @@ export default function Equipments() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input
-                    placeholder="Buscar por nome, número de série ou modelo..."
+                    placeholder="Buscar por nome, número de série, modelo ou localização..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -110,6 +118,7 @@ export default function Equipments() {
                       <TableHead>Hostname</TableHead>
                       <TableHead>Número de Série</TableHead>
                       <TableHead>Modelo</TableHead>
+                      <TableHead>Localização</TableHead>
                       <TableHead>Versão</TableHead>
                       <TableHead>Políticas</TableHead>
                       <TableHead>Interfaces</TableHead>
@@ -128,7 +137,10 @@ export default function Equipments() {
                           {device.serial}
                         </TableCell>
                         <TableCell>
-                          {device.model || 'N/A'}
+                          {device.modelDesc || device.model || 'N/A'}
+                        </TableCell>
+                        <TableCell>
+                          {device.localizacaoDesc || 'N/A'}
                         </TableCell>
                         <TableCell className="text-sm">
                           {device.version || 'N/A'}
