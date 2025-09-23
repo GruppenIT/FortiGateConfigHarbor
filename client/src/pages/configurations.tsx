@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Settings, Database, TestTube, Save, Loader2 } from "lucide-react";
+import { Settings, Database, TestTube, Save, Loader2, RefreshCw } from "lucide-react";
 import { queryClient } from "@/lib/queryClient";
 
 interface EllevoConfig {
@@ -86,6 +86,34 @@ export default function Configurations() {
     }
   });
 
+  // Forçar sincronização
+  const forceSyncMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/ellevo-sync/force", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) throw new Error("Erro ao forçar sincronização");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: data.success ? "Sincronização concluída" : "Erro na sincronização",
+        description: data.message,
+        variant: data.success ? "default" : "destructive"
+      });
+      // Invalidar cache dos equipamentos para atualizar a lista
+      queryClient.invalidateQueries({ queryKey: ['/api/devices'] });
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Não foi possível executar a sincronização.",
+      });
+    }
+  });
+
   // Inicializar formulário com dados carregados
   useEffect(() => {
     if (currentConfig && config.server === "") {
@@ -100,6 +128,10 @@ export default function Configurations() {
 
   const handleTestSync = () => {
     testSyncMutation.mutate();
+  };
+
+  const handleForceSync = () => {
+    forceSyncMutation.mutate();
   };
 
   if (isLoading) {
@@ -236,6 +268,21 @@ export default function Configurations() {
                       <TestTube className="h-4 w-4 mr-2" />
                     )}
                     Testar Sync
+                  </Button>
+                  
+                  <Button 
+                    type="button"
+                    variant="secondary"
+                    onClick={handleForceSync}
+                    disabled={forceSyncMutation.isPending || !config.server || !config.username}
+                    data-testid="button-force-sync"
+                  >
+                    {forceSyncMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <RefreshCw className="h-4 w-4 mr-2" />
+                    )}
+                    Forçar Sincronização
                   </Button>
                 </div>
               </form>
