@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Monitor, Eye, Search, Loader2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Monitor, Eye, Search, Loader2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, ShieldAlert, AlertTriangle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface Device {
@@ -218,6 +218,7 @@ export default function Equipments() {
                       <SortableHeader column="model">Modelo</SortableHeader>
                       <SortableHeader column="localizacaoDesc">Localização</SortableHeader>
                       <TableHead>Versão</TableHead>
+                      <TableHead>Conformidade</TableHead>
                       <TableHead>Políticas</TableHead>
                       <TableHead>Interfaces</TableHead>
                       <TableHead>Administradores</TableHead>
@@ -242,6 +243,28 @@ export default function Equipments() {
                         </TableCell>
                         <TableCell className="text-sm">
                           {device.version || 'N/A'}
+                        </TableCell>
+                        <TableCell>
+                          {device.complianceStatus === 'compliant' && (
+                            <div className="flex items-center gap-1">
+                              <ShieldCheck className="h-4 w-4 text-green-600 dark:text-green-400" />
+                              <span className="text-sm text-green-600 dark:text-green-400">Conforme</span>
+                            </div>
+                          )}
+                          {device.complianceStatus === 'non_compliant' && (
+                            <div className="flex items-center gap-1">
+                              <ShieldAlert className="h-4 w-4 text-red-600 dark:text-red-400" />
+                              <span className="text-sm text-red-600 dark:text-red-400">
+                                {device.violationsCount || 0} violação{(device.violationsCount || 0) !== 1 ? 'ões' : ''}
+                              </span>
+                            </div>
+                          )}
+                          {device.complianceStatus === 'unknown' && (
+                            <div className="flex items-center gap-1">
+                              <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                              <span className="text-sm text-yellow-600 dark:text-yellow-400">Pendente</span>
+                            </div>
+                          )}
                         </TableCell>
                         <TableCell>
                           <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30">
